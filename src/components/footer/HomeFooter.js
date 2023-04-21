@@ -1,5 +1,6 @@
 import React from "react";
 import styled, {css} from "styled-components";
+import FooterButtons from "./FooterButtons";
 
 const Container = styled.div`
     background-color: lightsalmon;
@@ -17,18 +18,24 @@ const Box = styled.div`
     width : 600px;
     height : 100px;
     box-sizing: border-box;
-    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 
 `;
 
 const HomeFooter = () => {
 
     return(
-        <>
-            <Container>
-                <Box></Box>
-            </Container>
-        </>
+    
+        <Container>
+            <Box>
+                <FooterButtons/>
+            </Box>
+        </Container>
+        
+       
     );
 }
 

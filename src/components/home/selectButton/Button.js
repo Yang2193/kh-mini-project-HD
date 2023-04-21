@@ -23,6 +23,23 @@ const Btn = styled.button`
     border-radius: 20px;
     width: 120px;
     height: 120px;
+   
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: lightsalmon;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
 
 `;
 
