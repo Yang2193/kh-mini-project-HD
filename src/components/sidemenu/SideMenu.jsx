@@ -12,12 +12,13 @@ const MenuButton = styled.div`
 
 const Box = styled.div`
     display: none;
-    height: 820px;
-    width: 380px;
+    height: 630px;
+    width: 320px;
     background-color: coral;
+    border-radius: 20px;
     position: absolute;
     top: 0;
-    left: -280px;
+    left: -220px;
     z-index: 1;
 
     ${({ isOpen }) =>

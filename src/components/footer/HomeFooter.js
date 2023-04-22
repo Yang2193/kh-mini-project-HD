@@ -9,8 +9,8 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    bottom: 0px;
     margin-top: 30px;
+    position: sticky;
 `;
 
 const Box = styled.div`

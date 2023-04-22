@@ -10,7 +10,7 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-    width : 810px;
+    width : 630px;
     height : 40px;
     border: 1px solid black;
     border-radius: 20px;
@@ -19,7 +19,7 @@ const Box = styled.div`
 `;
 
 const Input = styled.input`
-    width: 70%;
+    width: 80%;
     height: 40px;
     border-style: none;
     border: none;
@@ -28,6 +28,7 @@ const Input = styled.input`
     outline: none;
     padding: 0px;
     font-size: 20px;
+    
 `;
 
 const SearchBtn = styled.button`
@@ -35,11 +36,15 @@ const SearchBtn = styled.button`
     height: 40px;
     background-color: coral;
     border-style: none;
+    border: none;
     color: white;
     font-weight: bold;
     border-radius: 20px;
     position: absolute;
+    
     right: 0px;
+    box-sizing: border-box;
+    cursor: pointer;
 `
 
 const SearchBar = () => {
@@ -47,7 +52,7 @@ const SearchBar = () => {
         <>
         <Container>
             <Box>
-                <Input/><SearchBtn>검색</SearchBtn>
+                <Input placeholder="검색하고 싶은 키워드를 입력해주세요."/><SearchBtn>검색</SearchBtn>
             </Box>
         </Container>
         </>

@@ -1,6 +1,8 @@
 import React from "react";
 import styled, {css} from "styled-components";
 import SideMenu from "../sidemenu/SideMenu";
+import LogoCoral from "./images/logo-removebg-preview.png";
+
 
 const Container = styled.div`
     margin-top: 60px;
@@ -9,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-    background-color: lightsalmon;
+    background-color: none;
     position: relative;
     height: 100px;
     width : 100%;
@@ -17,13 +19,14 @@ const Box = styled.div`
     justify-content: center;
 
 `;
-
-const Logo = styled.div`
+const LogoBox = styled.div`
     position: absolute;
     height: 100px;
     width: 100px;
     left: 0px;
-    background-color: coral;
+`;
+const Logo = styled.img`
+  
 `;
 
 const Title = styled.div`
@@ -65,9 +68,12 @@ const HomeHeader = () => {
     return(
         <>
             <Box>
-                <Logo></Logo>
+                <LogoBox>
+                    <Logo src={LogoCoral}/>
+                </LogoBox>
+                
                 <Title>
-                    <TitleValue>평범한 식사도 허투루 할 수 없는 당신을 위해</TitleValue>
+                    <TitleValue></TitleValue>
                 </Title>
                 <SideMenu/>
             </Box>
