@@ -3,12 +3,11 @@ import styled, {css} from "styled-components";
 import ImageBox from "./ImageBox";
 
 const Container = styled.div`
-
+    margin-top: 60px;
     width: 100%;
     height: 300px;
     justify-content: center;
     display: flex;
-    margin-top: 20px;
 
 `;
 
@@ -23,13 +22,16 @@ const ImageCon = styled.div`
 const Top3 = () => {
 
     return(
-        <>
+        
+        
             <Container>
                 <ImageCon>
                     <ImageBox/>
                 </ImageCon>
             </Container>
-        </>
+            
+         
+       
     );
 }
 

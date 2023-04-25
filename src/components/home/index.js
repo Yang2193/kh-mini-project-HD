@@ -7,10 +7,8 @@ import SelectButton from "./selectButton/SelectButton";
 const Main = () => {
     return(
         <>
-            <SearchBar/>
             <SelectButton/>
             <Top3/>
-
         </>
 
     );

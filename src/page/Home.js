@@ -3,7 +3,6 @@ import HomeHeader from "../components/header/HomeHeader";
 import styled, {css} from "styled-components";
 import Main from "../components/home";
 import HomeFooter from "../components/footer/HomeFooter";
-import HeaderSection from "../components/header/HeaderSection";
 
 
 const Body = styled.body`
@@ -17,7 +16,7 @@ const Home = () => {
     return(
         <>
             <Body>
-                <HeaderSection/>
+                <HomeHeader/>
                 <Main/>   
                 <HomeFooter/>
             </Body>
