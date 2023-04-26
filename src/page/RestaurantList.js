@@ -3,6 +3,7 @@ import styled from "styled-components";
 import HomeHeader from "../components/header/HomeHeader";
 import DetailedCheck from "../components/search/DetailedCheck";
 import HomeFooter from "../components/footer/HomeFooter";
+import RestaurantInfoBox from "../components/restaurantList/RestaurantInfoBox";
 
 const Body = styled.div`
     background-color: ivory;
@@ -18,6 +19,7 @@ const RestaurantList = () => {
         <Body>
             <HomeHeader/>
             <DetailedCheck/>
+            <RestaurantInfoBox/>
             <HomeFooter/>
         </Body>
     );
