@@ -1,5 +1,6 @@
 import React from "react";
 import styled, {css} from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 const Box = styled.div`
     width: 630px;
@@ -44,6 +45,16 @@ const Btn = styled.button`
 `;
 
 const Button = () => {
+
+    const navigate = useNavigate();
+
+    const onClickReviewList = () => {
+        navigate("/ReviewList");
+    }
+
+    const onClickRestaurantList = () => {
+        navigate("/RestaurantList");
+    }
     return(
         <>
             <Box>
@@ -53,8 +64,8 @@ const Button = () => {
             </Box>
             <Box2>
                 <Btn>가격대</Btn>
-                <Btn>인기 리뷰</Btn>
-                <Btn>인기 식당</Btn>
+                <Btn onClick={onClickReviewList}>인기 리뷰</Btn>
+                <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
             </Box2>
         </>
     );

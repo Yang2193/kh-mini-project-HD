@@ -10,7 +10,13 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-    position: sticky;
+   
+    @media (min-height: 1080px) {
+        position: absolute;
+        bottom: 0px;
+        width : 100%;
+    }
+
 `;
 
 const Box = styled.div`
