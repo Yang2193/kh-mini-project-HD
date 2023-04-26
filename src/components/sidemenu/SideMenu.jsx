@@ -6,9 +6,11 @@ const MenuButton = styled.div`
   height  : 100px;
   width : 100px;
   position: absolute;
+  border-radius : 20px;
   right: 0px;
   top: 0px;
   background-image: url(${MenuImg});
+  cursor: pointer;
 `;
 
 const Box = styled.div`

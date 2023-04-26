@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import styled,{ css } from "styled-components";
+import RegionList from "./RegionList";
 
 // 상세정보 버튼 누를 시 그 박스 내부 지역 컴포넌트
 
@@ -54,62 +55,51 @@ const Box = styled.div`
 
 const BoxRegion = ({isOpen}) => {
 
+    const regionArr = ["서울", "경기", "인천", "대전", "세종", "충북", "충남", "광주", "전북", "전남", "대구", "경북", "부산", "울산", "경남", "강원", "제주"];
 
     const [region, setRegion] = useState("");
+    const [isAppear, setIsAppear] = useState(false);
 
     const onClickRegion = (e) => {
         const target = e.target;
         if(target.checked){
             setRegion(target.value);
             console.log(target.value);
+            setIsAppear(!isAppear);
         } else{
             setRegion("");
             console.log("해제");
+            setIsAppear(!isAppear);
         }
     }
 
     const check = () => {
         console.log(region);
     }
+    
+    const regionMap = regionArr.map((region) => (
+        <label key={region}>
+            <input type="checkbox"
+            value={region}
+            onChange={onClickRegion}/>
+            {region}
+        </label>
+      )
+    );
+
     return (
         <Box isOpen={isOpen}>
             <div className="title" onClick={check}>지역</div>
             <div className="checkBox">
-                <input type="checkbox" id="Seoul" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Seoul">서울</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">경기</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">인천</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">대전</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">세종</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">충북</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">충남</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">광주</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">전북</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">전남</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">대구</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">경북</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">부산</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">울산</label>
-                <input type="checkbox" id="Gyeonggi" name="region" onChange={onClickRegion}/>
-                <label htmlFor="Gyeonggi">경남</label>
-                <input type="checkbox" id="gangwon" name="region" onChange={onClickRegion}/>
-                <label htmlFor="gangwon">강원</label>
-                <input type="checkbox" id="jeju" name="region" onChange={onClickRegion}/>
-                <label htmlFor="jeju">제주</label>
-
+              {regionArr.map((region) => (
+                <label key={region}>
+                    <input type="checkbox"
+                    value={region}
+                    onChange={onClickRegion}/>
+                    {region}
+                    <RegionList region={region} isAppear={isAppear}/>
+                </label>
+              ))}
             </div>
         </Box>
     );
