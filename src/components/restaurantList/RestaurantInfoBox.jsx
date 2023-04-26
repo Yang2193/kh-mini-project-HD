@@ -7,17 +7,19 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     margin-top: 10px;
-    
+    overflow-y: scroll;
+    height: 810px;
+    flex-wrap: wrap;
 
 `;
 
 const RestaurantInfo = styled.div`
-    width: 630px;
+    width: 600px;
     height: 210px;
     border: 1px solid black;
-    margin-top: 10px;
+    margin: 10px 10px;
 
 `;
 
@@ -29,6 +31,8 @@ const RestaurantInfoBox = () => {
             <RestaurantInfo/>
             <RestaurantInfo/>
             <RestaurantInfo/>
+            <RestaurantInfo/>
+         
         </Container>
     );
 }

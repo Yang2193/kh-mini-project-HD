@@ -53,22 +53,21 @@ const Box = styled.div`
 // 배열을 이용해서 리스트 나열하기.
 // useState에 값을 담아서 서버에 날린 후 전송받기.
 
-const BoxRegion = ({isOpen}) => {
+const BoxRegion = ({isOpen, region, onRegionChange}) => {
 
     const regionArr = ["서울", "경기", "인천", "대전", "세종", "충북", "충남", "광주", "전북", "전남", "대구", "경북", "부산", "울산", "경남", "강원", "제주"];
 
-    const [region, setRegion] = useState("");
     const [isAppear, setIsAppear] = useState(false);
 
-    const onClickRegion = (e) => {
+    const onChangeRegion = (e) => {
         const target = e.target;
         if(target.checked){
-            setRegion(target.value);
             console.log(target.value);
+            onRegionChange(target.value);
             setIsAppear(!isAppear);
         } else{
-            setRegion("");
             console.log("해제");
+            onRegionChange("");
             setIsAppear(!isAppear);
         }
     }
@@ -81,7 +80,7 @@ const BoxRegion = ({isOpen}) => {
         <label key={region}>
             <input type="checkbox"
             value={region}
-            onChange={onClickRegion}/>
+            onChange={onChangeRegion}/>
             {region}
         </label>
       )
@@ -95,7 +94,7 @@ const BoxRegion = ({isOpen}) => {
                 <label key={region}>
                     <input type="checkbox"
                     value={region}
-                    onChange={onClickRegion}/>
+                    onChange={onChangeRegion}/>
                     {region}
                     <RegionList region={region} isAppear={isAppear}/>
                 </label>

@@ -44,7 +44,7 @@ const Box = styled.div`
 
 `;
 
-const BoxMenu = ({isOpen}) => {
+const BoxMenu = ({isOpen, menu}) => {
 
     return (
         <Box isOpen={isOpen}>

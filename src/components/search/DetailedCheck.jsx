@@ -85,6 +85,10 @@ const CheckBox = styled.div`
 
 const DetailedCheck = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [region, setRegion] = useState("");
+    const [menu, setMenu] = useState("");
+   
+
 
     const onClickOpen = () => {
         setIsOpen(!isOpen);
@@ -94,13 +98,19 @@ const DetailedCheck = () => {
         event.stopPropagation();
     };
 
+    const onRegionChange = (region) => {
+        setRegion(region);
+    }
+
+ 
+
     return (
         <Container>
             <DetailedBtn isOpen={isOpen} onClick={onClickOpen}>
                 <div className="textBox">상세 검색</div>
                 <div className="flex-container" onClick={onClickBox}>
-                    <BoxRegion isOpen={isOpen}/>
-                    <BoxMenu isOpen={isOpen}/>
+                    <BoxRegion isOpen={isOpen} region={region} onRegionChange={onRegionChange}/>
+                    <BoxMenu isOpen={isOpen} menu={menu}/>
                     <BoxPrice isOpen={isOpen}/>
                     <BoxRating isOpen={isOpen}/>
 
