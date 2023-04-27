@@ -5,6 +5,7 @@ import BoxRegion from "./DetailedCheckBoxRegion";
 import BoxMenu from "./DetailedCheckBoxMenu";
 import BoxPrice from "./DetailedCheckBoxPrice";
 import BoxRating from "./DetailedCheckBoxRating";
+import FilterModal from "../../utils/FilterModal";
 
 // 상세정보 버튼 컴포넌트
 
@@ -106,16 +107,17 @@ const DetailedCheck = () => {
 
     return (
         <Container>
-            <DetailedBtn isOpen={isOpen} onClick={onClickOpen}>
-                <div className="textBox">상세 검색</div>
+            <DetailedBtn onClick={onClickOpen}>
+                <div className="textBox">검색 필터</div>
                 <div className="flex-container" onClick={onClickBox}>
-                    <BoxRegion isOpen={isOpen} region={region} onRegionChange={onRegionChange}/>
-                    <BoxMenu isOpen={isOpen} menu={menu}/>
-                    <BoxPrice isOpen={isOpen}/>
-                    <BoxRating isOpen={isOpen}/>
+                    <BoxRegion  region={region} onRegionChange={onRegionChange}/>
+                    <BoxMenu menu={menu}/>
+                    <BoxPrice />
+                    <BoxRating />
 
                 </div>
             </DetailedBtn>
+            <FilterModal open={isOpen} close={onClickOpen}/>
             
         </Container>
     );
