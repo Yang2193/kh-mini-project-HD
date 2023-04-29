@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import RegionFilter from "../components/filter/RegionFilter";
-import RegionFilterBackup from "../components/filter/RegionFilterBackup";
+import MenuFilter from "../components/filter/MenuFilter";
+import PriceFilter from "../components/filter/PriceFilter";
+import RatingFilter from "../components/filter/RatingFilter";
+
+// ./search/DetailedCheck 밑에 존재
 
 const ModalStyle = styled.div`
       .modal {
@@ -45,6 +49,10 @@ const ModalStyle = styled.div`
         height: 30px;
         background-color: coral;
         font-weight: 700;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
     }
 
     section > header button {
@@ -128,7 +136,9 @@ const FilterModal = (props) => {
                     </header>
                     <main>
                         <RegionFilter/>
-                        <RegionFilterBackup/>
+                        <MenuFilter/>
+                        <PriceFilter/>
+                        <RatingFilter/>
                     </main>
                     <footer>
                         <button onClick={confirm}>확인</button>

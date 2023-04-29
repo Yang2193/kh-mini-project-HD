@@ -117,7 +117,7 @@ const DetailedCheck = () => {
 
                 </div>
             </DetailedBtn>
-            <FilterModal open={isOpen} close={onClickOpen}/>
+            <FilterModal open={isOpen} close={onClickOpen} header="검색 필터"/>
             
         </Container>
     );
