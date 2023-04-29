@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import RegionFilter from "../components/filter/RegionFilter";
+import RegionFilterBackup from "../components/filter/RegionFilterBackup";
 
 const ModalStyle = styled.div`
       .modal {
@@ -127,6 +128,7 @@ const FilterModal = (props) => {
                     </header>
                     <main>
                         <RegionFilter/>
+                        <RegionFilterBackup/>
                     </main>
                     <footer>
                         <button onClick={confirm}>확인</button>

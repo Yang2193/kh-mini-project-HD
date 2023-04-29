@@ -103,6 +103,14 @@ const RegionFilterBackup = () => {
     const [checkedCity, setCheckedCity] = useState([]);
     
     
+
+    const onChangeChecked = () => {
+        setIsChecked(!isChecked);
+    }
+
+    const test=() => {
+        console.log(checkedRegions)
+    }
     const onCheckRegion = (e) => {
         const value = e.target.value;
         const checked = e.target.checked;
@@ -118,17 +126,11 @@ const RegionFilterBackup = () => {
           }
           
           console.log(checkedRegions);
-        }
+        };
     
  
     
-    const onChangeChecked = () => {
-        setIsChecked(!isChecked);
-    }
-
-    const test=() => {
-        console.log(checkedRegions)
-    }
+  
 
     const regionMap = regionList.map((region) => (
         <Label key={region} checked={checkedRegions.includes(region)}>
@@ -136,6 +138,20 @@ const RegionFilterBackup = () => {
             {region}
         </Label>
       ));
+
+    const RegionMap = () => {
+        return(
+            <>
+            {regionList && regionList.map((region) => (
+                <Label key={region} checked={checkedRegions.includes(region)}>
+                <input type="checkbox" name="region" value={region}  onChange={onCheckRegion}/>
+                {region}
+                </Label>
+            ))}
+            </>
+
+        );
+    }
 
    
 
@@ -147,7 +163,7 @@ const RegionFilterBackup = () => {
             <p onClick={test}>지역</p>
             <div className="flex-box">
                 <RegionBox>
-                    {regionMap}
+                    <RegionMap/>
                 </RegionBox>
                 <CityBox>
                     {}
