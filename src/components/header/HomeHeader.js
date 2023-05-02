@@ -6,7 +6,7 @@ import BackgroundImg from "../../images/korean-food-fried-rice-with-kimchi-serve
 import SearchBar from "../search/SearchBar";
 import HeaderTextImg from "../../images/text1.png"
 
-
+//Home에 쓰는 헤더
 const Container = styled.div`
     background-color: none;
     position: relative;

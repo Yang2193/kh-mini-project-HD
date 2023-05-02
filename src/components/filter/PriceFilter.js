@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const priceList = ["1만원대", "2만원대", "3만원대", "5만원 이상", "10만원 이상"];
+const priceList = ["1만원대", "2만원대", "3만원대", "5만원대", "10만원 이상"];
 
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};

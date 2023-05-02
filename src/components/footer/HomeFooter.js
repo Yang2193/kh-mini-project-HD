@@ -2,6 +2,8 @@ import React from "react";
 import styled, {css} from "styled-components";
 import FooterButtons from "./FooterButtons";
 
+//홈화면에 쓰이는 Footer. 
+
 const Container = styled.div`
     background-color: lightsalmon;
     height: 100px;

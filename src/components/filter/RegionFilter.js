@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { SearchContext } from "../context/SearchInfo";
 
 const regionList = ["서울", "경기", "인천", "대전", "세종", "충북", "충남", "광주", "전북", "전남", "대구", "경북", "부산", "울산", "경남", "강원", "제주"];
 const cityList = {
@@ -117,10 +118,12 @@ const CityBox = styled.div`
 
 const RegionFilter = () => {
 
-    const [address, setAddress] = useState([]);
+    //contextAPI에 값을 저장
+    
+
+
     const [region, setRegion] = useState([]);
-    const [isChecked, setIsChecked] = useState(false);
-    const [checkedRegions, setCheckedRegions] = useState([]);
+
     const [checkedCities, setCheckedCities] = useState([]);
 
     
@@ -177,19 +180,6 @@ const RegionFilter = () => {
 
     }
 
-    // const CityMap = () => {
-    //     const cities = cityList[region];
-    //     return(
-    //         <>
-    //             {cities && cities.map((city) => (
-    //                 <LabelCity key={city} isChecked={checkedCities.includes(city)}>
-    //                     <input type="checkbox" value={city} onChange={onCheckCity}/>
-    //                     {city}
-    //                 </LabelCity>
-    //             ))}
-    //         </>
-    //     );
-    // };
 
     const cityMap = () => {
         const cities = cityList[region];
@@ -214,7 +204,6 @@ const RegionFilter = () => {
                     {regionMap()}
                 </RegionBox>
                 <CityBox>
-                    {/* <CityMap/> */}
                     {cityMap()}
                 </CityBox>
             </div>

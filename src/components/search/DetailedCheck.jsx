@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
 import styled,{ css } from "styled-components";
 import BoxRegion from "./DetailedCheckBoxRegion";
@@ -6,6 +6,7 @@ import BoxMenu from "./DetailedCheckBoxMenu";
 import BoxPrice from "./DetailedCheckBoxPrice";
 import BoxRating from "./DetailedCheckBoxRating";
 import FilterModal from "../../utils/FilterModal";
+import { SearchContext } from "../context/SearchInfo";
 
 // 상세정보 버튼 컴포넌트
 
@@ -88,7 +89,9 @@ const DetailedCheck = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [region, setRegion] = useState("");
     const [menu, setMenu] = useState("");
-   
+
+
+
 
 
     const onClickOpen = () => {
@@ -109,13 +112,6 @@ const DetailedCheck = () => {
         <Container>
             <DetailedBtn onClick={onClickOpen}>
                 <div className="textBox">검색 필터</div>
-                <div className="flex-container" onClick={onClickBox}>
-                    <BoxRegion  region={region} onRegionChange={onRegionChange}/>
-                    <BoxMenu menu={menu}/>
-                    <BoxPrice />
-                    <BoxRating />
-
-                </div>
             </DetailedBtn>
             <FilterModal open={isOpen} close={onClickOpen} header="검색 필터"/>
             
