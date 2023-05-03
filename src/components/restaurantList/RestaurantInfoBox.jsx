@@ -33,17 +33,19 @@ const RestaurantInfo = styled.div`
 
 const RestaurantInfoBox = ({searchFilter}) => {
     
-    const searchFilterMap = searchFilter.map(rest => (
-        <RestaurantInfo key={rest.restId}>
-            <div className="image"/>
-            <div>
-                <p>매장 이름 : {rest.restName} ({rest.category})</p>
-                <p>매장 주소 : {rest.addr}</p>
-                <p>예약 여부 : {(rest.reservation === 1)? "예약가능" : "예약불가"}</p>
-                <p>매장 번호 : {rest.restPhone}</p>
-                {rest.rating !== 0 && <p>평점 : {rest.rating}</p>}
-            </div>
-        </RestaurantInfo>
+    const searchFilterMap = 
+        searchFilter &&
+        searchFilter.map(rest => (
+            <RestaurantInfo key={rest.restId}>
+                <div className="image"/>
+                <div>
+                    <p>매장 이름 : {rest.restName} ({rest.category})</p>
+                    <p>매장 주소 : {rest.addr}</p>
+                    <p>예약 여부 : {(rest.reservation === 1)? "예약가능" : "예약불가"}</p>
+                    <p>매장 번호 : {rest.restPhone}</p>
+                    {rest.rating !== 0 && <p>평점 : {rest.rating}</p>}
+                </div>
+            </RestaurantInfo>
     ));
 
     return (

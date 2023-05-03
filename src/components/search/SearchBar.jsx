@@ -50,6 +50,11 @@ const SearchBtn = styled.button`
 `
 
 const SearchBar = () => {
+
+    const onClickSearch = () =>{
+        
+    }
+    
     return(
         <>
         <Container>
