@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { UserContext } from "../context/UserInfo";
 
 const ratingList = ["3.0 이상", "3.5 이상", "4.0 이상", "4.5 이상"];
 
@@ -54,23 +55,35 @@ const RatingBox = styled.div`
 
 const RatingFilter = () => {
 
-    const [checkedRating, setCheckedRating] = useState("");
+    //context API에 값을 저장
+    const context = useContext(UserContext);
+    const { rating, setRating } = context;
 
-    const onCheckRating = (rating) => {
-        const value = rating.target.value;
-        const checked = rating.target.checked;
+    useEffect(() => {
+        setRating("");
+    }
+    ,[])
+
+
+ 
+
+    const onCheckRating = (rate) => {
+        const value = rate.target.value;
+        const checked = rate.target.checked;
         
         if (checked) {
-            setCheckedRating(value);
+            // setCheckedRating(value);
+            setRating(value);
           } 
+          
     };
 
     const ratingMap = () => {
         return(
-            ratingList.map(rating => (
-                <Label key={rating} isChecked={checkedRating === rating} className={rating.length >= 7 ? 'small':''}>
-                    <input type="radio" name="rating" onChange={onCheckRating} value={rating}/>
-                    {rating}
+            ratingList.map(rating1 => (
+                <Label key={rating1} isChecked={rating === rating1} className={rating1.length >= 7 ? 'small':''}>
+                    <input type="radio" name="rating" onChange={onCheckRating} value={rating1} checked={rating === rating1}/>
+                    {rating1}
                 </Label>
             ))
         );

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { UserContext } from "../context/UserInfo";
 
 const priceList = ["1만원대", "2만원대", "3만원대", "5만원대", "10만원 이상"];
 
@@ -59,30 +60,37 @@ const PriceBox = styled.div`
 
 const PriceFilter = () => {
 
-    const [checkedPrice, setCheckedPrice] = useState([]);
+    const context = useContext(UserContext);
+    const { price, setPrice} = context;
 
-    const onCheckPrice = (price) => {
-        const value = price.target.value;
-        const checked = price.target.checked;
+    // const [checkedPrice, setCheckedPrice] = useState([]);
+
+    const onCheckPrice = (e) => {
+        const value = e.target.value;
+        const checked = e.target.checked;
 
         console.log(value);
         console.log(checked);
 
         if (checked) {
-            setCheckedPrice([...checkedPrice, value]);
+            // setCheckedPrice([...checkedPrice, value]);
+            setPrice([...price, value]);
             } else {
-            setCheckedPrice(checkedPrice.filter((price) => price !== value));
+            // setCheckedPrice(checkedPrice.filter((price) => price !== value));
+            setPrice(price.filter((price) => price !== value));
             }          
-            console.log(checkedPrice); 
+            // console.log(price); 
     };
 
     const priceMap = () => {
         return(
-            priceList.map((price) => (
-                <Label key={price} isChecked={checkedPrice.includes(price)} className={price.length >= 7 ? 'small' : ''}>
-                    <input type="checkbox" onChange={onCheckPrice} value={price} /> {price}
-                </Label>
-            ))
+            priceList.map((price1) => {
+                return (
+                    <Label key={price1} isChecked={price.includes(price1)} className={price1.length >= 7 ? 'small' : ''}>
+                        <input type="checkbox" onChange={onCheckPrice} value={price1} checked={price.includes(price1)}/> {price1}
+                    </Label>
+                );
+            })
         );
     }
 

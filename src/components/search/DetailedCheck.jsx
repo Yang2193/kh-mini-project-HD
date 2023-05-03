@@ -1,12 +1,10 @@
 import { useContext, useState } from "react";
 import React from "react";
 import styled,{ css } from "styled-components";
-import BoxRegion from "./DetailedCheckBoxRegion";
-import BoxMenu from "./DetailedCheckBoxMenu";
-import BoxPrice from "./DetailedCheckBoxPrice";
-import BoxRating from "./DetailedCheckBoxRating";
+
 import FilterModal from "../../utils/FilterModal";
-import { SearchContext } from "../context/SearchInfo";
+import { SearchContext, UserContext } from "../context/UserInfo";
+import AxiosApi from "../../api/AxiosApi";
 
 // 상세정보 버튼 컴포넌트
 
@@ -85,10 +83,12 @@ const CheckBox = styled.div`
   
 `;
 
-const DetailedCheck = () => {
+const DetailedCheck = ({handleFilter}) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [region, setRegion] = useState("");
-    const [menu, setMenu] = useState("");
+    
+    const context = useContext(UserContext);
+    const {address, category, price ,rating} = context;
+    
 
 
 
@@ -102,8 +102,22 @@ const DetailedCheck = () => {
         event.stopPropagation();
     };
 
-    const onRegionChange = (region) => {
-        setRegion(region);
+
+
+    const onClickTest = () => {
+        console.log(rating);
+        console.log(price);
+        console.log(category);
+        console.log(address);
+    }
+
+    const confirm = async() => {
+        console.log(address, category, price, rating);
+        const searchFilter = await AxiosApi.filterRestaurant(address, category, price, rating);
+        
+        handleFilter(searchFilter.data);
+        setIsOpen(!isOpen);
+
     }
 
  
@@ -111,9 +125,9 @@ const DetailedCheck = () => {
     return (
         <Container>
             <DetailedBtn onClick={onClickOpen}>
-                <div className="textBox">검색 필터</div>
+                <div className="textBox" onClick={onClickTest}>검색 필터</div>
             </DetailedBtn>
-            <FilterModal open={isOpen} close={onClickOpen} header="검색 필터"/>
+            <FilterModal open={isOpen} close={onClickOpen} header="검색 필터" confirm={confirm}/>
             
         </Container>
     );

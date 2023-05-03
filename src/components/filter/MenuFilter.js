@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { UserContext } from "../context/UserInfo";
 
 const menuCategory = ["한식", "중식", "양식", "일식", "아시안", "분식", "카페/디저트", "국/탕/찌개", "패스트푸드"];
 
@@ -59,6 +60,9 @@ const MenuBox = styled.div`
 
 const MenuFilter = () => {
 
+    const context = useContext(UserContext);
+    const {category, setCategory} = context;
+
     const [checkedMenu, setCheckedMenu] = useState([]);
 
     const onCheckMenu = (menu) => {
@@ -69,9 +73,11 @@ const MenuFilter = () => {
         console.log(checked);
 
         if (checked) {
-            setCheckedMenu([...checkedMenu, value]);
+            // setCheckedMenu([...checkedMenu, value]);
+            setCategory([...category, value]);
             } else {
-            setCheckedMenu(checkedMenu.filter((menu) => menu !== value));
+            // setCheckedMenu(checkedMenu.filter((menu) => menu !== value));
+            setCategory(category.filter((menu) => menu !== value));
             }          
             console.log(checkedMenu); 
     }
@@ -79,8 +85,8 @@ const MenuFilter = () => {
     const menuMap = () => {
         return(
             menuCategory.map((menu) => (
-                <Label key={menu} isChecked={checkedMenu.includes(menu)} className={menu.length >= 7 ? 'small' : ''}>
-                    <input type="checkbox" onChange={onCheckMenu} value={menu} /> {menu}
+                <Label key={menu} isChecked={category.includes(menu)} className={menu.length >= 7 ? 'small' : ''}>
+                    <input type="checkbox" onChange={onCheckMenu} value={menu} checked={category.includes(menu)}/> {menu}
                 </Label>
             ))
         );

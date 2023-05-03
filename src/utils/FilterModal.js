@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import RegionFilter from "../components/filter/RegionFilter";
 import MenuFilter from "../components/filter/MenuFilter";
 import PriceFilter from "../components/filter/PriceFilter";
 import RatingFilter from "../components/filter/RatingFilter";
+import { UserContext } from "../components/context/UserInfo";
 
 // ./search/DetailedCheck 밑에 존재
 
@@ -121,6 +122,8 @@ const ModalStyle = styled.div`
 `;
 
 const FilterModal = (props) => {
+
+
 
     const{open, confirm, close, type, header, children} = props;
     return (
