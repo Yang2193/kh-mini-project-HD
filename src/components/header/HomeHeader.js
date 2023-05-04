@@ -84,20 +84,22 @@ const Logo = styled.img`
 
 
 
-const HomeHeader = () => {
+const HomeHeader = ({ handleType, children}) => {
+    const onClickHome = () => {
+        handleType("Main");
+    }
     return(
         <>
             <Container>
-                <LogoBox>
+                <LogoBox onClick={onClickHome}>
                     <Logo src={LogoCoral}/>
                 </LogoBox>
                 <Box>           
                     <TextImage/>
-
                     <div className="background"></div>
                 </Box>
                 <SideMenu/>
-                <SearchBar/>
+                {children}
             </Container>
         </>
     );

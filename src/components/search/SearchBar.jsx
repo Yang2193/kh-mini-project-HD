@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components";
+import AxiosApi from "../../api/AxiosApi";
+import { UserContext } from "../context/UserInfo";
 
 const Container = styled.div`
     margin-top: 60px;
@@ -49,17 +52,36 @@ const SearchBtn = styled.button`
     cursor: pointer;
 `
 
-const SearchBar = () => {
+const SearchBar = ({handleFilter, handleType}) => {
+   
+    const context = useContext(UserContext);
+    const {keywordArr, setKeywordArr, address, category, price, rating} = context;
 
-    const onClickSearch = () =>{
-        
+    const [keyword, setKeyword] = useState("");
+
+    const onChangeKeyword = (e) =>{
+        const value = e.target.value;
+        setKeyword(value);
+        setKeywordArr(value.split(" "));
     }
+
+    const onClickSearch = async() =>{
+        
+        console.log(keywordArr, address, category, price, rating);
+        const rsp = await AxiosApi.filterRestaurant(keywordArr, address, category, price, rating);
+        console.log(rsp.data);
+        handleFilter(rsp.data);
+        handleType("List");
+    };
+
+    
     
     return(
         <>
         <Container>
             <Box>
-                <Input placeholder="검색하고 싶은 키워드를 입력해주세요."/><SearchBtn>검색</SearchBtn>
+                <Input placeholder="검색하고 싶은 키워드를 입력해주세요." value={keyword} onChange={onChangeKeyword}/>
+                <SearchBtn onClick={onClickSearch}>검색</SearchBtn>
             </Box>
         </Container>
         </>

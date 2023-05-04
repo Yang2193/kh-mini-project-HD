@@ -5,6 +5,8 @@ export const UserContext = createContext(null);
 
 
 const UserStore = (props) => {
+
+    const [keywordArr, setKeywordArr] = useState([]);
     const [address, setAddress] = useState({});
     const [category, setCategory] = useState([]);
     const [price, setPrice ] = useState([]);
@@ -14,7 +16,7 @@ const UserStore = (props) => {
     const [cities, setCities] = useState([]);
 
     return(
-        <UserContext.Provider value = {{address, setAddress, category, setCategory, price, setPrice, rating, setRating, region, setRegion, checkedCities, setCheckedCities, cities, setCities}}>
+        <UserContext.Provider value = {{keywordArr, setKeywordArr, address, setAddress, category, setCategory, price, setPrice, rating, setRating, region, setRegion, checkedCities, setCheckedCities, cities, setCities}}>
             {props.children}
         </UserContext.Provider>
     );

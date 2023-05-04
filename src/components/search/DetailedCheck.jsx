@@ -87,7 +87,7 @@ const DetailedCheck = ({handleFilter}) => {
     const [isOpen, setIsOpen] = useState(false);
     
     const context = useContext(UserContext);
-    const {address, category, price ,rating} = context;
+    const {keywordArr, address, category, price ,rating} = context;
     
 
 
@@ -112,10 +112,11 @@ const DetailedCheck = ({handleFilter}) => {
     }
 
     const confirm = async() => {
-        console.log(address, category, price, rating);
-        const searchFilter = await AxiosApi.filterRestaurant(address, category, price, rating);
+        console.log(keywordArr, address, category, price, rating);
+        const searchFilter = await AxiosApi.filterRestaurant(keywordArr, address, category, price, rating);
         
         handleFilter(searchFilter.data);
+        console.log(searchFilter.data);
         setIsOpen(!isOpen);
 
     }

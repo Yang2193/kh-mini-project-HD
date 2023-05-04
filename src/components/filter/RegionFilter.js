@@ -153,9 +153,14 @@ const RegionFilter = () => {
     }
 
     const removeAddress = (obj, val) => {
-        if(obj[changeRegionName(region)]){
-            obj[changeRegionName(region)] = obj[changeRegionName(region)].filter((item) => item !== val);
+        const regionName = changeRegionName(region);
+        if(obj[regionName]){
+            obj[regionName] = obj[regionName].filter((item) => item !== val);
+            if(obj[regionName].length === 0) {
+                delete obj[regionName];
+            }
         }
+        
     }
     
     const onCheckRegion = (e) => {
