@@ -36,7 +36,7 @@ const Home = () => {
     return(
         <>
             <Body>
-                <HomeHeader handleType={handleType}>
+                <HomeHeader>
                     <SearchBar handleType={handleType} handleFilter={handleFilter}/>
                 </HomeHeader>
                 {type === "Main" && (
