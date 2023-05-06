@@ -93,7 +93,7 @@ const DetailedCheck = ({handleFilter}) => {
 
 
 
-
+    // 모달 열고 닫기
     const onClickOpen = () => {
         setIsOpen(!isOpen);
     }
@@ -111,6 +111,7 @@ const DetailedCheck = ({handleFilter}) => {
         console.log(address);
     }
 
+    // 확인 버튼 누르면 검색어 & 검색필터에 선택된 값 전송 후 결과 받아옴.
     const confirm = async() => {
         console.log(keywordArr, address, category, price, rating);
         const searchFilter = await AxiosApi.filterRestaurant(keywordArr, address, category, price, rating);

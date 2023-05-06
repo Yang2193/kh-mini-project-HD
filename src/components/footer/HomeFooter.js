@@ -5,7 +5,7 @@ import FooterButtons from "./FooterButtons";
 //홈화면에 쓰이는 Footer. 
 
 const Container = styled.div`
-    background-color: lightsalmon;
+    background-color: coral;
     height: 100px;
     width : 100%;
     display: flex;

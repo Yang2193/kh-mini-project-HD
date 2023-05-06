@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled, {css} from "styled-components";
 import MenuImg from "../../images/pngwing.com-removebg-preview.png";
+import { FiMenu } from 'react-icons/fi';
 
 const MenuButton = styled.div`
   height  : 100px;
@@ -9,8 +10,23 @@ const MenuButton = styled.div`
   border-radius : 20px;
   right: 0px;
   top: 0px;
-  background-image: url(${MenuImg});
   cursor: pointer;
+`;
+
+const StyledFaBars = styled(FiMenu)`
+    color: coral;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height  : 60px;
+    width : 60px;
+    padding: 10px;
+    
+    &:hover {
+      color: lightsalmon;
+    }
+
 `;
 
 const Box = styled.div`
@@ -23,8 +39,6 @@ const Box = styled.div`
     top: 0px;
     left: -160px;
     z-index: 1;
-
-   
 
     ${({ isOpen }) =>
     isOpen &&
@@ -48,7 +62,7 @@ const Box = styled.div`
 
     
     .box{
-        width: 320px;
+        width: 260px;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -82,6 +96,15 @@ const SideMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef(null);
 
+    const MenuBtn = ({onClick}) => {
+
+        return(
+            <div onClick={onClick}>
+                <StyledFaBars/>
+            </div>
+        )
+    }
+
     useEffect(() => {   
         const clickOutside = (event) =>{
             if(ref.current && !ref.current.contains(event.target)){
@@ -112,8 +135,8 @@ const SideMenu = () => {
     
 
     return(
-        
-            <MenuButton onClick={onClickMenu} ref={ref}>
+        <MenuButton  onClick={onClickMenu} ref={ref}>
+            <StyledFaBars/>
                 <Box isOpen={isOpen} >
                    <div className="header">메뉴</div>
                     <div className="box" onClick={onClickBox}>
@@ -125,7 +148,7 @@ const SideMenu = () => {
                         <div className="item">예약 현황</div>
                     </div>
                 </Box>
-            </MenuButton>
+        </MenuButton>
         
     );
 }

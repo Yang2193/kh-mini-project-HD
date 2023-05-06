@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from "styled-components";
+import AxiosApi from "../../api/AxiosApi";
 
 const Container = styled.div`
     margin-top: 60px;
@@ -15,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-  width: 80%;
+  width: 70%;
   height: 300px;
   text-align: center;
 `;
@@ -31,18 +32,25 @@ const StyledSlider = styled(Slider)`
   .slick-slide div{
     width : 240px;
     height: 240px;
+    margin: 10px;
     background-color: black;
     color: white;
-    display: flex;
+    display: flex !important;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-  
+    position: relative;
+    cursor: pointer;
+
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .slick-list {
     width: 100%;
     margin: 0 auto;
-    padding-left: 50px;
     text-align: center;
   }
 
@@ -54,6 +62,7 @@ const StyledSlider = styled(Slider)`
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
+    font-size: 30px;
     
   }
 
@@ -68,6 +77,27 @@ const StyledSlider = styled(Slider)`
     z-index: 1;
     position: absolute;
   }
+
+  .slick-dots {
+
+    button::before{
+        color: coral;
+      }
+      .slick-active{
+
+        button::before{
+          color: coral;
+        }
+       }
+  }
+
+  
+  @media screen and (min-width: 1920px) {
+  .slick-slide div {
+    width: 400px;
+    height: 400px;
+    }
+  }
   
 `;
 
@@ -76,9 +106,15 @@ const StyledSlider = styled(Slider)`
 
 const HomeCarousel = () => {
 
+  //슬라이드에 따라서 출력 문구 설정
   const [title, setTitle] = useState("");
 
+  //TOP3 세팅을 위한 useState
+  const [wt3r, setWt3r] = useState(null);
+  const [mt3r, setMt3r] = useState(null);
+  const [wt3review, setWt3review] = useState(null);
 
+  //slick 라이브러리 세팅
   const settings = {
     dots: true,
     infinite: true,
@@ -96,39 +132,40 @@ const HomeCarousel = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async() => {
+      try{
+        const rsp = await AxiosApi.weeklyTop3RestListGet();
+        const rspReview = await AxiosApi.weeklyTop3ReviewListGet();
+        setWt3r(rsp.data);
+        setWt3review(rspReview.data);
+      } catch(error){
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [])
+
+
     return (
       <Container>
         <Box>
             <div>
             <h2> {title} </h2>
             <StyledSlider {...settings}>
-              <div className="box">
-                1
-              </div>
-              <div className="box">
-                2
-              </div>
-              <div className="box">
-                3
-              </div>
-              <div className="box">
-                4
-              </div>
-              <div className="box">
-                <h3>5</h3>
-              </div>
-              <div className="box">
-                <h3>6</h3>
-              </div>
-              <div className="box">
-                <h3>7</h3>
-              </div>
-              <div className="box">
-                <h3>8</h3>
-              </div>
-              <div>
-                <h3>9</h3>
-              </div>
+              {wt3r && wt3r.map(e => (
+                <div key={e.restId}>
+                  <h3>{e.restName}({e.category})</h3>
+                  <p>평점 : {e.rating}</p>
+                </div>
+              ))}
+              {wt3review && wt3review.map(e=>(
+                <div key={e.reviewId}>
+                  <h2>{e.restaurantName}</h2>
+                  <h3>{e.reviewTitle}</h3>
+                </div>
+              ))}
+          
             </StyledSlider>
             </div>
         </Box>

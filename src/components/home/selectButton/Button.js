@@ -87,16 +87,19 @@ const Button = ({ handleType, handleFilter }) => {
     const navigate = useNavigate();
 
     const onClickReviewList = () => {
-        navigate("/ReviewList");
+       
+        handleType("Review")
     }
 
     const onClickRestaurantList = async() => {
 
-        const rsp = await AxiosApi.popularRestListGet("popular")
+        const rsp = await AxiosApi.popularRestListGet("popular");
         console.log(rsp.data);
         handleFilter(rsp.data);
         handleType("List");
+
     }
+    
     return(
         <Container>
             <Box>

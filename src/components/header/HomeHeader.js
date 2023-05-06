@@ -85,11 +85,12 @@ const Logo = styled.img`
 
 
 
-const HomeHeader = ({ children }) => {
+const HomeHeader = ({ handleType, children }) => {
 
     const navigate = useNavigate();
     const onClickHome = () => {
         navigate("/");
+        handleType("Main");
     };
 
     return(

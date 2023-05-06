@@ -50,6 +50,10 @@ const SearchBtn = styled.button`
     right: 0px;
     box-sizing: border-box;
     cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
 `
 
 const SearchBar = ({handleFilter, handleType}) => {
@@ -59,13 +63,14 @@ const SearchBar = ({handleFilter, handleType}) => {
 
     const [keyword, setKeyword] = useState("");
 
+    //키워드 설정
     const onChangeKeyword = (e) =>{
         const value = e.target.value;
         setKeyword(value);
         setKeywordArr(value.split(" "));
     }
     
-
+    // 검색 버튼
     const onClickSearch = async() =>{
         
         console.log(keywordArr, address, category, price, rating);

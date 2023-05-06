@@ -7,6 +7,8 @@ import DetailedCheck from "../components/search/DetailedCheck";
 import RestaurantInfoBox from "../components/restaurantList/RestaurantInfoBox";
 import Button from "../components/home/selectButton/Button";
 import Top3 from "../components/home/imageBox/Top3";
+import Reviews from "../components/reviewList/Reviews";
+import HomeCarousel from "../components/home/HomeCarousel";
 
 
 const Body = styled.div`
@@ -36,13 +38,13 @@ const Home = () => {
     return(
         <>
             <Body>
-                <HomeHeader>
+                <HomeHeader handleType={handleType}>
                     <SearchBar handleType={handleType} handleFilter={handleFilter}/>
                 </HomeHeader>
                 {type === "Main" && (
                     <>
                         <Button handleType={handleType} handleFilter={handleFilter}/>
-                        <Top3/>  
+                        <HomeCarousel/>  
                     </>
                 )}
                 {type === "List" && (
@@ -69,6 +71,7 @@ const Home = () => {
                 )}
                 {type === "Review" && (
                     <>
+                        <Reviews/>
                     </>
                 )}
                 <HomeFooter/>
