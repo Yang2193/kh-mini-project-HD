@@ -38,15 +38,15 @@ const Home = () => {
     return(
         <>
             <Body>
-                <HomeHeader handleType={handleType}>
-                    <SearchBar handleType = {handleType} handleFilter = {handleFilter}/>
+                <HomeHeader>
+                    <SearchBar handleType={handleType} handleFilter={handleFilter}/>
                 </HomeHeader>
                 {type === "Main" && (
                     <Main/>  
                 )}
                 {type === "List" && (
                     <>
-                     <DetailedCheck handleType = {handleType} handleFilter = {handleFilter}/>
+                     <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                      <RestaurantInfoBox searchFilter={searchFilter}/>
                     </>
                 )}

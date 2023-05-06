@@ -5,6 +5,7 @@ import LogoCoral from "../../images/logo-removebg-preview.png";
 import BackgroundImg from "../../images/korean-food-fried-rice-with-kimchi-serve-with-fried-egg.jpg";
 import SearchBar from "../search/SearchBar";
 import HeaderTextImg from "../../images/text1.png"
+import { useNavigate } from "react-router-dom";
 
 //Home에 쓰는 헤더
 const Container = styled.div`
@@ -84,10 +85,13 @@ const Logo = styled.img`
 
 
 
-const HomeHeader = ({ handleType, children}) => {
+const HomeHeader = ({ children }) => {
+
+    const navigate = useNavigate();
     const onClickHome = () => {
-        handleType("Main");
-    }
+        navigate("/");
+    };
+
     return(
         <>
             <Container>

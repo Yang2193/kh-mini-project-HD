@@ -64,6 +64,7 @@ const SearchBar = ({handleFilter, handleType}) => {
         setKeyword(value);
         setKeywordArr(value.split(" "));
     }
+    
 
     const onClickSearch = async() =>{
         
