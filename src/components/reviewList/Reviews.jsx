@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import AxiosApi from "../../api/AxiosApi";
 
 const Container = styled.div`
     width: 100%;
@@ -20,6 +21,11 @@ const ReviewInfo = styled.div`
 `;
 
 const Reviews = () => {
+
+    useEffect(() => {
+        const rsp = AxiosApi.popularReviewListGet("review");
+    }, [])
+
     return(
     <Container>
         <ReviewInfo/>

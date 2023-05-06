@@ -1,8 +1,46 @@
 import React from "react";
 import styled, {css} from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import AxiosApi from "../../../api/AxiosApi";
+
+const Container = styled.div`
+    width : 100%;
+    margin-top: 60px;
+    height : 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
 const Box = styled.div`
+    box-sizing: border-box;
+    width : 630px;
+    height: 270px;
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-evenly;
+
+    .box{
+        width: 630px;
+        height: 120px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-evenly;
+        box-sizing: border-box;
+    }
+
+    .box2{
+        width: 630px;
+        height: 120px;
+        display: flex;
+        justify-content: space-evenly;
+        box-sizing: border-box;
+    }
+`;
+
+const Box1 = styled.div`
     width: 630px;
     height: 120px;
     margin-bottom: 20px;
@@ -44,7 +82,7 @@ const Btn = styled.button`
 
 `;
 
-const Button = () => {
+const Button = ({ handleType, handleFilter }) => {
 
     const navigate = useNavigate();
 
@@ -52,22 +90,28 @@ const Button = () => {
         navigate("/ReviewList");
     }
 
-    const onClickRestaurantList = () => {
-        navigate("/RestaurantList");
+    const onClickRestaurantList = async() => {
+
+        const rsp = await AxiosApi.popularRestListGet("popular")
+        console.log(rsp.data);
+        handleFilter(rsp.data);
+        handleType("List");
     }
     return(
-        <>
+        <Container>
             <Box>
-                <Btn>지역</Btn>
-                <Btn>메뉴</Btn>
-                <Btn>평점</Btn>
+                <div className="box">
+                    <Btn>지역</Btn>
+                    <Btn>메뉴</Btn>
+                    <Btn>평점</Btn>
+                </div>
+                <div className="box2">
+                    <Btn>가격대</Btn>
+                    <Btn onClick={onClickReviewList}>인기 리뷰</Btn>
+                    <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
+                </div>
             </Box>
-            <Box2>
-                <Btn>가격대</Btn>
-                <Btn onClick={onClickReviewList}>인기 리뷰</Btn>
-                <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
-            </Box2>
-        </>
+        </Container>
     );
 }
 

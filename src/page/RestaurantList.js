@@ -17,6 +17,9 @@ const Body = styled.div`
 `;
 
 const RestaurantList = () => {
+    useEffect(() => {
+        
+    }, [])
   
     const [searchFilter, setSearchFilter] = useState([]);
 

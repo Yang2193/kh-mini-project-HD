@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import HomeHeader from "../components/header/HomeHeader";
 import styled, {css} from "styled-components";
-import Main from "../components/home";
 import HomeFooter from "../components/footer/HomeFooter";
 import SearchBar from "../components/search/SearchBar";
 import DetailedCheck from "../components/search/DetailedCheck";
 import RestaurantInfoBox from "../components/restaurantList/RestaurantInfoBox";
+import Button from "../components/home/selectButton/Button";
+import Top3 from "../components/home/imageBox/Top3";
 
 
 const Body = styled.div`
@@ -15,9 +16,6 @@ const Body = styled.div`
     @media (min-height: 1080px) {
         height: 100vh;
 }
-    
-    
-  
 `;
 
 const Home = () => {
@@ -39,15 +37,38 @@ const Home = () => {
         <>
             <Body>
                 <HomeHeader handleType={handleType}>
-                    <SearchBar handleType = {handleType} handleFilter = {handleFilter}/>
+                    <SearchBar handleType={handleType} handleFilter={handleFilter}/>
                 </HomeHeader>
                 {type === "Main" && (
-                    <Main/>  
+                    <>
+                        <Button handleType={handleType} handleFilter={handleFilter}/>
+                        <Top3/>  
+                    </>
                 )}
                 {type === "List" && (
                     <>
-                     <DetailedCheck handleType = {handleType} handleFilter = {handleFilter}/>
+                     <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                      <RestaurantInfoBox searchFilter={searchFilter}/>
+                    </>
+                )}
+                {type === "Region" && (
+                    <>
+                    </>
+                )}
+                {type === "Category" && (
+                    <>
+                    </>
+                )}
+                {type === "Rating" && (
+                    <>
+                    </>
+                )}
+                {type === "Price" && (
+                    <>
+                    </>
+                )}
+                {type === "Review" && (
+                    <>
                     </>
                 )}
                 <HomeFooter/>

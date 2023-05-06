@@ -22,6 +22,12 @@ const AxiosApi = {
     //인기 식당 가져오는 용도
     popularRestListGet : async(popular) => {
         return await axios.get(KH_DOMAIN + `/restaurantList?popular=${popular}`);
+    },
+
+    //인기 리뷰 가져오는 메소드
+
+    popularReviewListGet : async(review) => {
+        return await axios.get(KH_DOMAIN + `/?review=${review})`)
     }
 
 }
