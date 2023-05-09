@@ -139,6 +139,7 @@ const HomeCarousel = () => {
         const rspReview = await AxiosApi.weeklyTop3ReviewListGet();
         setWt3r(rsp.data);
         setWt3review(rspReview.data);
+        console.log(rspReview.data);
       } catch(error){
         console.error(error);
       }
@@ -161,11 +162,11 @@ const HomeCarousel = () => {
               ))}
               {wt3review && wt3review.map(e=>(
                 <div key={e.reviewId}>
-                  <h2>{e.restaurantName}</h2>
+                  <h2>{e.restName}</h2>
                   <h3>{e.reviewTitle}</h3>
                 </div>
               ))}
-          
+           
             </StyledSlider>
             </div>
         </Box>
