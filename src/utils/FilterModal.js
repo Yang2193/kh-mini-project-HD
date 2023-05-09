@@ -4,7 +4,7 @@ import RegionFilter from "../components/filter/RegionFilter";
 import MenuFilter from "../components/filter/MenuFilter";
 import PriceFilter from "../components/filter/PriceFilter";
 import RatingFilter from "../components/filter/RatingFilter";
-import { UserContext } from "../components/context/UserInfo";
+import { UserContext } from "../context/UserInfo";
 
 // ./search/DetailedCheck 밑에 존재
 

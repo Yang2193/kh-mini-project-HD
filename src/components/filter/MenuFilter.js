@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { UserContext } from "../context/UserInfo";
+import { UserContext } from "../../context/UserInfo";
 
 const menuCategory = ["한식", "중식", "양식", "일식", "아시안", "분식", "카페/디저트", "국/탕/찌개", "패스트푸드"];
 

@@ -3,7 +3,7 @@ import React from "react";
 import styled,{ css } from "styled-components";
 
 import FilterModal from "../../utils/FilterModal";
-import { SearchContext, UserContext } from "../context/UserInfo";
+import { SearchContext, UserContext } from "../../context/UserInfo";
 import AxiosApi from "../../api/AxiosApi";
 
 // 상세정보 버튼 컴포넌트

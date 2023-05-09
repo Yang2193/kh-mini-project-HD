@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { UserContext } from "../context/UserInfo";
+import { UserContext } from "../../context/UserInfo";
 
 const ratingList = ["3.0 이상", "3.5 이상", "4.0 이상", "4.5 이상"];
 

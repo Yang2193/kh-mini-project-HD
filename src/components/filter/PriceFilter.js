@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { UserContext } from "../context/UserInfo";
+import { UserContext } from "../../context/UserInfo";
 
 const priceList = ["1만원대", "2만원대", "3만원대", "5만원대", "10만원 이상"];
 

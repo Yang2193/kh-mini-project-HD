@@ -60,6 +60,25 @@ const Container = styled.div`
     color: red;
   }
 
+  .signup-button {
+    margin-top: 100px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    width: 100%; /* 원하는 너비 설정 */
+    height: 50px;
+    color: white;
+    background-color: orange;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 18px;
+    border: orange;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
   .enable-button {
     margin-top: 100px;
     margin-left: 30px;
@@ -185,6 +204,10 @@ const Login = ({children}) => {
         setModalOpen(true);
       }
     }
+
+    const onClickSignUp = () => {
+      navigate('/signup');
+    }
     return(
   
         <Container>
@@ -195,21 +218,24 @@ const Login = ({children}) => {
         <div className="item2">
             <Input placeholder="이름" value ={inputId} onChange={onChangeId}/>
         </div>
-        <div className="hint">
+        {/* <div className="hint">
           {inputId.length > 0 && <span className={`${isId ? 'success' : 'error'}`}>{idMessage}</span>}
-        </div>
+        </div> */}
 
         <div className="item2">
             <Input placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
         </div>
-        <div className="hint">
+        {/* <div className="hint">
             {inputPw.length > 0 && (
                 <span className={`${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
+        </div> */}
+        <div className="item2">
+          <button className='signup-button' onClick={onClickSignUp}>회원가입</button>
         </div>
         <div className="item2">
         {(isId && isPw) ?
-          <button className="enable-button" onClick={onClickLogin}>SING IN</button>  :
-          <button className="disable-button" onClick={onClickLogin}>SING IN</button>}
+          <button className="enable-button" onClick={onClickLogin}>SIGN IN</button>  :
+          <button className="disable-button" onClick={onClickLogin}>SIGN IN</button>}
         </div>
         <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
    </Container>

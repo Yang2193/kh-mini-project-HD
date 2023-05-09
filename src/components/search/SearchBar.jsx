@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
-import { UserContext } from "../context/UserInfo";
+import { UserContext } from "../../context/UserInfo";
 
 const Container = styled.div`
     margin-top: 60px;
