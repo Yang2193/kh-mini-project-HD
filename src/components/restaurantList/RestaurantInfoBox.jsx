@@ -16,7 +16,7 @@ const Container = styled.div`
 
 `;
 
-const RestaurantInfo = styled.div`
+const RestaurantInfo = styled(Link)`
     width: 810px;
     height: 240px;
     border: 1px solid black;
@@ -38,8 +38,7 @@ const RestaurantInfoBox = ({searchFilter}) => {
     const searchFilterMap = 
         searchFilter &&
         searchFilter.map(rest => (
-            <RestaurantInfo  key={rest.restId}>
-                <Link  to={"/info"} onClick={() => setRestId(rest.restId)}>
+            <RestaurantInfo to={"/info"} onClick={() => setRestId(rest.restId)} key={rest.restId}>
                 <div className="image"/>
                 <div>
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>
@@ -48,7 +47,6 @@ const RestaurantInfoBox = ({searchFilter}) => {
                     <p>매장 번호 : {rest.restPhone}</p>
                     {rest.rating !== 0 && <p>평점 : {rest.rating}</p>}
                 </div>
-                </Link>
             </RestaurantInfo>
     ));
 
