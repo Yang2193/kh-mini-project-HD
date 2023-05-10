@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useContext} from "react";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-
+import { RestIdContext } from "../../context/RestaurantId";
 const Container = styled.div`
     width: 100%;
     border: 1px solid black;
@@ -32,11 +33,13 @@ const RestaurantInfo = styled.div`
 `;
 
 const RestaurantInfoBox = ({searchFilter}) => {
-    
+    const {setRestId} = useContext(RestIdContext);
+ 
     const searchFilterMap = 
         searchFilter &&
         searchFilter.map(rest => (
-            <RestaurantInfo key={rest.restId}>
+            <RestaurantInfo  key={rest.restId}>
+                <Link  to={"/info"} onClick={() => setRestId(rest.restId)}>
                 <div className="image"/>
                 <div>
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>
@@ -45,6 +48,7 @@ const RestaurantInfoBox = ({searchFilter}) => {
                     <p>매장 번호 : {rest.restPhone}</p>
                     {rest.rating !== 0 && <p>평점 : {rest.rating}</p>}
                 </div>
+                </Link>
             </RestaurantInfo>
     ));
 
