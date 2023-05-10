@@ -115,8 +115,102 @@ const AxiosApi = {
     //찜가게 조회 
     restLikeGet : async(id) => {
         return await axios.get(KH_DOMAIN + `/restLike?name=${id}` );
-    }
+    },
 
+//페이지 상단 고정 매장정보 불러오기
+  restaurantInfoFixed:async(restaurantId) =>{
+    return await axios.get(KH_DOMAIN + `/restaurant/?restaurantId=${restaurantId}`)
+  }, 
+  
+// 매장 상세 정보 불러오기
+  restaurantInfo: async (restaurantId) => {
+    return await axios.get(KH_DOMAIN + `/restaurant/info?restaurantId=${restaurantId}`);
+  },
+  
+// 매장의 메뉴 정보 불러오기
+  restaurantMenu:async(restaurantId)=>{
+    return await axios.get(KH_DOMAIN + `/restaurant/menu?restaurantId=${restaurantId}`)
+  },
+  
+//매장의 리뷰 정보 불러오기
+  restaurantReview:async(restaurantId)=>{
+    return await axios.get(KH_DOMAIN + `/restaurant/review?restaurantId=${restaurantId}`)
+  },
+
+// 리뷰 추가 하기
+  addReview:async(restId,memId,title,content,rating)=>{
+    const review={
+      restId:restId,
+      memberId:memId,
+      title:title,
+      content:content,
+      rating:rating
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/review",review);
+  },
+  // 문의 등록
+  addInquiry:async(restId,memId,title,content)=>{
+    const inquiry={
+      restId:restId,
+      memberId:memId,
+      title:title,
+      content:content
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry",inquiry);
+  },
+  //찜 등록
+  addRestLike:async(restId,memId)=>{
+    const addLike={
+      restId:restId,
+      memberId:memId
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/add/restLike",addLike);
+  },
+  // 찜 삭제
+  delRestLike:async(restId,memId)=>{
+    const delLike={
+      restId:restId,
+      memberId:memId
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/del/restLike",delLike);
+  },
+  //공감 등록
+  addRevLike:async(revId,memId)=>{
+    const addLike={
+      revId:revId,
+      memberId:memId
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/add/revLike",addLike);
+  },
+  // 공감 삭제
+  delRevLike:async(revId,memId)=>{
+    const delLike={
+      revId:revId,
+      memberId:memId
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/del/revLike",delLike);
+  },
+  // 찜 리스트 조회
+  restLiked:async(memId)=>{
+    return await axios.get(KH_DOMAIN+`/restaurant/liked?memberId=${memId}`);
+  },  
+
+  // 리뷰 공감 리스트 조회
+  revLiked:async(memId)=>{
+    return await axios.get(KH_DOMAIN+`/review/liked?memberId=${memId}`);
+  },
+  // 예약 추가 
+  addRes:async(restId,memId,resDate,resReq,resSeat,resPeo)=>{
+    const res = {
+      restId:restId,
+      memberId:memId,
+      resDate:resDate,
+      resReq:resReq,
+      resSeat:resSeat,
+      resPeo:resPeo
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/add/reservation",res);
+  }
 
 }
 

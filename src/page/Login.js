@@ -199,6 +199,8 @@ const Login = ({children}) => {
       console.log(res.data);
       if(res.data === true) {
        window.localStorage.setItem("userId",inputId);
+       window.localStorage.setItem("isLogin","TRUE");
+
         navigate('/');  
       } else {
         setModalOpen(true);
