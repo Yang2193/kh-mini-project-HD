@@ -155,12 +155,16 @@ const SignUp = () => {
      const [inputConPw, setInputConPw] = useState("");
      const [inputName, setInputName] = useState("");
      const [inputEmail, setInputEmail] = useState("");
+     const [inputPhone, setInputPhone] = useState("");
+     const [inputNickname, setInputNickname] = useState("");
  
      // 오류 메시지
      const [idMessage, setIdMessage] = useState("");
      const [pwMessage, setPwMessage] = useState("");
      const [conPwMessage, setConPwMessage] = useState("");
      const [mailMessage, setMailMessage] = useState("");
+     const [phoneMessage, setPhoneMessage] = useState("");
+     const [nicknameMessage, setNicknameMessage] = useState("");
  
      // 유효성 검사
      const [isId, setIsId] = useState(false);
@@ -168,6 +172,8 @@ const SignUp = () => {
      const [isConPw, setIsConPw] = useState(false);
      const [isName, setIsName] = useState(false);
      const [isMail, setIsMail] = useState(false);
+     const [isPhone, setIsPhone] = useState(false);
+     const [isNick, setIsNick] = useState(false);
      // 팝업
      const [modalOpen, setModalOpen] = useState(false);
      const [modalText, setModelText] = useState("중복된 아이디 입니다.");
@@ -176,7 +182,7 @@ const SignUp = () => {
         setModalOpen(false);
     };
 
-    const onChangId = (e) => {
+    const onChangeId = (e) => {
         setInputId(e.target.value)
         if (e.target.value.length < 5 || e.target.value.length > 12) {
             setIdMessage("5자리 이상 12자리 미만으로 입력해 주세요.");
@@ -216,9 +222,22 @@ const SignUp = () => {
         setIsName(true);
     }
     const onChangeMail = (e) => {
+        // 이메일 정규식 추가
         setInputEmail(e.target.value);
         setIsMail(true);
     }
+    const onChangePhone = (e) => {
+        // 전화번호 정규식 추가
+        const phone = e.target.value;
+        setInputPhone(phone);
+        setIsPhone(true);
+        }
+
+    const onChangeNickname = (e) => {
+        setInputNickname(e.target.value);
+        setIsNick(true);
+    }
+ 
 
     const onClickLogin = async() => {
         console.log("Click 회원가입");
@@ -229,10 +248,10 @@ const SignUp = () => {
 
         if (memberCheck.data === true) {
             console.log("가입된 아이디가 없습니다. 다음 단계 진행 합니다.");
-            const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail);
-            console.log(memberReg.data.result);
+            const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail, inputPhone, inputNickname);
+            console.log(memberReg.data);
             if(memberReg.data === true) {
-                navigate('/');
+                navigate('/Login');
             } else {
                 setModalOpen(true);
                 setModelText("회원 가입에 실패 했습니다.");
@@ -244,6 +263,8 @@ const SignUp = () => {
             setModelText("이미 가입된 회원 입니다.");
         } 
     }
+
+  
 
     const onClickPrev = () => {
         navigate('/login');
@@ -257,7 +278,7 @@ const SignUp = () => {
         </div>
 
         <div className="item2">
-            <Input placeholder="아이디" value ={inputId} onChange={onChangId}/>
+            <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
         </div>
         <div className="hint">
                 {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
@@ -282,9 +303,15 @@ const SignUp = () => {
         <div className="item2">
             <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
         </div>
+        <div className="item2">
+            <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
+        </div>
+        <div className="item2">
+            <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
+        </div>
 
         <div className="item2">
-            {(isId && isPw && isConPw && isName && isMail) ? 
+            {(isId && isPw && isConPw && isName && isMail && isPhone && isNick) ? 
             <button className="enable-button" onClick={onClickLogin}>NEXT</button> :
             <button className="disable-button">NEXT</button>}
             <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>

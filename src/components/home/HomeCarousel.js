@@ -98,7 +98,6 @@ const StyledSlider = styled(Slider)`
     height: 400px;
     }
   }
-  
 `;
 
 

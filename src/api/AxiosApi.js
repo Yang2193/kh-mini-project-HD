@@ -58,22 +58,24 @@ const AxiosApi = {
         return await axios.get(KH_DOMAIN + `/member?name=${id}`);
     },
 
-    // 회원 가입
-    memberReg: async(id, pwd, name, mail) => {
-        const member = {
-            id: id, 
-            pwd: pwd,
-            name: name,
-            mail: mail
-        };
-        return await axios.post(KH_DOMAIN + "/new", member);
+   // 회원 가입
+   memberReg: async(id, pwd, name, mail, phone, nickname) => {
+    const member = {
+        id: id, 
+        pwd: pwd,
+        name: name,
+        email: mail,
+        phone : phone,
+        nickname : nickname
+    };
+    return await axios.post(KH_DOMAIN + "/newMember", member);
     },
     // 회원 가입 여부 확인
     memberRegCheck: async(id) => {
         const check = {
             id: id
         };
-        return await axios.post(KH_DOMAIN + "/check", check);
+        return await axios.post(KH_DOMAIN + "/checkMember", check);
     },
 
     // 회원 탈퇴
