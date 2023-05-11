@@ -121,6 +121,14 @@ const AxiosApi = {
         return await axios.post(KH_DOMAIN + "/checkBizMember", check);
     },
 
+    //사업자 회원 이메일 인증
+    bizMailConfirm: async(mail) => {
+      const email = {
+        email: mail
+      };
+      return await axios.post(KH_DOMAIN + "/bizSignup/email", email);
+    },
+
     // 아이디찾기 첫번째 단계, 일단 이메일로 회원정보가 있는지 체크
     findIdStep1: async(email) => {
         const mail = {

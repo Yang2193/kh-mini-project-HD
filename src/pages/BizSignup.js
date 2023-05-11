@@ -4,66 +4,43 @@ import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
 
-// // 이메일 인증을 위한 함수
-// const mailGunSendMail = (email) => {
-//     const auth = {
-//         auth: {
-//             api_key: process.env.MAILGUN_APIKEY,
-//             domain: process.env.MAILGUN_DOMAIN
-//         }
-//     };
-
-//     const nodemailerMailgun = nodemailer.createTransport(mailgunTransport(auth));
-//     return nodemailerMailgun.sendMail(email, (err, info) => {
-//         if(err){
-//             console.log(`Error: ${err}`);
-//         }else{
-//             console.log(`Response: ${info}`);
-//         }
-//     });
-// }
-
-// const sendSecretMail = (address, secret) => {
-//     const email = {
-//         from: "Heodang@heodang.com",
-//         to: address,
-//         subject: "허당 이메일 인증",
-//         html: `<p>회원님의 인증 번호는 ${secret}</p>`
-//     };
-//     return mailGunSendMail(email);
-// }
-
-
 
 
 const Container = styled.div`
+  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-evenly;
+  align-items: center;
+  background-color: ivory;
+  height: 100vh;
 
-.sign {
-    margin-top: 47px;
-    margin-left: 34px;
-    font: normal normal bold 24px/35px Poppins;
-    display: flex;
-    letter-spacing: 0px;
-    color: #313131;
-    opacity: 1;
-}
+  .box{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width:500px;
+    align-items: center;
+    background-color: ivory;
+  }
 
   .item1 {
-    margin-top: 100px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .item1 img {
+    width: 120px;
+    height: 120px;
   }
 
   .item2 {
     margin: 10px;
     display: flex;
     align-items: center;
+    width: 500px;
   }
 
   .item3 {
@@ -77,15 +54,38 @@ const Container = styled.div`
     font-size: 14px;
   }
 
+  .item4{
+    margin: 10px;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+  }
+
+  .item5{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    width: 500px;
+    
+    button{
+        margin-left: 30px;
+        
+    }
+  }
+
+  
+
   .hint {
       display: flex;
       margin-top: -5px;
       margin-bottom: 10px;
       margin-right: 40px;
-      justify-content:right;
-      align-items:center;
+      width: 460px;
+      justify-content: right;
+      align-items: center;
       font-size: 12px;
       color: #999;
+
   }
   .success {
     color: royalblue;
@@ -94,8 +94,8 @@ const Container = styled.div`
     color: red;
   }
 
-  .prev-button {
-    margin-top: 100px;
+  .signup-button {
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -104,7 +104,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -114,7 +114,7 @@ const Container = styled.div`
   }
 
   .enable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -123,15 +123,15 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
     font-weight: 700;
   }
   .enable-button:active {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -140,7 +140,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: #999;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -148,7 +148,7 @@ const Container = styled.div`
     font-weight: 700;
   }
   .disable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -161,7 +161,26 @@ const Container = styled.div`
     font-size: 13px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
+  }
+
+  .prev-button {
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    width: 100%; /* 원하는 너비 설정 */
+    height: 50px;
+    color: white;
+    background-color: coral;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 18px;
+    border: coral;
+    font-weight: 700;
+    cursor: pointer;
   }
 `;
 
@@ -181,36 +200,45 @@ const Input = styled.input`
 const BizSignUp = () => {
     const navigate = useNavigate();
 
-     // 키보드 입력
-     const [inputId, setInputId] = useState("");
-     const [inputPw, setInputPw] = useState("");
-     const [inputConPw, setInputConPw] = useState("");
-     const [inputName, setInputName] = useState("");
-     const [inputEmail, setInputEmail] = useState("");
-     const [inputPhone, setInputPhone] = useState("");
+    // 키보드 입력
+    const [inputId, setInputId] = useState("");
+    const [inputPw, setInputPw] = useState("");
+    const [inputConPw, setInputConPw] = useState("");
+    const [inputName, setInputName] = useState("");
+    const [inputEmail, setInputEmail] = useState("");
+    const [inputPhone, setInputPhone] = useState("");
+    const [inputKey, setInputKey] = useState("");
 
- 
-     // 오류 메시지
-     const [idMessage, setIdMessage] = useState("");
-     const [pwMessage, setPwMessage] = useState("");
-     const [conPwMessage, setConPwMessage] = useState("");
-     const [mailMessage, setMailMessage] = useState("");
-     const [phoneMessage, setPhoneMessage] = useState("");
-  
- 
-     // 유효성 검사
-     const [isId, setIsId] = useState(false);
-     const [isPw, setIsPw] = useState(false)
-     const [isConPw, setIsConPw] = useState(false);
-     const [isName, setIsName] = useState(false);
-     const [isMail, setIsMail] = useState(false);
-     const [isPhone, setIsPhone] = useState(false);
-    
-     // 팝업
-     const [modalOpen, setModalOpen] = useState(false);
-     const [modalText, setModelText] = useState("중복된 아이디 입니다.");
 
-     const closeModal = () => {
+    // 이메일 인증 키 코드 
+    const [authKey, setAuthKey] = useState("");
+
+    // 오류 메시지
+    const [idMessage, setIdMessage] = useState("");
+    const [pwMessage, setPwMessage] = useState("");
+    const [conPwMessage, setConPwMessage] = useState("");
+    const [mailMessage, setMailMessage] = useState("");
+    const [phoneMessage, setPhoneMessage] = useState("");
+    const [keyMessage, setKeyMessage] = useState("");
+
+
+
+    // 유효성 검사
+    const [isId, setIsId] = useState(false);
+    const [isPw, setIsPw] = useState(false)
+    const [isConPw, setIsConPw] = useState(false);
+    const [isName, setIsName] = useState(false);
+    const [isMail, setIsMail] = useState(false);
+    const [isPhone, setIsPhone] = useState(false);
+    const [isKey, setIsKey] = useState(false);
+    const [isSend, setIsSend] = useState(false);
+
+
+    // 팝업
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalText, setModelText] = useState("중복된 아이디 입니다.");
+
+    const closeModal = () => {
         setModalOpen(false);
     };
 
@@ -257,6 +285,29 @@ const BizSignUp = () => {
         // 이메일 정규식 추가
         setInputEmail(e.target.value);
         setIsMail(true);
+        
+    }
+
+      // 이메일 인증 체크 함수 
+      const onClickEmail = async() => {
+
+        const rsp = await AxiosApi.bizMailConfirm(inputEmail);
+        setAuthKey(rsp.data);
+        setKeyMessage("이메일로 인증코드가 전송되었습니다.");
+        setIsSend(true);
+    }
+
+    const onChangeKey = (e) => {
+        setIsSend(false);
+        const key = e.target.value
+        setInputKey(key);
+        if(authKey === key){
+            setIsKey(true);
+            setKeyMessage("인증되었습니다.");
+        } else {
+            setIsKey(false);
+            setKeyMessage("잘못된 인증번호입니다.")
+        }
     }
     const onChangePhone = (e) => {
         // 전화번호 정규식 추가
@@ -302,51 +353,62 @@ const BizSignUp = () => {
 
     return(
         <Container>
-        <div className="sign">
-            <span>사업자 회원가입</span>
-        </div>
+            <div className="box">
+                <div className="sign">
+                    <span>사업자 회원가입</span>
+                </div>
 
-        <div className="item2">
-            <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
-        </div>
-        <div className="hint">
-                {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
-        </div>
-        <div className="item2">
-            <Input type="password" placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
-        </div>
-        <div className="hint">
-                {inputPw.length > 0 && (
-                <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
-        </div>
-        <div className="item2">
-            <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
-        </div>
-        <div className="hint">
-                {inputPw.length > 0 && (
-                <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
-        </div>
-        <div className="item2">
-            <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
-        </div>
-        <div className="item2">
-            <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-            <button>인증</button>
-        </div>
-        <div className="item2">
-            <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
-        </div>
+                <div className="item2">
+                    <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
+                </div>
+                <div className="hint">
+                        {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
+                </div>
+                <div className="item2">
+                    <Input type="password" placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
+                </div>
+                <div className="hint">
+                        {inputPw.length > 0 && (
+                        <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
+                </div>
+                <div className="item2">
+                    <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
+                </div>
+                <div className="hint">
+                        {inputPw.length > 0 && (
+                        <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
+                </div>
+                <div className="item2">
+                    <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
+                </div>
+                <div className="item2">
+                    <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
+                </div>
+                <div className="item5">
+                    <button onClick={onClickEmail}>인증번호 요청</button>
+                    <Input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
+                </div>
+                <div className="hint">
+                    {isSend && <span className="success">{keyMessage}</span>}
+                    {inputKey.length > 0 && (
+                            <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
+                        )}
+                </div>
+                <div className="item2">
+                    <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
+                </div>
 
-        <div className="item2">
-            {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
-            <button className="enable-button" onClick={onClickLogin}>NEXT</button> :
-            <button className="disable-button">NEXT</button>}
-            <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
-        </div>
-        <div className="item2">
-            <button className="prev-button" onClick={onClickPrev}>PREV</button>
-        </div>
-    </Container>
+                <div className="item2">
+                    {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
+                    <button className="enable-button" onClick={onClickLogin}>회원가입</button> :
+                    <button className="disable-button">회원가입</button>}
+                    <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
+                </div>
+                <div className="item2">
+                    <button className="prev-button" onClick={onClickPrev}>이전으로</button>
+                </div>
+            </div>
+        </Container>
     );
 };
 export default BizSignUp;

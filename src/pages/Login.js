@@ -116,12 +116,13 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
     font-weight: 700;
+    cursor: pointer;
   }
   .enable-button:active {
     margin-top: 10px;
@@ -133,12 +134,13 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: lightsalmon;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
     border: #999;
     font-weight: 700;
+    cursor: pointer;
   }
   .disable-button {
     margin-top: 10px;
