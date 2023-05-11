@@ -178,7 +178,7 @@ const Input = styled.input`
   outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
 `;
 
-const SignUp = () => {
+const BizSignUp = () => {
     const navigate = useNavigate();
 
      // 키보드 입력
@@ -188,7 +188,7 @@ const SignUp = () => {
      const [inputName, setInputName] = useState("");
      const [inputEmail, setInputEmail] = useState("");
      const [inputPhone, setInputPhone] = useState("");
-     const [inputNickname, setInputNickname] = useState("");
+
  
      // 오류 메시지
      const [idMessage, setIdMessage] = useState("");
@@ -196,7 +196,7 @@ const SignUp = () => {
      const [conPwMessage, setConPwMessage] = useState("");
      const [mailMessage, setMailMessage] = useState("");
      const [phoneMessage, setPhoneMessage] = useState("");
-     const [nicknameMessage, setNicknameMessage] = useState("");
+  
  
      // 유효성 검사
      const [isId, setIsId] = useState(false);
@@ -205,7 +205,7 @@ const SignUp = () => {
      const [isName, setIsName] = useState(false);
      const [isMail, setIsMail] = useState(false);
      const [isPhone, setIsPhone] = useState(false);
-     const [isNick, setIsNick] = useState(false);
+    
      // 팝업
      const [modalOpen, setModalOpen] = useState(false);
      const [modalText, setModelText] = useState("중복된 아이디 입니다.");
@@ -265,22 +265,19 @@ const SignUp = () => {
         setIsPhone(true);
         }
 
-    const onChangeNickname = (e) => {
-        setInputNickname(e.target.value);
-        setIsNick(true);
-    }
+
  
 
     const onClickLogin = async() => {
         console.log("Click 회원가입");
         // 가입 여부 우선 확인
-        const memberCheck = await AxiosApi.memberRegCheck(inputId);
+        const memberCheck = await AxiosApi.bizMemberRegCheck(inputId);
         console.log("가입 가능 여부 확인 : ", memberCheck.data);
         // 가입 여부 확인 후 가입 절차 진행
 
         if (memberCheck.data === true) {
             console.log("가입된 아이디가 없습니다. 다음 단계 진행 합니다.");
-            const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail, inputPhone, inputNickname);
+            const memberReg = await AxiosApi.bizMemberReg(inputId, inputPw, inputName, inputEmail, inputPhone);
             console.log(memberReg.data);
             if(memberReg.data === true) {
                 navigate('/Login');
@@ -306,7 +303,7 @@ const SignUp = () => {
     return(
         <Container>
         <div className="sign">
-            <span>Sign Up</span>
+            <span>사업자 회원가입</span>
         </div>
 
         <div className="item2">
@@ -339,12 +336,9 @@ const SignUp = () => {
         <div className="item2">
             <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
         </div>
-        <div className="item2">
-            <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
-        </div>
 
         <div className="item2">
-            {(isId && isPw && isConPw && isName && isMail && isPhone && isNick) ? 
+            {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
             <button className="enable-button" onClick={onClickLogin}>NEXT</button> :
             <button className="disable-button">NEXT</button>}
             <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
@@ -355,4 +349,4 @@ const SignUp = () => {
     </Container>
     );
 };
-export default SignUp;
+export default BizSignUp;

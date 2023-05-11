@@ -94,6 +94,57 @@ const AxiosApi = {
         return await axios.post(KH_DOMAIN+"/update",member);
     },
 
+     // 사업자 회원 가입
+   bizMemberReg: async(id, pwd, name, mail, phone) => {
+        const member = {
+            id: id, 
+            pwd: pwd,
+            name: name,
+            email: mail,
+            phone : phone,
+        };
+        return await axios.post(KH_DOMAIN + "/newBizMember", member);
+    },
+      // 사업자 회원 가입 여부 확인
+      bizMemberRegCheck: async(id) => {
+        const check = {
+            id: id
+        };
+        return await axios.post(KH_DOMAIN + "/checkBizMember", check);
+    },
+
+    // 아이디찾기 첫번째 단계, 일단 이메일로 회원정보가 있는지 체크
+    findIdStep1: async(email) => {
+        const mail = {
+          email: email
+        };
+        return await axios.post(KH_DOMAIN + "/checkMemberEmail", mail);
+    },
+
+    //회원정보가 있는지 체크하고, True로 반환받으면 이메일 보내기 단계
+    findIdStep2: async(email) => {
+      const mail = {
+        email: email
+      };
+      return await axios.post(KH_DOMAIN + "/findId", mail);
+    },
+
+    findPwStep1: async(id, email) => {
+      const obj = {
+        id: id,
+        email: email
+      }
+      return await axios.post(KH_DOMAIN + "/checkMemberIdEmail", obj);
+    },
+
+    findPwStep2: async(id, email) => {
+      const obj = {
+        id: id,
+        email: email
+      }
+      return await axios.post(KH_DOMAIN + "/findPw", obj);
+    },
+
     //문의 조회
     inquiryGet : async(id) => {
         return await axios.get(KH_DOMAIN + `/inquiry?name=${id}`);

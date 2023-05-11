@@ -2,6 +2,7 @@ import React from "react";
 import styled, {css} from "styled-components";
 import SideMenu from "../sidemenu/SideMenu";
 import LogoCoral from "../../images/logo-removebg-preview.png";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     background-color: none;
@@ -45,10 +46,11 @@ const Logo = styled.img`
 
 
 const Header = ({setCategory,children}) => {
+    const navigate = useNavigate();
     return(
         <>
             <Container>
-                <LogoBox>
+                <LogoBox onClick={()=>navigate("/")}>
                     <Logo src={LogoCoral}/>
                 </LogoBox>
                 <Box>           

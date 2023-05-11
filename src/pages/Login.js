@@ -1,32 +1,50 @@
 import React, { useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import imgLogo from "../images/logo.png";
+import imgLogo from "../images/logo-removebg-preview.png";
 import styled from 'styled-components';
 import AxiosApi from '../api/AxiosApi';
 import Modal from '../utils/Modal';
 
+const Label = styled.label`
+        background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
+        color : ${({ isChecked }) => (isChecked ? 'white' : 'black')};
+        width : 120px;
+        height : 30px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        border: 1px solid coral;
+        cursor: pointer;
 
+        input{
+          display: none;
+        }
+`;
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-evenly;
+  align-items: center;
+  background-color: ivory;
+  height: 100vh;
 
   .item1 {
-    margin-top: 100px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .item1 img {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
   }
 
   .item2 {
-    margin: 0 auto;
+    margin: 10px;
     display: flex;
     align-items: center;
     width: 500px;
@@ -41,6 +59,14 @@ const Container = styled.div`
     align-items: center;
     color: #999;
     font-size: 14px;
+  }
+
+  .item4{
+    margin: 10px;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    
   }
 
   .hint {
@@ -61,7 +87,7 @@ const Container = styled.div`
   }
 
   .signup-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -70,7 +96,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -80,7 +106,7 @@ const Container = styled.div`
   }
 
   .enable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -97,7 +123,7 @@ const Container = styled.div`
     font-weight: 700;
   }
   .enable-button:active {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -106,7 +132,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: #999;
+    background-color: lightsalmon;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -114,7 +140,7 @@ const Container = styled.div`
     font-weight: 700;
   }
   .disable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -148,6 +174,9 @@ const Input = styled.input`
 const Login = ({children}) => {
     const navigate = useNavigate();
 
+    // 일반회원 / 사업자회원 구분
+    const [memberType, setMemberType] = useState("일반회원");
+
     // 키보드 입력
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
@@ -165,6 +194,14 @@ const Login = ({children}) => {
     const closeModal = () => {
         setModalOpen(false);
     };
+
+    //일반회원 / 사업자회원 체크하는 메소드
+    const onChangeMemberType = (e) => {
+      const value = e.target.value;
+      const checked = e.target.checked;
+      console.log(value);
+      if(checked) setMemberType(value);
+    }
     
     
     // 5~ 20자리의 영문자, 숫자, 언더스코어(_)로 이루어진 문자열이 유효한 아이디 형식인지 검사하는 정규표현식
@@ -194,49 +231,65 @@ const Login = ({children}) => {
     }
     const onClickLogin = async() => {
       
-      // 로그인을 위한 axios 호출
-      const res = await AxiosApi.memberLogin(inputId, inputPw);
-      console.log(res.data);
-      if(res.data === true) {
-       window.localStorage.setItem("userId",inputId);
-        navigate('/');  
-      } else {
-        setModalOpen(true);
+      if(memberType==="일반회원"){
+        // 로그인을 위한 axios 호출
+        const res = await AxiosApi.memberLogin(inputId, inputPw);
+        console.log(res.data);
+        if(res.data === true) {
+        window.localStorage.setItem("userId",inputId);
+          navigate('/');  
+        } else {
+          setModalOpen(true);
+        }
       }
+     
     }
 
     const onClickSignUp = () => {
-      navigate('/signup');
+
+      if(memberType==="일반회원") navigate('/signup');
+      else navigate('/BizSignUp');
     }
+
     return(
   
         <Container>
         <div className="item1">
-          <img src={imgLogo} alt="Logo" />
+          <img src={imgLogo} alt="Logo" onClick={()=>navigate("/")} />
         </div>
-        <div>{children}</div>
+
+        <div><p>{children}</p></div>
+      
+        <div className='item4'>
+          <Label isChecked={"일반회원"===memberType}>
+            <input type="radio" name='memberType' value={"일반회원"} onChange={onChangeMemberType} checked={"일반회원"===memberType}/> 일반회원
+          </Label>
+          <Label isChecked={"사업자회원"===memberType}>
+            <input type="radio" name='memberType' value={"사업자회원"} onChange={onChangeMemberType} checked={"사업자회원"===memberType}/> 사업자회원
+          </Label>
+        </div>
         <div className="item2">
-            <Input placeholder="이름" value ={inputId} onChange={onChangeId}/>
+            <Input placeholder="ID" value ={inputId} onChange={onChangeId}/>
         </div>
-        {/* <div className="hint">
-          {inputId.length > 0 && <span className={`${isId ? 'success' : 'error'}`}>{idMessage}</span>}
-        </div> */}
+       
 
         <div className="item2">
-            <Input placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
+            <Input placeholder="패스워드" type='password' value ={inputPw} onChange={onChangePw}/>
         </div>
-        {/* <div className="hint">
-            {inputPw.length > 0 && (
-                <span className={`${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
-        </div> */}
+
+        <div className="item2">
+        {(isId && isPw) ?
+          <button className="enable-button" onClick={onClickLogin}>로그인</button>  :
+          <button className="disable-button" onClick={onClickLogin}>로그인</button>}
+        </div>
+
         <div className="item2">
           <button className='signup-button' onClick={onClickSignUp}>회원가입</button>
         </div>
         <div className="item2">
-        {(isId && isPw) ?
-          <button className="enable-button" onClick={onClickLogin}>SIGN IN</button>  :
-          <button className="disable-button" onClick={onClickLogin}>SIGN IN</button>}
+          <button className='signup-button' onClick={()=>navigate("/IdPwFind")}>ID/PW 찾기</button>
         </div>
+    
         <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
    </Container>
     );

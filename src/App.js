@@ -9,8 +9,13 @@ import Mypage from './pages/Mypage';
 import Signup from './pages/Signup';
 import Info from './pages/RestaurantInfo';
 import RestaurantProvider from './context/RestaurantId';
+<<<<<<< Updated upstream
 import Reservation from './pages/Reservation';
 import ReviewDetail from './pages/ReviewDetail';
+=======
+import IdPwFind from './pages/IdPwFind';
+import BizSignUp from './pages/BizSignup';
+>>>>>>> Stashed changes
 function App() {
   return (
     <UserStore>
@@ -22,11 +27,20 @@ function App() {
               {/* <Route path="/RestaurantList" element={<RestaurantList/>}/> */}
               <Route path="/ReviewList" element={<ReviewList/>}/>
               <Route path='/Login' element={<Login/>}/>
+<<<<<<< Updated upstream
               <Route path="/Info" element={<Info/>} />
               <Route path='/Mypage' element={<Mypage/>}/>
               <Route path='/Signup' element={<Signup/>}/>
               <Route path='/Reservation' element={<Reservation/>}/>
               <Route path="/Detail" element={<ReviewDetail/>}/>
+=======
+              <Route path='/IdPwFind' element={<IdPwFind/>}/>
+              <Route path="/info" element={<Info/>} />
+              <Route path='/Mypage' element={<Mypage/>}/>
+              <Route path='/Signup' element={<Signup/>}/>
+              <Route path='/BizSignup' element={<BizSignUp/>}/>
+
+>>>>>>> Stashed changes
             </Routes>
           </Router>
         </MemberProvider>

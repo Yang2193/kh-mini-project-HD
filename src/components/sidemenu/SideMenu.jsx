@@ -96,14 +96,8 @@ const SideMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef(null);
     const navigate = useNavigate();
-    const MenuBtn = ({onClick}) => {
+    const userId = window.localStorage.getItem("userId");
 
-        return(
-            <div onClick={onClick}>
-                <StyledFaBars/>
-            </div>
-        )
-    }
 
     useEffect(() => {   
         const clickOutside = (event) =>{
@@ -131,12 +125,19 @@ const SideMenu = () => {
     const onClickBox = (event) => {
         event.stopPropagation();
     };
+
     const handleLinkClick = (path,category) => {
         const queryParams = new URLSearchParams();
         if(category) queryParams.set("category", category);
         navigate({ pathname: path, search: queryParams.toString() }); 
         setIsOpen(false);
       };
+
+    const logout = () =>{
+        window.localStorage.setItem("userId", '');
+        navigate("/");
+        setIsOpen(!isOpen);
+    }
     
 
     return(
@@ -145,7 +146,10 @@ const SideMenu = () => {
                 <Box isOpen={isOpen} >
                    <div className="header">메뉴</div>
                     <div className="box" onClick={onClickBox}>
-                    <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
+                        {userId ?
+                            <div className="item" onClick={logout}>로그아웃</div>
+                        :   <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
+                        }
                         <div className="item" onClick={()=> handleLinkClick("/MyPage")}>마이 페이지</div>
                         <div className="item" onClick={()=> handleLinkClick("/MyPage","menu1")}>내 정보/수정</div>
                         <div className="item" onClick={()=> handleLinkClick("/MyPage","menu3")}>찜한 가게</div>
