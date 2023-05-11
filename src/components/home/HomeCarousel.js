@@ -106,7 +106,7 @@ const StyledSlider = styled(Slider)`
 const HomeCarousel = () => {
 
   //슬라이드에 따라서 출력 문구 설정
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("이 주의 인기 매장");
 
   //TOP3 세팅을 위한 useState
   const [wt3r, setWt3r] = useState(null);

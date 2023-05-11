@@ -37,33 +37,31 @@ import styled from "styled-components";
 
 
 const Container = styled.div`
+  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-evenly;
-
-.sign {
-    margin-top: 47px;
-    margin-left: 34px;
-    font: normal normal bold 24px/35px Poppins;
-    display: flex;
-    letter-spacing: 0px;
-    color: #313131;
-    opacity: 1;
-}
+  align-items: center;
+  background-color: ivory;
+  height: 100vh;
 
   .item1 {
-    margin-top: 100px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .item1 img {
+    width: 120px;
+    height: 120px;
   }
 
   .item2 {
     margin: 10px;
     display: flex;
     align-items: center;
+    width: 500px;
   }
 
   .item3 {
@@ -75,6 +73,14 @@ const Container = styled.div`
     align-items: center;
     color: #999;
     font-size: 14px;
+  }
+
+  .item4{
+    margin: 10px;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    
   }
 
   .hint {
@@ -94,8 +100,8 @@ const Container = styled.div`
     color: red;
   }
 
-  .prev-button {
-    margin-top: 100px;
+  .signup-button {
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -104,7 +110,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -114,7 +120,7 @@ const Container = styled.div`
   }
 
   .enable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -123,15 +129,15 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
     font-weight: 700;
   }
   .enable-button:active {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -140,7 +146,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: #999;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -148,7 +154,7 @@ const Container = styled.div`
     font-weight: 700;
   }
   .disable-button {
-    margin-top: 100px;
+    margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -161,7 +167,26 @@ const Container = styled.div`
     font-size: 13px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
+  }
+
+  .prev-button {
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    width: 100%; /* 원하는 너비 설정 */
+    height: 50px;
+    color: white;
+    background-color: coral;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 18px;
+    border: coral;
+    font-weight: 700;
+    cursor: pointer;
   }
 `;
 
@@ -177,6 +202,7 @@ const Input = styled.input`
   border-radius: 18px; /* iSO 둥근모서리 제거 */
   outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
 `;
+
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -362,7 +388,9 @@ const SignUp = () => {
         <div className="item2">
             <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
             <button onClick={onClickEmail}>인증번호 요청</button>
-            <input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
+        </div>
+        <div className="item2">
+            <Input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
             {inputKey.length > 0 && (
                 <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
             )}

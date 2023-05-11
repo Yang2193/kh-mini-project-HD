@@ -24,6 +24,7 @@ const Label = styled.label`
 `;
 
 const Container = styled.div`
+  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -115,11 +116,11 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
     font-weight: 700;
   }
   .enable-button:active {
@@ -132,7 +133,7 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: lightsalmon;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
@@ -153,7 +154,7 @@ const Container = styled.div`
     font-size: 13px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
   }
 
   .prev-button {
@@ -166,11 +167,11 @@ const Container = styled.div`
     width: 100%; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: orange;
+    background-color: coral;
     font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
-    border: orange;
+    border: coral;
     font-weight: 700;
     cursor: pointer;
   }
@@ -205,19 +206,16 @@ const IdPwFind = () => {
     //회원가입된 ID가 없을 시 출력할 문구
     const [checkId, setCheckId] = useState(true);
 
+
     //ID 혹은 PW 찾기 성공 시 문구를 출력하기 위한 useState
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccessPw, setIsSuccessPw] = useState(false);
     
     // 키보드 입력 받기
     const [inputId, setInputId] = useState("");
-    const [inputPw, setInputPw] = useState("");
     const [inputMail, setInputMail] = useState("");
     
-
-
-
     // 오류메시지
-    const [PwMessage, setPwMessage] = useState("");
     const [MailMessage, setMailMessage] = useState("");
 
 
@@ -248,7 +246,7 @@ const IdPwFind = () => {
 
     const onClickFindId = async() => {
 
-        // 로그인을 위해 axios 호출
+        // 아이디 존재여부를 확인하기 위해 axios 호출
         const response = await AxiosApi.findIdStep1(inputMail);
         console.log(response.data);
         if(response.data === true) {
@@ -257,10 +255,25 @@ const IdPwFind = () => {
             if(rsp.data === true){
                 setIsSuccess(true);
             }
-            
+            //여기 보완해야 할 거 같은 디테일이 있는데 기억이 안 난다. 기억이 나면 다시 메모할 것
         } else {
             setCheckId(false);
         }
+    }
+
+    const onClickFindPw = async() => {
+      //아이디 존재여부를 확인하기 위해 axios호출
+      const response = await AxiosApi.findPwStep1(inputId, inputMail);
+      console.log(response.data);
+      if(response.data === true){
+          setCheckId(true);
+          const rsp = await AxiosApi.findPwStep2(inputId, inputMail);
+          if(rsp.data === true){
+            setIsSuccessPw(true);
+          }
+      } else {
+          setCheckId(false);
+      }
     }
 
     const onClickPrev = () => {
@@ -282,7 +295,7 @@ const IdPwFind = () => {
              </div>
             {findType==="ID찾기" ?
                 <>
-                    <div className='item2'>
+                    <div className='item4'>
                         <p>가입하실 때 입력하신 이메일 주소를 입력해주세요.</p>
                     </div>
                     <div className="item2">
@@ -299,28 +312,30 @@ const IdPwFind = () => {
                 </>
             :
                 <>
-                    <div className='item2'>
+                    <div className='item4'>
                         <p>가입하실 때 입력하신 ID와 이메일 주소를 입력해주세요.</p>
                     </div>
                     <div className="item2">
-                        <Input placeholder="이름" value ={inputId} onChange={onChangeId}/>
+                        <Input placeholder="ID" value ={inputId} onChange={onChangeId}/>
                     </div>
                     <div className="item2">
                         <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} />
                     </div>
+                    {checkId===false && <p>가입되지 않은 ID거나 등록되지 않은 이메일입니다.</p>}
+                    {isSuccessPw===true && <p>입력하신 이메일로 임시 비밀번호를 발급하였습니다.</p>}
                     <div className="hint">
                         {inputMail.length > 0 && (
                         <span className={`${isMail ? "success" : "error"}`}>{MailMessage}</span>)}
                     </div>
                     <div className="item2">
                         {(isMail) ?
-                        <button className="enable-button" >PW찾기</button> :
+                        <button className="enable-button" onClick={onClickFindPw} >PW찾기</button> :
                         <button className="disable-button" >PW찾기</button>}
                     </div>
                 </>
             }
             <div className="item2">
-                <button className="prev-button" onClick={onClickPrev}>PREV</button>
+                <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 돌아가기</button>
             </div>
         </Container>
     );

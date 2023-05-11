@@ -137,6 +137,7 @@ const AxiosApi = {
       return await axios.post(KH_DOMAIN + "/findId", mail);
     },
 
+    // 비번 찾기 1단계 , 아이디, 이메일로 가입된 회원이 있는지 체크
     findPwStep1: async(id, email) => {
       const obj = {
         id: id,
@@ -145,6 +146,7 @@ const AxiosApi = {
       return await axios.post(KH_DOMAIN + "/checkMemberIdEmail", obj);
     },
 
+    //비번 찾기 2단계, 이메일로 해당 아이디의 변경된 PW값을 보내줌
     findPwStep2: async(id, email) => {
       const obj = {
         id: id,
