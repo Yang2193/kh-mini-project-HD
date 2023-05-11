@@ -9,6 +9,8 @@ import Mypage from './pages/Mypage';
 import Signup from './pages/Signup';
 import Info from './pages/RestaurantInfo';
 import RestaurantProvider from './context/RestaurantId';
+import Reservation from './pages/Reservation';
+import ReviewDetail from './pages/ReviewDetail';
 function App() {
   return (
     <UserStore>
@@ -20,9 +22,11 @@ function App() {
               {/* <Route path="/RestaurantList" element={<RestaurantList/>}/> */}
               <Route path="/ReviewList" element={<ReviewList/>}/>
               <Route path='/Login' element={<Login/>}/>
-              <Route path="/info" element={<Info/>} />
+              <Route path="/Info" element={<Info/>} />
               <Route path='/Mypage' element={<Mypage/>}/>
               <Route path='/Signup' element={<Signup/>}/>
+              <Route path='/Reservation' element={<Reservation/>}/>
+              <Route path="/Detail" element={<ReviewDetail/>}/>
             </Routes>
           </Router>
         </MemberProvider>

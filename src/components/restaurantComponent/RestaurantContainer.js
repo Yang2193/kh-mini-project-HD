@@ -5,7 +5,6 @@ import AxiosApi from "../../api/AxiosApi";
 import { RestIdContext } from "../../context/RestaurantId";
 import {  useNavigate } from "react-router-dom";
 import InquiryModal from "../../utils/rest/InquiryModal";
-import ResModal from "../../utils/rest/ResModal";
 
 const FixContent = styled.section`
 
@@ -155,23 +154,7 @@ const closeModal = () => {
             addLike();
         }else
             deleteLike();
-        }
-//예약하기 팝업
-    const [resModalOpen, setResModalOpen] = useState(false);    
-    const openResModal = () => {
-        console.log(isLogin,memId);
-        if (isLogin === "TRUE") {
-            setResModalOpen(true);
-        } else {
-            alert("로그인이 되어있지 않습니다.")
-            navigate("/login");
-        }
-    }
-
-    const closeResModal = () => {
-        setResModalOpen(false);
-    }
-    
+        }    
 
     return(
             <FixContent>
@@ -185,8 +168,8 @@ const closeModal = () => {
                         <button className="inq" onClick={openModal}>문의 하기</button>
                         <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
                         <button className="like" onClick={onClickLiked} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
-                        <button className="res" onClick={openResModal}>예약 하기</button>
-                        <ResModal open={resModalOpen} close={closeResModal}></ResModal>
+                        <button className="res" onClick={()=>navigate("/Reservation")}>예약 하기</button>
+
                     </div>
                 ))}
             </FixContent>

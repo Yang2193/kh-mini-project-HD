@@ -150,7 +150,11 @@ const AxiosApi = {
     }
     return await axios.post(KH_DOMAIN + "/restaurant/add/review",review);
   },
-  // 문의 등록
+// 리뷰 상세 정보 불러오기
+  reviewDetail:async(reviewId)=>{
+    return await axios.get(KH_DOMAIN + `/review/detail?reviewId=${reviewId}`)
+  },
+// 문의 등록
   addInquiry:async(restId,memId,title,content)=>{
     const inquiry={
       restId:restId,
