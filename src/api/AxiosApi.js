@@ -78,6 +78,14 @@ const AxiosApi = {
         return await axios.post(KH_DOMAIN + "/checkMember", check);
     },
 
+    //이메일 인증
+    mailConfirm: async(mail) => {
+      const email = {
+        email: mail
+      };
+      return await axios.post(KH_DOMAIN + "/signup/email", email);
+    },
+
     // 회원 탈퇴
     memberDel: async(id) => {
         const del = {

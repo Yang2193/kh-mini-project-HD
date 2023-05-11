@@ -189,12 +189,16 @@ const SignUp = () => {
      const [inputEmail, setInputEmail] = useState("");
      const [inputPhone, setInputPhone] = useState("");
      const [inputNickname, setInputNickname] = useState("");
+     const [inputKey, setInputKey] = useState("");
  
+     // 이메일 인증 키 코드 
+     const [authKey, setAuthKey] = useState("");
      // 오류 메시지
      const [idMessage, setIdMessage] = useState("");
      const [pwMessage, setPwMessage] = useState("");
      const [conPwMessage, setConPwMessage] = useState("");
      const [mailMessage, setMailMessage] = useState("");
+     const [keyMessage, setKeyMessage] = useState("");
      const [phoneMessage, setPhoneMessage] = useState("");
      const [nicknameMessage, setNicknameMessage] = useState("");
  
@@ -206,6 +210,7 @@ const SignUp = () => {
      const [isMail, setIsMail] = useState(false);
      const [isPhone, setIsPhone] = useState(false);
      const [isNick, setIsNick] = useState(false);
+     const [isKey, setIsKey] = useState(false);
      // 팝업
      const [modalOpen, setModalOpen] = useState(false);
      const [modalText, setModelText] = useState("중복된 아이디 입니다.");
@@ -257,6 +262,27 @@ const SignUp = () => {
         // 이메일 정규식 추가
         setInputEmail(e.target.value);
         setIsMail(true);
+        
+    }
+
+      // 이메일 인증 체크 함수 
+      const onClickEmail = async() => {
+
+        const rsp = await AxiosApi.mailConfirm(inputEmail);
+        setAuthKey(rsp.data);
+
+    }
+
+    const onChangeKey = (e) => {
+        const key = e.target.value
+        setInputKey(key);
+        if(authKey === key){
+            setIsKey(true);
+            setKeyMessage("인증되었습니다.");
+        } else {
+            setIsKey(false);
+            setKeyMessage("잘못된 인증번호입니다.")
+        }
     }
     const onChangePhone = (e) => {
         // 전화번호 정규식 추가
@@ -297,6 +323,7 @@ const SignUp = () => {
     }
 
   
+  
 
     const onClickPrev = () => {
         navigate('/login');
@@ -326,7 +353,7 @@ const SignUp = () => {
             <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
         </div>
         <div className="hint">
-                {inputPw.length > 0 && (
+                {inputConPw.length > 0 && (
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
         </div>
         <div className="item2">
@@ -334,7 +361,12 @@ const SignUp = () => {
         </div>
         <div className="item2">
             <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-            <button>인증</button>
+            <button onClick={onClickEmail}>인증번호 요청</button>
+            <input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
+            {inputKey.length > 0 && (
+                <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
+            )}
+            
         </div>
         <div className="item2">
             <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
@@ -344,7 +376,7 @@ const SignUp = () => {
         </div>
 
         <div className="item2">
-            {(isId && isPw && isConPw && isName && isMail && isPhone && isNick) ? 
+            {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
             <button className="enable-button" onClick={onClickLogin}>NEXT</button> :
             <button className="disable-button">NEXT</button>}
             <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
