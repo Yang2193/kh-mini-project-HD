@@ -210,10 +210,8 @@ const Input = styled.input`
 
 
 const SignUp = () => {
+
     const navigate = useNavigate();
-
-<<<<<<< Updated upstream
-
 
     // 키보드 입력
     const [inputId, setInputId] = useState("");
@@ -247,41 +245,6 @@ const SignUp = () => {
     const [isNick, setIsNick] = useState(false);
     const [isKey, setIsKey] = useState(false);
     const [isSend, setIsSend] = useState(false);
-=======
-     // 키보드 입력
-     const [inputId, setInputId] = useState("");
-     const [inputPw, setInputPw] = useState("");
-     const [inputConPw, setInputConPw] = useState("");
-     const [inputName, setInputName] = useState("");
-     const [inputEmail, setInputEmail] = useState("");
-     const [inputPhone, setInputPhone] = useState("");
-     const [inputNickname, setInputNickname] = useState("");
-     const [inputKey, setInputKey] = useState("");
- 
-     // 이메일 인증 키 코드 
-     const [authKey, setAuthKey] = useState("");
-     // 오류 메시지
-     const [idMessage, setIdMessage] = useState("");
-     const [pwMessage, setPwMessage] = useState("");
-     const [conPwMessage, setConPwMessage] = useState("");
-     const [mailMessage, setMailMessage] = useState("");
-     const [keyMessage, setKeyMessage] = useState("");
-     const [phoneMessage, setPhoneMessage] = useState("");
-     const [nicknameMessage, setNicknameMessage] = useState("");
- 
-     // 유효성 검사
-     const [isId, setIsId] = useState(false);
-     const [isPw, setIsPw] = useState(false)
-     const [isConPw, setIsConPw] = useState(false);
-     const [isName, setIsName] = useState(false);
-     const [isMail, setIsMail] = useState(false);
-     const [isPhone, setIsPhone] = useState(false);
-     const [isNick, setIsNick] = useState(false);
-     const [isKey, setIsKey] = useState(false);
-     // 팝업
-     const [modalOpen, setModalOpen] = useState(false);
-     const [modalText, setModelText] = useState("중복된 아이디 입니다.");
->>>>>>> Stashed changes
 
     // 팝업
     const [modalOpen, setModalOpen] = useState(false);
@@ -292,13 +255,11 @@ const SignUp = () => {
     // 회원가입 시 환영 팝업
     const [signUpModalOpen, setSignUpModalOpen] = useState(false);
 
-    // modal에 들어갈 props.confirm 함수
-    const onClickConfirm = () => {
-        navigate("/login");
-    }
+    // modal에 들어갈 props.confirm, props.close 함수 -> 엔터와 ESC를 눌렀을 때 서로 다른 동작을 하게 하려면 다른 함수를 넣으면 된다.
 
     const closeSignUpModal = () => {
         setSignUpModalOpen(false);
+        navigate("/login");
     }
 
 
@@ -318,6 +279,7 @@ const SignUp = () => {
  
     const closeModal = () => {
         setModalOpen(false);
+        navigate("/login");
     };
 
   
@@ -372,12 +334,8 @@ const SignUp = () => {
 
         const rsp = await AxiosApi.mailConfirm(inputEmail);
         setAuthKey(rsp.data);
-<<<<<<< Updated upstream
         setMailMessage("이메일로 인증코드가 전송되었습니다.");
         setIsSend(true);
-=======
-
->>>>>>> Stashed changes
     }
 
     const onChangeKey = (e) => {
@@ -456,7 +414,6 @@ const SignUp = () => {
                         <span>Sign Up</span>
                     </div>
 
-<<<<<<< Updated upstream
                     <div className="item2">
                         <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
                     </div>
@@ -499,20 +456,20 @@ const SignUp = () => {
                         <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
                     </div>
                     <div className="item2">
-                        <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
+                        <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname} onKeyDown={onKeyDownSignUp} />
                     </div>
                     <div className="item5">
-                        <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress}/>
+                        <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress} onKeyDown={onKeyDownSignUp} />
                         <button onClick={openPost}>주소찾기</button>
                         {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress}/>}
                     </div>
                 
                     <div className="item2">
                         {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
-                        <button className="enable-button" onClick={onClickSignUp}>회원가입</button> :
+                        <input type="button" className="enable-button" onClick={onClickSignUp} onKeyDown={onKeyDownSignUp} value="회원가입"/> :
                         <button className="disable-button">회원가입</button>}
                         <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
-                        <MessageModal open={signUpModalOpen} confirm={onClickConfirm} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
+                        <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal} header="회원가입">회원가입을 환영합니다!</MessageModal>
                     </div>
                     <div className="item2">
                         <button className="prev-button" onClick={onClickPrev}>이전으로</button>
@@ -520,57 +477,6 @@ const SignUp = () => {
                 </div>
             
         </Container>
-=======
-        <div className="item2">
-            <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
-        </div>
-        <div className="hint">
-                {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
-        </div>
-        <div className="item2">
-            <Input type="password" placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
-        </div>
-        <div className="hint">
-                {inputPw.length > 0 && (
-                <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
-        </div>
-        <div className="item2">
-            <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
-        </div>
-        <div className="hint">
-                {inputConPw.length > 0 && (
-                <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
-        </div>
-        <div className="item2">
-            <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
-        </div>
-        <div className="item2">
-            <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-            <button onClick={onClickEmail}>인증번호 요청</button>
-            <input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
-            {inputKey.length > 0 && (
-                <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
-            )}
-            
-        </div>
-        <div className="item2">
-            <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
-        </div>
-        <div className="item2">
-            <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
-        </div>
-
-        <div className="item2">
-            {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
-            <button className="enable-button" onClick={onClickLogin}>NEXT</button> :
-            <button className="disable-button">NEXT</button>}
-            <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
-        </div>
-        <div className="item2">
-            <button className="prev-button" onClick={onClickPrev}>PREV</button>
-        </div>
-    </Container>
->>>>>>> Stashed changes
     );
 };
 export default SignUp;

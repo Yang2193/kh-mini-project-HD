@@ -111,7 +111,8 @@ const MessageModal = (props) => {
     const { open, confirm, close, type, header, children } = props;
 
     //confirm에 페이지 이동 시킴
-
+    // modal에 들어갈 props.confirm, props.close 함수 -> 엔터와 ESC를 눌렀을 때 서로 다른 동작을 하게 하려면 다른 함수를 넣으면 된다.
+    // 그런 경우가 거의 없겠지만... 혹시나...
         const handleKeyDown = (e) => {
             if(open && e.keyCode === 13){
                 confirm();

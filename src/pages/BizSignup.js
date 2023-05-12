@@ -243,13 +243,10 @@ const BizSignUp = () => {
     // 회원가입 시 환영 팝업
     const [signUpModalOpen, setSignUpModalOpen] = useState(false);
 
-    // modal에 들어갈 props.confirm 함수
-    const onClickConfirm = () => {
-        navigate("/login");
-    }
-
+    // modal의 close, confirm에 들어갈 함수
     const closeSignUpModal = () => {
         setSignUpModalOpen(false);
+        navigate("/login");
     }
 
     const closeModal = () => {
@@ -372,7 +369,7 @@ const BizSignUp = () => {
 
 
     return(
-        <Container onKeyDown={onKeyDownSignUp}>
+        <Container>
             <div className="box">
                 <div className="sign">
                     <span>사업자 회원가입</span>
@@ -415,7 +412,7 @@ const BizSignUp = () => {
                         )}
                 </div>
                 <div className="item2">
-                    <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
+                    <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone} onKeyDown={onKeyDownSignUp}/>
                 </div>
 
                 <div className="item2">
@@ -423,7 +420,7 @@ const BizSignUp = () => {
                     <button className="enable-button" onClick={onClickSignUp}>회원가입</button> :
                     <button className="disable-button">회원가입</button>}
                     <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
-                    <MessageModal open={signUpModalOpen} confirm={onClickConfirm} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
+                    <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
                 </div>
                 <div className="item2">
                     <button className="prev-button" onClick={onClickPrev}>이전으로</button>
