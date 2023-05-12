@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
+import AddressModal from "../utils/AddressModal";
 
 
 const Container = styled.div`
@@ -68,8 +69,9 @@ const Container = styled.div`
     width: 500px;
     
     button{
-        margin-left: 30px;
-        
+        margin-right: 36px;
+        width : 100px;
+        height: 100%;
     }
   }
 
@@ -198,6 +200,8 @@ const Input = styled.input`
 const SignUp = () => {
     const navigate = useNavigate();
 
+
+
     // 키보드 입력
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
@@ -207,6 +211,8 @@ const SignUp = () => {
     const [inputPhone, setInputPhone] = useState("");
     const [inputNickname, setInputNickname] = useState("");
     const [inputKey, setInputKey] = useState("");
+    const [inputAddress, setInputAddress] = useState("");
+    const [inputAddressDetail, setInputAddressDetail] = useState("");
 
     // 이메일 인증 키 코드 
     const [authKey, setAuthKey] = useState("");
@@ -233,11 +239,26 @@ const SignUp = () => {
     // 팝업
     const [modalOpen, setModalOpen] = useState(false);
     const [modalText, setModelText] = useState("중복된 아이디 입니다.");
+    const [isOpenPost, setIsOpenPost] = useState(false);
+  
+    const openPost = () => {
+        setIsOpenPost(true);
+      };
+    
+    const closePost = () => {
+        setIsOpenPost(false);
+    }
 
+    const searchAddress = (address) => {
+        setInputAddress(address);
+    }
+
+ 
     const closeModal = () => {
         setModalOpen(false);
     };
 
+  
     const onChangeId = (e) => {
         setInputId(e.target.value)
         if (e.target.value.length < 5 || e.target.value.length > 12) {
@@ -316,6 +337,10 @@ const SignUp = () => {
         setInputNickname(e.target.value);
         setIsNick(true);
     }
+
+    const onChangeAddress = (e) => {
+        setInputAddress(e.target.value);
+    }
  
 
     const onClickLogin = async() => {
@@ -349,6 +374,7 @@ const SignUp = () => {
     const onClickPrev = () => {
         navigate('/login');
     }
+
 
 
     return(
@@ -385,8 +411,8 @@ const SignUp = () => {
                     <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
                 </div>
                 <div className="item5">
-                    <button onClick={onClickEmail}>인증번호 요청</button>
-                    <Input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
+                    <Input type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
+                    <button onClick={onClickEmail}>이메일 인증</button>
                 </div>
                 <div className="hint">
                     {isSend && <span className="success">{keyMessage}</span>}
@@ -400,7 +426,12 @@ const SignUp = () => {
                 <div className="item2">
                     <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
                 </div>
-
+                <div className="item5">
+                    <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress}/>
+                    <button onClick={openPost}>주소찾기</button>
+                    {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress}/>}
+                </div>
+             
                 <div className="item2">
                     {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
                     <button className="enable-button" onClick={onClickLogin}>회원가입</button> :
