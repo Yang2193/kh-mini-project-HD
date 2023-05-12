@@ -59,14 +59,15 @@ const AxiosApi = {
     },
 
    // 회원 가입
-   memberReg: async(id, pwd, name, mail, phone, nickname) => {
+   memberReg: async(id, pwd, name, mail, phone, nickname, address) => {
     const member = {
         id: id, 
         pwd: pwd,
         name: name,
         email: mail,
         phone : phone,
-        nickname : nickname
+        nickname : nickname,
+        address : address
     };
     return await axios.post(KH_DOMAIN + "/newMember", member);
     },

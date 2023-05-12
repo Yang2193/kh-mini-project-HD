@@ -212,7 +212,6 @@ const SignUp = () => {
     const [inputNickname, setInputNickname] = useState("");
     const [inputKey, setInputKey] = useState("");
     const [inputAddress, setInputAddress] = useState("");
-    const [inputAddressDetail, setInputAddressDetail] = useState("");
 
     // 이메일 인증 키 코드 
     const [authKey, setAuthKey] = useState("");
@@ -352,7 +351,7 @@ const SignUp = () => {
 
         if (memberCheck.data === true) {
             console.log("가입된 아이디가 없습니다. 다음 단계 진행 합니다.");
-            const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail, inputPhone, inputNickname);
+            const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail, inputPhone, inputNickname, inputAddress);
             console.log(memberReg.data);
             if(memberReg.data === true) {
                 navigate('/Login');
