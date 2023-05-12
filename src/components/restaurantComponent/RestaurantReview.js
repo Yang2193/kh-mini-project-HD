@@ -176,9 +176,7 @@ const Review =() => {
                         <p className="rating">평점 : {rest.reviewRating}</p>
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         <div className="imgBox">
-                            <img src="" alt="" />
-                            <img src="" alt="" />
-                            <img src="" alt="" />
+                            <img src={rest.reviewImage}/>
                         </div>
                     </div>
                 ))}

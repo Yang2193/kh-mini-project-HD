@@ -209,13 +209,15 @@ const AxiosApi = {
   },
 
 // 리뷰 추가 하기
-  addReview:async(restId,memId,title,content,rating)=>{
+  addReview:async(restId,memId,title,content,rating,image)=>{
     const review={
       restId:restId,
       memberId:memId,
       title:title,
       content:content,
-      rating:rating
+      rating:rating,
+      image:image
+
     }
     return await axios.post(KH_DOMAIN + "/restaurant/add/review",review);
   },
@@ -224,12 +226,13 @@ const AxiosApi = {
     return await axios.get(KH_DOMAIN + `/review/detail?reviewId=${reviewId}`)
   },
 // 문의 등록
-  addInquiry:async(restId,memId,title,content)=>{
+  addInquiry:async(restId,memId,title,content,image)=>{
     const inquiry={
       restId:restId,
       memberId:memId,
       title:title,
-      content:content
+      content:content,
+      image:image
     }
     return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry",inquiry);
   },

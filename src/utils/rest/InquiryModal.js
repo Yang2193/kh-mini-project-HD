@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useState,useContext } from "react";
 import AxiosApi from "../../api/AxiosApi";
 import { RestIdContext } from "../../context/RestaurantId";
+import { storage } from "../../firebase/firebase";
+import { ref,uploadBytes,getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 
 const ModalStyle = styled.div`
 
@@ -123,10 +126,35 @@ const ModalStyle = styled.div`
 
 const InquiryModal = (props) => {
     const {restId} = useContext(RestIdContext); // context api로 매장 id 입력 받음
+    const memId= localStorage.getItem("userId");
 
     // 팝업 열고 닫음
     const {open,close} = props;
+    // 팝업창 초기화
+    const resetInput = () => {
+        setInputTitle("");
+        setInputContent("");
+        setImageUrl(null);
+        setImageUpload(null);
+      }
+    // 이미지 업로드 기능
+    const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
+    const [imageUrl,setImageUrl] =useState(null);//url 저장
 
+    const onChangeImage =(e) =>{
+        setImageUpload(e.target.files[0])
+    }
+
+    const uploadImage=()=>{ // 이미지 업로드 하는 함수
+        if(imageUplod===null) return;
+
+    const imageRef = ref(storage,`images/${imageUplod.name + v4() }`) //폴더 생성 (이름이 같지 않게 파일 일름뒤에 랜덤함수를 붙임)
+    uploadBytes(imageRef,imageUplod).then((snapshot)=>{ // 이미지 파이어 베이스에 보내기 
+        return getDownloadURL(snapshot.ref).then((url)=>{ 
+            setImageUrl(url);
+          });
+    })
+};
     // 문의 데이터 입력 받고 데이터 추가 전송
     const [inputTttle, setInputTitle] = useState("");
     const [inputContent, setInputContent] = useState("");
@@ -139,14 +167,13 @@ const InquiryModal = (props) => {
     }
 
     const addInquiry = async() =>{
-        const memId= localStorage.getItem("userId");
-
-        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent);
+        uploadImage();
+        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,imageUrl);
 
         if(rsp.data === true) {
-            console.log("성공");
             alert("문의가 등록되었습니다.")
-
+            close();
+            resetInput();
         } else {
             console.log("전송 실패");
         }
@@ -164,10 +191,10 @@ const InquiryModal = (props) => {
                     <main>
                         <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
                         <textarea className="content" cols="30" rows="10"  value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
-                        <input type="file" className="file"/>
+                        <input type="file" className="file"  onChange={onChangeImage}/>
                     </main>
                     <footer>
-                        <button className="add" onClick={addInquiry&&close}>문의 등록</button>
+                        <button className="add" onClick={addInquiry}>문의 등록</button>
                         <button className="clo" onClick={close}>취소</button>
                     </footer>
                 </section>

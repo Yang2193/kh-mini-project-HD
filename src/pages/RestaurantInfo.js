@@ -9,14 +9,12 @@ import { RestIdContext } from "../context/RestaurantId";
 import Menu from "../components/restaurantComponent/RestaurantMenu";
 import Review from "../components/restaurantComponent/RestaurantReview";
 const InfoContainer = styled.section`
-		position: relative;
-		top: 30px;
+		
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		background-color: ivory;
-		height: 700px;
 		.cont{
         position: relative;
 		top:15px;
@@ -24,7 +22,6 @@ const InfoContainer = styled.section`
 		background-color: white;
 		width: 845px;
 		border: 1px solid;
-		height: 540px;
 		p{
 			margin: 10px;
 			font-size: 20px;
@@ -68,26 +65,26 @@ const Info = () => {
 			{type === "default" && (
 				<InfoContainer>
 				{rtInfo&&rtInfo.map(rest =>(
-					<div className="cont" key ={rest.restaurantNotice}>
+					<div className="cont" key ={rest.restNotice}>
 						<div className="box">
 							<h2>공지사항</h2>
-							<p>{rest.restaurantNotice}</p>
+							<p>{rest.restNotice}</p>
 						</div>
 						<div className="box">
 							<h2>전화번호</h2>
-							<p>{rest.restaurantPhone}</p>
+							<p>{rest.restPhoneNum}</p>
 						</div>
 						<div className="box">
 							<h2>매장소개</h2>
-							<p>{rest.restaurantIntroduce}</p>
+							<p>{rest.restIntro}</p>
 						</div>
 						<div className="box">
 							<h2>영업시간</h2>
-							<p>{rest.restaurantHours}</p>
+							<p>{rest.restHours}</p>
 						</div>
 						<div className="box">
 							<h2>매장주소</h2>
-							<p>{rest.restaurantAddr}</p>
+							<p>{rest.restAddr}</p>
 						</div>
 					</div>
 				))}			
