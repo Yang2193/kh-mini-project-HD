@@ -15,7 +15,7 @@ import 'react-calendar/dist/Calendar.css'; // css import
 
 const Reservation =() =>{
     const {restId} = useContext(RestIdContext);
-    const memId = localStorage.getItem("memId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
 
     const navigate = useNavigate();
 	const[type,setType] = useState("booking");

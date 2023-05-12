@@ -38,7 +38,7 @@ const Info = () => {
 	// Context Api 사용
 	const {restId} = useContext(RestIdContext);
 	// 데이터 호출 
-	const [rtInfo, setRtInfo] = useState("");
+	const [restInfo, setRestInfo] = useState("");
 	
 	const[type,setType] = useState("default");
 
@@ -50,7 +50,7 @@ const Info = () => {
 	useEffect(() => {
 		const rtInfo = async () => {
 		const rsp = await AxiosApi.restaurantInfo(restId);
-		setRtInfo(rsp.data);
+		setRestInfo(rsp.data);
 		};
 		rtInfo();
 	}, []);
@@ -64,8 +64,8 @@ const Info = () => {
 
 			{type === "default" && (
 				<InfoContainer>
-				{rtInfo&&rtInfo.map(rest =>(
-					<div className="cont" key ={rest.restNotice}>
+				{restInfo&&restInfo.map(rest =>(
+					<div className="cont" key ={rest.restId}>
 						<div className="box">
 							<h2>공지사항</h2>
 							<p>{rest.restNotice}</p>

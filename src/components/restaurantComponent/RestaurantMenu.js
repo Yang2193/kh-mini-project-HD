@@ -74,7 +74,7 @@ const Menu =() => {
             <MenuContanier>
                 <div className="cont">
                     {menu && menu.map(rest =>(
-                        <div className="box" key={rest.menuName}>
+                        <div className="box" key={rest.menuId}>
                             <p>메뉴 이름 : {rest.menuName} </p>
                             <p>설명 : {rest.menuDesc}</p>
                             <p>가격 : {rest.menuPrice} </p>
