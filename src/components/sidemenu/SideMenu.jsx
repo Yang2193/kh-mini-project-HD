@@ -163,7 +163,7 @@ const SideMenu = () => {
                         <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>예약 현황</div>
                     </div>
                 </Box>
-                <MessageModal open={modalOpen} close={onClickClose} confirm={onClickClose} head="로그아웃">로그아웃 하셨습니다.</MessageModal>
+                <MessageModal open={modalOpen} close={onClickClose} confirm={onClickClose} header="로그아웃">로그아웃 하셨습니다.</MessageModal>
         </MenuButton>
         
     );

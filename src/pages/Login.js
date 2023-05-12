@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AxiosApi from '../api/AxiosApi';
 import Modal from '../utils/Modal';
 import MessageModal from '../utils/MessageModal';
+import { useEffect } from 'react';
 
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
@@ -159,9 +160,7 @@ const Container = styled.div`
     border-radius: 18px;
     border: orange;
   }
-  .input2{
-    width: 300px;
-  }
+
 `;
 
 const Input = styled.input`
@@ -208,6 +207,7 @@ const Login = ({children}) => {
       setLoginModalOpen(false);
     }
 
+  
     //일반회원 / 사업자회원 체크하는 메소드
     const onChangeMemberType = (e) => {
       const value = e.target.value;
@@ -279,45 +279,47 @@ const Login = ({children}) => {
 
     return(
   
-        <Container onKeyDown={onKeyDownLogin}>
-        <div className="item1">
-          <img src={imgLogo} alt="Logo" onClick={()=>navigate("/")} />
-        </div>
+        <Container>
+          <div className="item1">
+            <img src={imgLogo} alt="Logo" onClick={()=>navigate("/")} />
+          </div>
 
-        <div><p>{children}</p></div>
-      
-        <div className='item4'>
-          <Label isChecked={"일반회원"===memberType}>
-            <input type="radio" name='memberType' value={"일반회원"} onChange={onChangeMemberType} checked={"일반회원"===memberType}/> 일반회원
-          </Label>
-          <Label isChecked={"사업자회원"===memberType}>
-            <input type="radio" name='memberType' value={"사업자회원"} onChange={onChangeMemberType} checked={"사업자회원"===memberType}/> 사업자회원
-          </Label>
-        </div>
-        <div className="item2">
-            <Input placeholder="ID" value ={inputId} onChange={onChangeId}/>
-        </div>
-       
+          <div><p>{children}</p></div>
+        
+          <div className='item4'>
+            <Label isChecked={"일반회원"===memberType}>
+              <input type="radio" name='memberType' value={"일반회원"} onChange={onChangeMemberType} checked={"일반회원"===memberType}/> 일반회원
+            </Label>
+            <Label isChecked={"사업자회원"===memberType}>
+              <input type="radio" name='memberType' value={"사업자회원"} onChange={onChangeMemberType} checked={"사업자회원"===memberType}/> 사업자회원
+            </Label>
+          </div>
+          <div className="item2">
+              <Input placeholder="ID" value ={inputId} onChange={onChangeId}/>
+          </div>
+        
 
-        <div className="item2">
-            <Input placeholder="패스워드" type='password' value ={inputPw} onChange={onChangePw}/>
-        </div>
+          <div className="item2">
+              <Input placeholder="패스워드" type='password' value ={inputPw} onChange={onChangePw} onKeyDown={onKeyDownLogin}/>
+          </div>
 
-        <div className="item2">
-        {(isId && isPw) ?
-          <button className="enable-button" onClick={onClickLogin} >로그인</button>  :
-          <button className="disable-button" onClick={onClickLogin} >로그인</button>}
-        </div>
-     
-        <div className="item2">
-          <button className='signup-button' onClick={onClickSignUp}>회원가입</button>
-        </div>
-        <div className="item2">
-          <button className='signup-button' onClick={()=>navigate("/IdPwFind")}>ID/PW 찾기</button>
-        </div>
     
-        <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
-        <MessageModal open={loginModalOpen} close={closeLoginModal} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
+          <div className="item2">
+          {(isId && isPw) ?
+            <button className="enable-button" onClick={onClickLogin} >로그인</button>  :
+            <button className="disable-button" onClick={onClickLogin} >로그인</button>}
+          </div>
+          
+      
+          <div className="item2">
+            <button className='signup-button' onClick={onClickSignUp}>회원가입</button>
+          </div>
+          <div className="item2">
+            <button className='signup-button' onClick={()=>navigate("/IdPwFind")}>ID/PW 찾기</button>
+          </div>
+      
+          <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
+          <MessageModal open={loginModalOpen} close={closeLoginModal} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
    </Container>
     );
 }

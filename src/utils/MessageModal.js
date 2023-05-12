@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import styled from 'styled-components';
 
 const ModalStyle = styled.div`
@@ -24,6 +25,18 @@ const ModalStyle = styled.div`
         cursor: pointer;
         margin-right: 10px;
         border: 0;
+    }
+
+    .inputBtn{
+        outline: none;
+        cursor: pointer;
+        margin-right: 10px;
+        border: 0;
+        padding: 6px 12px;
+        color: #fff;
+        background-color: #6c757d;
+        border-radius: 5px;
+        font-size: 13px;
     }
 
     section {
@@ -97,17 +110,25 @@ const ModalStyle = styled.div`
 const MessageModal = (props) => {
     const { open, confirm, close, type, header, children } = props;
 
-    const handleKeyDown = (e) => {
-        if(open && e.keyCode === 13){
-            confirm();
-        }
-    }
+    //confirm에 페이지 이동 시킴
+
+        const handleKeyDown = (e) => {
+            if(open && e.keyCode === 13){
+                confirm();
+            } else if(open && e.keyCode === 27){
+                close();
+            }
+        };
+
+   
+
+
     
     //console.log("Modal Component : " + type);
     const maxWidth = type ==="resv" ? 'none' : '450px';
     return (
         <ModalStyle maxWidth={maxWidth}>
-            <div className={open ? 'openModal modal' : 'modal'} onKeyDown={handleKeyDown}>
+            <div className={open ? 'openModal modal' : 'modal'} onClick={close}>
             {open &&
                 <section>
                     <header>
@@ -118,7 +139,7 @@ const MessageModal = (props) => {
                     </header>
                     <main>{children}</main>
                     <footer>
-                     <button onClick={confirm}>확인</button>
+                     <input className="inputBtn" type="button" onClick={confirm} autoFocus onKeyDown={handleKeyDown} value="확인"/>
                     </footer>
                 </section>
             }

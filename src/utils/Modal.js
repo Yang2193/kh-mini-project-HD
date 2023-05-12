@@ -97,6 +97,7 @@ const ModalStyle = styled.div`
 const Modal = (props) => {
     const { open, confirm, close, type, header, children } = props;
 
+
     //console.log("Modal Component : " + type);
     const maxWidth = type ==="resv" ? 'none' : '450px';
     return (
