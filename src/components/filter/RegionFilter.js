@@ -148,16 +148,16 @@ const RegionFilter = () => {
     const addAddress = (val) => {
         setAddress(prevAddr => ({
             ...prevAddr,
-            [changeRegionName(region)]: [...(prevAddr[changeRegionName(region)] || []), val]
+            [region]: [...(prevAddr[region] || []), val]
         }));
     }
 
     const removeAddress = (obj, val) => {
-        const regionName = changeRegionName(region);
-        if(obj[regionName]){
-            obj[regionName] = obj[regionName].filter((item) => item !== val);
-            if(obj[regionName].length === 0) {
-                delete obj[regionName];
+        // const regionName = changeRegionName(region);
+        if(obj[region]){
+            obj[region] = obj[region].filter((item) => item !== val);
+            if(obj[region].length === 0) {
+                delete obj[region];
             }
         }
         

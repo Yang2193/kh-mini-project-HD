@@ -68,8 +68,9 @@ const Container = styled.div`
     width: 500px;
     
     button{
-        margin-left: 30px;
-        
+        margin-right: 36px;
+        width : 100px;
+        height: 100%;
     }
   }
 
@@ -385,8 +386,8 @@ const BizSignUp = () => {
                     <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
                 </div>
                 <div className="item5">
-                    <button onClick={onClickEmail}>인증번호 요청</button>
-                    <Input type="text" placeholder="인증번호를 입력하세요" onChange={onChangeKey}/>
+                    <Input type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
+                    <button onClick={onClickEmail}>이메일 인증</button>
                 </div>
                 <div className="hint">
                     {isSend && <span className="success">{keyMessage}</span>}

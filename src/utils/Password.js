@@ -53,7 +53,7 @@ const Input = styled.input`
   border-radius: 18px;
   outline-style: none; 
 `;
-const Password = ({children , type , setIsPwd,memberDelete}) => { 
+const Password = ({children , type , setIsPwd, memberDelete}) => { 
     //키보드입력
     const [inputPw, setInputPw] = useState("");
     const [inputConPw, setInputConPw] = useState("");
