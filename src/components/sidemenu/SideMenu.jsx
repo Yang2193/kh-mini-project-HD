@@ -121,7 +121,7 @@ const SideMenu = () => {
     const onClickClose = () => {
         setModalOpen(false);
     }
-    
+
     
     const onClickMenu = () => {
         setIsOpen(!isOpen);

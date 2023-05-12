@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "../components/header/Header";
 import { useLocation } from "react-router-dom";
+import MessageModal from "../utils/MessageModal";
 const MypageBlock = styled.div`
     //전체폰트
     font-family: "NanumGothic";
@@ -67,7 +68,8 @@ const Mypage= () => {
            <Section category={category}/>
            </div>
            <HomeFooter/>
-           <Modal open={modalOpen} close={closeModal} type="ok" header="로그인">로그인이 필요한 페이지입니다.</Modal>
+           <MessageModal open={modalOpen} close={closeModal} confirm={closeModal} header="로그인">로그인이 필요한 페이지입니다.</MessageModal>
+           {/* <Modal open={modalOpen} close={closeModal} type="ok" header="로그인">로그인이 필요한 페이지입니다.</Modal> */}
         </MypageBlock>
     );
 }

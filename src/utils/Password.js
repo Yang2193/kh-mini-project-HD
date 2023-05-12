@@ -87,15 +87,21 @@ const Password = ({children , type , setIsPwd, memberDelete}) => {
       else if (type ==="del" && pwMessage && memberValue.pwd === inputPw) memberDelete();
       else setModalOpen(true);
     }
+    
+    const handleKeyDown = (e) => {
+        if(e.keyCode === 13){
+            isPwd();
+        } 
+    };
 
 
     return(
         <Container>
             <div className="pwdTitle">비밀번호 입력</div>
             <div className="content">{children}</div>
-            <Input type="password" placeholder="패스워드" value={inputPw} onChange={onChangePw}/>
+            <Input type="password" placeholder="패스워드" value={inputPw} onChange={onChangePw} onKeyDown={handleKeyDown}/>
             {type ==="del" &&<Input type="password" placeholder="패스워드 재입력"  value ={inputConPw} onChange={onChangeConPw} />}
-            <button className="enable-button" onClick={isPwd}>확인</button> 
+            <input type="button" className="enable-button" onClick={isPwd} value="확인"/>
             <Modal open={modalOpen} close={closeModal} header="오류" type="ok">{type ==="del" && inputConPw===""? "패스워드를 한번 더 입력 해주세요" :"패스워드를 잘못 입력 하셨습니다."}</Modal>   
         </Container>
     );

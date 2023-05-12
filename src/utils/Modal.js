@@ -26,6 +26,18 @@ const ModalStyle = styled.div`
         border: 0;
     }
 
+    .inputBtn{
+        outline: none;
+        cursor: pointer;
+        margin-right: 10px;
+        border: 0;
+        padding: 6px 12px;
+        color: #fff;
+        background-color: #6c757d;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+
     section {
         width: 90%;
         max-width: ${props => props.maxWidth};
@@ -97,6 +109,13 @@ const ModalStyle = styled.div`
 const Modal = (props) => {
     const { open, confirm, close, type, header, children } = props;
 
+    const handleKeyDown = (e) => {
+        if(open && e.keyCode === 13){
+            close();
+        } else if(open && e.keyCode === 27){
+            close();
+        }
+    };
 
     //console.log("Modal Component : " + type);
     const maxWidth = type ==="resv" ? 'none' : '450px';
@@ -113,7 +132,7 @@ const Modal = (props) => {
                     </header>
                     <main>{children}</main>
                     <footer>
-                    {type === "ok" ?(<button onClick={close}>확인</button>):null}
+                    {type === "ok" ?(<input className="inputBtn" type="button" onClick={close} autoFocus onKeyDown={handleKeyDown} value="확인"/>):null}
                     </footer>
                 </section>
             }

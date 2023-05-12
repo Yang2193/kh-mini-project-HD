@@ -256,6 +256,7 @@ const IdPwFind = () => {
                 setIsSuccess(true);
             }
             //여기 보완해야 할 거 같은 디테일이 있는데 기억이 안 난다. 기억이 나면 다시 메모할 것
+            //재입력시 문구 남아있는 문제 수정 할 것
         } else {
             setCheckId(false);
         }

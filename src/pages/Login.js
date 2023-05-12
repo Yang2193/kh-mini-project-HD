@@ -319,7 +319,7 @@ const Login = ({children}) => {
           </div>
       
           <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
-          <MessageModal open={loginModalOpen} close={closeLoginModal} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
+          <MessageModal open={loginModalOpen} close={onClickConfirm} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
    </Container>
     );
 }
