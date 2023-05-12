@@ -135,13 +135,11 @@ const ReviewDetail = () =>{
                         <p className="title">{rest.reviewTitle}</p>
                         <p className="content">{rest.reviewContent}</p>
                         <p className="rating">평점 : {rest.reviewRating}</p>
-                        <p>공감수 : </p>
+                        <p>공감수 :{rest.likeCnt} </p>
                         <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
 
                         <div className="imgBox">
-                            <img src="" alt="이미지"/>
-                            <img src="" alt="이미지" className="img1"/>
-                            <img src="" alt="이미지" className="img2"/>
+                            <img src={rest.image}/>
                         </div>
                     </div>
                 ))}
