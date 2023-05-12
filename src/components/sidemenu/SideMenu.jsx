@@ -3,6 +3,7 @@ import styled, {css} from "styled-components";
 import MenuImg from "../../images/pngwing.com-removebg-preview.png";
 import { FiMenu } from 'react-icons/fi';
 import { useNavigate  } from "react-router-dom";
+import MessageModal from "../../utils/MessageModal";
 const MenuButton = styled.div`
   height  : 100px;
   width : 100px;
@@ -98,6 +99,9 @@ const SideMenu = () => {
     const navigate = useNavigate();
     const userId = window.localStorage.getItem("userId");
 
+    //팝업창
+    const [modalOpen, setModalOpen] = useState(false);
+
 
     useEffect(() => {   
         const clickOutside = (event) =>{
@@ -113,8 +117,9 @@ const SideMenu = () => {
 
     },[ref]);
 
+    //모달창 닫기
     const onClickClose = () => {
-        setIsOpen(false);
+        setModalOpen(false);
     }
     
     
@@ -137,6 +142,7 @@ const SideMenu = () => {
         window.localStorage.setItem("userId", '');
         navigate("/");
         setIsOpen(!isOpen);
+        setModalOpen(true);
     }
     
 
@@ -157,6 +163,7 @@ const SideMenu = () => {
                         <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>예약 현황</div>
                     </div>
                 </Box>
+                <MessageModal open={modalOpen} close={onClickClose} confirm={onClickClose} head="로그아웃">로그아웃 하셨습니다.</MessageModal>
         </MenuButton>
         
     );

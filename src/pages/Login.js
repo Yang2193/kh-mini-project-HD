@@ -4,6 +4,7 @@ import imgLogo from "../images/logo-removebg-preview.png";
 import styled from 'styled-components';
 import AxiosApi from '../api/AxiosApi';
 import Modal from '../utils/Modal';
+import MessageModal from '../utils/MessageModal';
 
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
@@ -158,6 +159,9 @@ const Container = styled.div`
     border-radius: 18px;
     border: orange;
   }
+  .input2{
+    width: 300px;
+  }
 `;
 
 const Input = styled.input`
@@ -198,6 +202,12 @@ const Login = ({children}) => {
         setModalOpen(false);
     };
 
+    //팝업 처리(로그인 환영)
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const closeLoginModal = () =>{
+      setLoginModalOpen(false);
+    }
+
     //일반회원 / 사업자회원 체크하는 메소드
     const onChangeMemberType = (e) => {
       const value = e.target.value;
@@ -233,18 +243,21 @@ const Login = ({children}) => {
       }
     }
     const onClickLogin = async() => {
-      
+      //멤버 타입 여부에 따라서 다른 AxiosAPI 호출
+
       if(memberType==="일반회원"){
         // 로그인을 위한 axios 호출
         const res = await AxiosApi.memberLogin(inputId, inputPw);
         console.log(res.data);
         if(res.data === true) {
-        window.localStorage.setItem("userId",inputId);
-          navigate('/');  
+          window.localStorage.setItem("userId",inputId);
+          setLoginModalOpen(true);
         } else {
           setModalOpen(true);
         }
-      }
+      } else {
+        // 사업자회원 로그인 쪽 axios 호출, 사업자 로그인쪽 여기다가 만드시면 됩니다.
+      } 
      
     }
 
@@ -254,9 +267,19 @@ const Login = ({children}) => {
       else navigate('/BizSignUp');
     }
 
+    const onClickConfirm = () => {
+      navigate('/');
+    }
+
+    const onKeyDownLogin = (e) => {
+      if(e.key === 'Enter'){
+        onClickLogin();
+      }
+    }
+
     return(
   
-        <Container>
+        <Container onKeyDown={onKeyDownLogin}>
         <div className="item1">
           <img src={imgLogo} alt="Logo" onClick={()=>navigate("/")} />
         </div>
@@ -282,10 +305,10 @@ const Login = ({children}) => {
 
         <div className="item2">
         {(isId && isPw) ?
-          <button className="enable-button" onClick={onClickLogin}>로그인</button>  :
-          <button className="disable-button" onClick={onClickLogin}>로그인</button>}
+          <button className="enable-button" onClick={onClickLogin} >로그인</button>  :
+          <button className="disable-button" onClick={onClickLogin} >로그인</button>}
         </div>
-
+     
         <div className="item2">
           <button className='signup-button' onClick={onClickSignUp}>회원가입</button>
         </div>
@@ -294,6 +317,7 @@ const Login = ({children}) => {
         </div>
     
         <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
+        <MessageModal open={loginModalOpen} close={closeLoginModal} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
    </Container>
     );
 }

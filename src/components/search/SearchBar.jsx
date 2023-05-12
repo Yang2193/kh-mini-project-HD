@@ -80,13 +80,20 @@ const SearchBar = ({handleFilter, handleType}) => {
         handleType("List");
     };
 
+    // 엔터버튼
+    const handleKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            onClickSearch();
+        }
+    }
+
     
     
     return(
         <>
         <Container>
             <Box>
-                <Input placeholder="검색하고 싶은 키워드를 입력해주세요." value={keyword} onChange={onChangeKeyword}/>
+                <Input placeholder="검색하고 싶은 키워드를 입력해주세요." value={keyword} onChange={onChangeKeyword} onKeyDown={handleKeyPress} />
                 <SearchBtn onClick={onClickSearch}>검색</SearchBtn>
             </Box>
         </Container>

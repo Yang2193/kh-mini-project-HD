@@ -4,6 +4,7 @@ import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
 import AddressModal from "../utils/AddressModal";
+import MessageModal from "../utils/MessageModal";
 
 
 const Container = styled.div`
@@ -73,6 +74,13 @@ const Container = styled.div`
         width : 100px;
         height: 100%;
     }
+  }
+
+  .item6{
+    margin: 10px;
+    display: flex;
+    justify-content: right;
+    width: 500px;
   }
 
   .hint {
@@ -181,6 +189,10 @@ const Container = styled.div`
     font-weight: 700;
     cursor: pointer;
   }
+
+  .input2{
+    width: 500px;
+  }
 `;
 
 const Input = styled.input`
@@ -238,7 +250,22 @@ const SignUp = () => {
     // 팝업
     const [modalOpen, setModalOpen] = useState(false);
     const [modalText, setModelText] = useState("중복된 아이디 입니다.");
+    // 주소찾기 팝업 및 조건부 렌더링 용
     const [isOpenPost, setIsOpenPost] = useState(false);
+
+    // 회원가입 시 환영 팝업
+    const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+
+    // modal에 들어갈 props.confirm 함수
+    const onClickConfirm = () => {
+        navigate("/login");
+    }
+
+    const closeSignUpModal = () => {
+        setSignUpModalOpen(false);
+    }
+
+
   
     const openPost = () => {
         setIsOpenPost(true);
@@ -309,12 +336,11 @@ const SignUp = () => {
 
         const rsp = await AxiosApi.mailConfirm(inputEmail);
         setAuthKey(rsp.data);
-        setKeyMessage("이메일로 인증코드가 전송되었습니다.");
+        setMailMessage("이메일로 인증코드가 전송되었습니다.");
         setIsSend(true);
     }
 
     const onChangeKey = (e) => {
-        setIsSend(false);
         const key = e.target.value
         setInputKey(key);
         if(authKey === key){
@@ -342,7 +368,7 @@ const SignUp = () => {
     }
  
 
-    const onClickLogin = async() => {
+    const onClickSignUp = async() => {
         console.log("Click 회원가입");
         // 가입 여부 우선 확인
         const memberCheck = await AxiosApi.memberRegCheck(inputId);
@@ -354,7 +380,7 @@ const SignUp = () => {
             const memberReg = await AxiosApi.memberReg(inputId, inputPw, inputName, inputEmail, inputPhone, inputNickname, inputAddress);
             console.log(memberReg.data);
             if(memberReg.data === true) {
-                navigate('/Login');
+                setSignUpModalOpen(true);
             } else {
                 setModalOpen(true);
                 setModelText("회원 가입에 실패 했습니다.");
@@ -374,73 +400,84 @@ const SignUp = () => {
         navigate('/login');
     }
 
+    const onKeyDownSignUp = (e) => {
+        if(e.key === 'Enter'){
+            onClickSignUp();
+          }
+    }
+
 
 
     return(
         <Container>
+            
             <div className="box">
-                <div className="sign">
-                    <span>Sign Up</span>
-                </div>
+                    <div className="sign">
+                        <span>Sign Up</span>
+                    </div>
 
-                <div className="item2">
-                    <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
+                    <div className="item2">
+                        <Input placeholder="아이디" value ={inputId} onChange={onChangeId}/>
+                    </div>
+                    <div className="hint">
+                            {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
+                    </div>
+                    <div className="item2">
+                        <Input type="password" placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
+                    </div>
+                    <div className="hint">
+                            {inputPw.length > 0 && (
+                            <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
+                    </div>
+                    <div className="item2">
+                        <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
+                    </div>
+                    <div className="hint">
+                            {inputConPw.length > 0 && (
+                            <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
+                    </div>
+                    <div className="item2">
+                        <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
+                    </div>
+                    <div className="item5">
+                        <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
+                        <button onClick={onClickEmail}>이메일 인증</button>
+                    </div>
+                    <div className="hint">
+                        {isSend && <span className="success">{mailMessage}</span>}    
+                    </div>
+                    <div className="item6">
+                        <Input className="input2" type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
+                    </div>
+                    <div className="hint">
+                        {inputKey.length > 0 && (
+                                <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
+                            )}
+                    </div>
+                    <div className="item2">
+                        <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
+                    </div>
+                    <div className="item2">
+                        <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
+                    </div>
+                    <div className="item5">
+                        <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress}/>
+                        <button onClick={openPost}>주소찾기</button>
+                        {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress}/>}
+                    </div>
+                
+                    <div className="item2">
+                        {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
+                        <button className="enable-button" onClick={onClickSignUp}>회원가입</button> :
+                        <button className="disable-button">회원가입</button>}
+                        <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
+                        <MessageModal open={signUpModalOpen} confirm={onClickConfirm} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
+                    </div>
+                    <div className="item2">
+                        <button className="prev-button" onClick={onClickPrev}>이전으로</button>
+                    </div>
                 </div>
-                <div className="hint">
-                        {inputId.length > 0 && <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>}
-                </div>
-                <div className="item2">
-                    <Input type="password" placeholder="패스워드" value ={inputPw} onChange={onChangePw}/>
-                </div>
-                <div className="hint">
-                        {inputPw.length > 0 && (
-                        <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
-                </div>
-                <div className="item2">
-                    <Input type="password" placeholder="패스워드 확인" value ={inputConPw} onChange={onChangeConPw}/>
-                </div>
-                <div className="hint">
-                        {inputConPw.length > 0 && (
-                        <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
-                </div>
-                <div className="item2">
-                    <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
-                </div>
-                <div className="item2">
-                    <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-                </div>
-                <div className="item5">
-                    <Input type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
-                    <button onClick={onClickEmail}>이메일 인증</button>
-                </div>
-                <div className="hint">
-                    {isSend && <span className="success">{keyMessage}</span>}
-                    {inputKey.length > 0 && (
-                            <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
-                        )}
-                </div>
-                <div className="item2">
-                    <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
-                </div>
-                <div className="item2">
-                    <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname}/>
-                </div>
-                <div className="item5">
-                    <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress}/>
-                    <button onClick={openPost}>주소찾기</button>
-                    {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress}/>}
-                </div>
-             
-                <div className="item2">
-                    {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
-                    <button className="enable-button" onClick={onClickLogin}>회원가입</button> :
-                    <button className="disable-button">회원가입</button>}
-                    <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
-                </div>
-                <div className="item2">
-                    <button className="prev-button" onClick={onClickPrev}>이전으로</button>
-                </div>
-            </div>
+            
         </Container>
     );
 };

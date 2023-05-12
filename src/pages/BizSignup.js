@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
+import MessageModal from "../utils/MessageModal";
 
 
 
@@ -237,7 +238,19 @@ const BizSignUp = () => {
 
     // 팝업
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalText, setModelText] = useState("중복된 아이디 입니다.");
+    const [modalText, setModalText] = useState("중복된 아이디 입니다.");
+
+    // 회원가입 시 환영 팝업
+    const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+
+    // modal에 들어갈 props.confirm 함수
+    const onClickConfirm = () => {
+        navigate("/login");
+    }
+
+    const closeSignUpModal = () => {
+        setSignUpModalOpen(false);
+    }
 
     const closeModal = () => {
         setModalOpen(false);
@@ -320,7 +333,7 @@ const BizSignUp = () => {
 
  
 
-    const onClickLogin = async() => {
+    const onClickSignUp = async() => {
         console.log("Click 회원가입");
         // 가입 여부 우선 확인
         const memberCheck = await AxiosApi.bizMemberRegCheck(inputId);
@@ -332,16 +345,16 @@ const BizSignUp = () => {
             const memberReg = await AxiosApi.bizMemberReg(inputId, inputPw, inputName, inputEmail, inputPhone);
             console.log(memberReg.data);
             if(memberReg.data === true) {
-                navigate('/Login');
+                setSignUpModalOpen(true);
             } else {
                 setModalOpen(true);
-                setModelText("회원 가입에 실패 했습니다.");
+                setModalText("회원 가입에 실패 했습니다.");
             }
 
         } else {
             console.log("이미 가입된 회원 입니다.")
             setModalOpen(true);
-            setModelText("이미 가입된 회원 입니다.");
+            setModalText("이미 가입된 회원 입니다.");
         } 
     }
 
@@ -351,9 +364,15 @@ const BizSignUp = () => {
         navigate('/login');
     }
 
+    const onKeyDownSignUp = (e) => {
+        if(e.keyCode === 13){
+            onClickSignUp();
+          }
+    }
+
 
     return(
-        <Container>
+        <Container onKeyDown={onKeyDownSignUp}>
             <div className="box">
                 <div className="sign">
                     <span>사업자 회원가입</span>
@@ -401,9 +420,10 @@ const BizSignUp = () => {
 
                 <div className="item2">
                     {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
-                    <button className="enable-button" onClick={onClickLogin}>회원가입</button> :
+                    <button className="enable-button" onClick={onClickSignUp}>회원가입</button> :
                     <button className="disable-button">회원가입</button>}
                     <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
+                    <MessageModal open={signUpModalOpen} confirm={onClickConfirm} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
                 </div>
                 <div className="item2">
                     <button className="prev-button" onClick={onClickPrev}>이전으로</button>
