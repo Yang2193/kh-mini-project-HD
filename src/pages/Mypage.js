@@ -41,8 +41,6 @@ const Mypage= () => {
       const [modalOpen, setModalOpen] = useState(false);
       const navigate = useNavigate();
 
-
-  
     useEffect(()=> {
         const useId= localStorage.getItem("userId");
         if(!useId) {

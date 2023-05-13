@@ -238,10 +238,11 @@ const AxiosApi = {
     return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry",inquiry);
   },
   //찜 등록
-  addRestLike:async(restId,memId)=>{
+  addRestLike:async(restId,memId,name)=>{
     const addLike={
       restId:restId,
-      memberId:memId
+      memberId:memId,
+      restName:name
     }
     return await axios.post(KH_DOMAIN+"/restaurant/add/restLike",addLike);
   },
@@ -289,6 +290,17 @@ const AxiosApi = {
       resPeo:resPeo
     }
     return await axios.post(KH_DOMAIN+"/restaurant/add/reservation",res);
+  },
+  //예약 수정
+  updateRes:async(resDate,resReq,resSeat,resPeo,resId)=>{
+    const data={
+      resDate:resDate,
+      resReq:resReq,
+      resSeat:resSeat,
+      resPeo:resPeo,
+      resId:resId
+    }
+    return await axios.post(KH_DOMAIN+"/restaurant/update/reservation",data)
   }
 
 }

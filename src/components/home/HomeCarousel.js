@@ -4,7 +4,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
-
+import { useNavigate } from "react-router-dom/dist";
+import { useContext } from "react";
+import { ReviewIdContext } from "../../context/RestaurantId";
 const Container = styled.div`
     margin-top: 60px;
     width: 100%;
@@ -104,7 +106,18 @@ const StyledSlider = styled(Slider)`
 
 
 const HomeCarousel = () => {
+// 페이지이동
+const nav=useNavigate();
+const movePage = (restId) => {
+  localStorage.setItem("restId", restId);
+  nav("/info");
+};
+const {setReviewId} = useContext(ReviewIdContext)
 
+const movePageReview = (reviewId) => {
+  setReviewId(reviewId);
+  nav("/Detail");
+};
   //슬라이드에 따라서 출력 문구 설정
   const [title, setTitle] = useState("이 주의 인기 매장");
 
@@ -154,13 +167,13 @@ const HomeCarousel = () => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {wt3r && wt3r.map(e => (
-                <div key={e.restId}>
+                <div onClick={()=>movePage(e.restId)} key={e.restId} >
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>
               ))}
               {wt3review && wt3review.map(e=>(
-                <div key={e.reviewId}>
+                <div onClick={()=>movePageReview(e.reviewId)} key={e.reviewId}>
                   <h2>{e.restName}</h2>
                   <h3>{e.reviewTitle}</h3>
                 </div>

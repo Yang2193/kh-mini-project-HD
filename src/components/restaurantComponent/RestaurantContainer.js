@@ -66,9 +66,7 @@ const FixContent = styled.section`
 `;
 
 const RestaurantContainer =() =>{
-    //Context API로 매장 id 받아와서 해당 id 매장 정보 출력
-    const {restId} = useContext(RestIdContext);
-    const isLogin=localStorage.getItem("isLogin")
+	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
     // 매장 정보 호출
     const [rtInfoFix, setRtInfoFix] = useState("");
@@ -88,9 +86,7 @@ const navigate= useNavigate();
 const [modalOpen, setModalOpen] = useState(false);
 
 const openModal = () => {
-
-    console.log(isLogin,memId);
-    if (isLogin === "TRUE") {
+    if (memId) {
         setModalOpen(true);
     } else {
         alert("로그인이 되어있지 않습니다.")
@@ -124,8 +120,8 @@ const closeModal = () => {
       }, [likedList, restId]);
 
 
-    const addLike = async () => { 
-        const rsp = await AxiosApi.addRestLike(restId, memId);
+    const addLike = async (name) => { 
+        const rsp = await AxiosApi.addRestLike(restId, memId,name);
         if (rsp.data === true) {
             console.log("찜 등록 성공");
             setLikedList([...likedList, {restId, memId}]); // 찜등록 성공시 배열에도 추가
@@ -149,13 +145,25 @@ const closeModal = () => {
             }
         };
 
-    const onClickLiked = () =>{
+    const onClickLiked = (name) =>{
+        if(!memId) {  
+        alert("로그인이 되어있지 않습니다.")
+        navigate("/login");
+    } 
         if (!isLiked) {
-            addLike();
+            addLike(name);
         }else
             deleteLike();
         }    
-
+// 예약 페이지
+const checklogin =()=>{
+    if(!memId){
+        alert("로그인이 되어있지 않습니다.")
+        navigate("/login");
+    }else{
+        navigate("/Reservation")
+    }
+}
     return(
             <FixContent>
                 <img src="" alt="이미지" />
@@ -167,8 +175,8 @@ const closeModal = () => {
                         <p>평점 : {rest.avgRating}</p>
                         <button className="inq" onClick={openModal}>문의 하기</button>
                         <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
-                        <button className="like" onClick={onClickLiked} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
-                        <button className="res" onClick={()=>navigate("/Reservation")}>예약 하기</button>
+                        <button className="like" onClick={()=>onClickLiked(rest.name)} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
+                        <button className="res" onClick={checklogin}>예약 하기</button>
 
                     </div>
                 ))}

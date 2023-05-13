@@ -1,6 +1,13 @@
 import React, {useContext}from "react";
 import styled from "styled-components";
+import { useState } from "react";
 import { MemberContext } from "../../context/MemberContext";
+import DatePicker from "react-datepicker";
+import AxiosApi from "../../api/AxiosApi";
+import Select from "react-select";
+import ko from "date-fns/locale/ko";
+import moment from "moment";
+
 
 //리뷰 상세정보
 const ResvModal = styled.div`
@@ -15,7 +22,6 @@ const ResvModal = styled.div`
     justify-content: center;
     padding: 20px 0;
     position: relative; 
-    
     .stat{
         //모달창 상단에 상태 두기 위해서 사용
         position: absolute;
@@ -77,15 +83,68 @@ const ResvModal = styled.div`
 
 const ResvView = ({data}) => {
 const {memberValue} = useContext(MemberContext);
+// 예약 변경
+const [showInput, setShowInput] = useState(false);
+// 날짜 시간
+const [startDate, setStartDate] = useState(new Date());
+const date = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+
+// 인원 수
+const [people, setPeople] = useState(1);
+function selPeo(selectedOption) {
+    setPeople(selectedOption.value);
+  }
+
+const optionPeos = [];
+  for (let i = 1; i <= 10; i++) {
+    optionPeos.push({ value: i, label: `${i}명` });
+  }
+// 좌석
+const [seat, setSeat] = useState(1);
+function selSeat(selectedOption) {
+    setSeat(selectedOption.value);
+}
+
+const optionSeats = [];
+for (let i = 1; i <= 10; i++) {
+    optionSeats.push({ value: i, label: `${i}번` });
+}
+//요청사항
+const[resReq,setResReq] = useState();
+const onChange=(e)=>{
+    setResReq(e.target.value)
+}
+// 업데이트
+const onClickUpate =  async(resvId)=> {
+    const rsp = await AxiosApi.updateRes(date,resReq,seat,people,resvId);
+    console.log(date,resReq,seat,people,resvId);
+    if(rsp.data){
+        setShowInput(false);
+    } 
+}
+
     return(
     <ResvModal data={data}>
     <div className="stat">{data.resvStat}</div>
     <div className="restName">{data.restName}</div>
     <br />
     <div className="section1">
-    <div>날짜 : {data.applicationDate}</div>
-    <div>인원수 : {data.resvPeople}명</div>
-    <div>좌석 : {data.resvSeat}번</div>
+    <label htmlFor ="date">날짜 : </label>
+    {showInput ?  <DatePicker
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      showTimeSelect
+      locale={ko}
+      dateFormat="yyyy-MM-dd a h:mm"/> 
+      : <span className="result">{data.applicationDate}</span>}
+    <br />
+    <label htmlFor ="date">인원수 : </label>
+    {showInput ? <Select options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} /> :
+                 <span className="result">{data.resvPeople}명</span>}
+    <br />
+    <label htmlFor ="date">좌석 : </label>
+    {showInput ? <Select options={optionSeats} defaultValue={optionSeats[0]} onChange={selSeat} /> :
+                 <span className="result">{data.resvSeat}번</span>}
     </div>
     <br />
     <div className="section2Title">예약자 정보 및 요청사항</div>
@@ -93,11 +152,14 @@ const {memberValue} = useContext(MemberContext);
     <div className="section2">
     <div>이름 : {memberValue.name}</div>
     <div>전화번호 : {memberValue.phoneNum}</div>
-    <div>요청사항 </div>
-    <div className="box">{data.resvRequest}</div>
+    <label htmlFor ="date">요청사항 : </label>
+    {showInput ? <textarea placeholder='요청사항을 적으세요' value={resReq} onChange={onChange} cols="45" rows="10"/> :
+                 <div className="box">{data.resvRequest}</div> }
+    
     </div>
     <div>
-        <button className="updateBtn btn">예약변경</button>
+    {showInput? <button className="updateBtn btn" onClick={()=>onClickUpate(data.resvId)} style={{backgroundColor : "#FFA07A"}}>예약변경완료</button>:
+                <button className="updateBtn btn" onClick={()=> setShowInput(true)} >예약변경</button>}
         <button className="cancelBtn btn">예약취소</button>
     </div>
     

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useState,useContext } from "react";
 import AxiosApi from "../../api/AxiosApi";
-import { RestIdContext } from "../../context/RestaurantId";
 import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
@@ -123,7 +122,7 @@ const ModalStyle = styled.div`
 `;
 
 const ReviewModal = (props) => {
-    const {restId} = useContext(RestIdContext); // context api로 매장 id 입력 받음
+	const restId = localStorage.getItem("restId");
     const memId= localStorage.getItem("userId");
 
     // 팝업 열고 닫음

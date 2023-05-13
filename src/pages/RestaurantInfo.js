@@ -5,7 +5,6 @@ import Header from "../components/header/Header";
 import HomeFooter from "../components/footer/HomeFooter";
 import RestaurantContainer from "../components/restaurantComponent/RestaurantContainer";
 import RestaurantNav from "../components/restaurantComponent/RestaurantNav";
-import { RestIdContext } from "../context/RestaurantId";
 import Menu from "../components/restaurantComponent/RestaurantMenu";
 import Review from "../components/restaurantComponent/RestaurantReview";
 const InfoContainer = styled.section`
@@ -35,8 +34,10 @@ const InfoContainer = styled.section`
 
 
 const Info = () => {
-	// Context Api 사용
-	const {restId} = useContext(RestIdContext);
+	// 로컬 스토리지 사용
+	const restId = localStorage.getItem("restId");
+	console.log(restId);
+
 	// 데이터 호출 
 	const [restInfo, setRestInfo] = useState("");
 	

@@ -2,69 +2,91 @@ import { useEffect,useState,useContext } from "react";
 import AxiosApi from "../api/AxiosApi";
 import { ReviewIdContext } from "../context/RestaurantId";
 import styled from "styled-components";
-
+import Header from "../components/header/Header";
+import HomeFooter from "../components/footer/HomeFooter";
+import { useNavigate } from "react-router-dom";
 const ReviewPage = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: ivory;
-    height: 1020px;
-    width: 1980px;
+    height: 800px;
     .like{
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        left:750px;
-        bottom: 250px;
         font-size: 20px;
         border: 1px solid;
         height: 30px;
         width: 40px;
+        top: 140px;
         cursor: pointer;
     }
     .box{
+        margin-top: 30px;
         width: 800px;
         height: 500px;
         border: 1px solid;
         background-color: white;
         border: 1px solid;
         padding:10px;
+        p{
+            position: relative;
+        }
         .date{
             font-size: 10px;
         }
         img{
-            position: absolute;
-            width: 200px;
-            height: 100px;
-            margin-left: 55px;
-            margin-top: 10px;
-            border: 1px solid;
-        }
-        .img1{
-            left: 250px;
-        }
-        .img2{
-            left: 500px;
-        }
-        .imgBox{
             position: relative;
-            top:50px;
-            border: 1px solid;
-            width: 100%;
-            height: 120px;
+            width: 40%;
+            height: 80%;
+            left: 350px;
+            bottom: 260px;
+  
         }
-    }
-    .title{
+        .title {
         font-size: 25px;
         font-weight: bold;
+        bottom: 20px;
     }
+        .rating{
+            top:150px;
+            font-size: 20px;
+        }
+        .content{
+            font-size: 20px;
+        }
+        .nick{
+            font-size: 17px;
+        }
+        .date{
+            font-size: 10px;
+            bottom:32px;
+            left:100px;
+        }
+        .likeCount{
+            font-size: 15px;
+            top:220px
 
-`;
+        }
+        .return{
+            position: relative;
+            width: 100px;
+            height: 30px;
+            background-color: lightsalmon;
+            border: none;
+            cursor: pointer;
+            bottom: 220px;
+            left: 700px;
+        }
+    }
+    `;
 
 const ReviewDetail = () =>{
+    const nav = useNavigate();
     const {reviewId} = useContext(ReviewIdContext);
-    const memId = localStorage.getItem("memId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
 
     const [rtReview, setRtReview] = useState(""); // 리뷰 데이터 불러오기
     useEffect(() => {
@@ -120,13 +142,23 @@ const ReviewDetail = () =>{
         };
 
     const onClickLiked = () =>{
+        if(!memId) {  
+            alert("로그인이 되어있지 않습니다.")
+            nav("/login");
+        } 
         if (!isRevLike) {
             addLike();
         }else{
             deleteLike();
         }
     }
+    const movePage = (restId) => {
+        localStorage.setItem("restId", restId);
+        nav("/Info");
+      };
     return(
+        <>
+        <Header/>
         <ReviewPage>
              {rtReview&&rtReview.map(rest=>(
                     <div className="box" key={rest.reviewId}>
@@ -135,15 +167,15 @@ const ReviewDetail = () =>{
                         <p className="title">{rest.reviewTitle}</p>
                         <p className="content">{rest.reviewContent}</p>
                         <p className="rating">평점 : {rest.reviewRating}</p>
-                        <p>공감수 :{rest.likeCnt} </p>
+                        <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
-
-                        <div className="imgBox">
-                            <img src={rest.image}/>
-                        </div>
+                        <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>
+                        <img src={rest.image}/>
                     </div>
                 ))}
         </ReviewPage>
+        <HomeFooter/>
+        </>
     )
 
 }

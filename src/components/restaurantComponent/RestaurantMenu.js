@@ -45,7 +45,7 @@ const MenuContanier = styled.section `
 `;
 
 const Menu =() => {
-    const {restId} = useContext(RestIdContext);
+	const restId = localStorage.getItem("restId");
 
     const [rtMenu, setRtMenu] = useState("");
     const [menu, setMenu] = useState([]); // 현재까지 불러온 리뷰 데이터

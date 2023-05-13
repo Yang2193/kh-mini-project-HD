@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import restSampleImg from "../../images/restSample.jpg"
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const RsetBlock = styled.div`
       
@@ -56,7 +57,12 @@ const RsetBlock = styled.div`
     
 `;
 const RestBox = ({value}) => {
-
+// 페이지 이동
+const nav = useNavigate();
+const movePage=(restId)=>{
+    localStorage.setItem("restId",restId);
+    nav("/Info");
+}
     const [visibleLike, setVisibleLike] = useState([]); // 화면에 보이는 찜한 데이터
 	const [count, setCount] = useState(3); // 기본 개수
     // onClick 으로 클릭시 3개씩 화면에 나올 데이터 개수 추가 + 화면 높이 증가
@@ -76,7 +82,7 @@ const RestBox = ({value}) => {
         <RsetBlock >
         <div className="container" style={{height: height}}>
         {visibleLike && visibleLike.map(rest=>(
-            <div key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
+            <div onClick={()=>movePage(rest.restId)}  key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
             <div>
             <p>{rest.restName}</p> 
             <p>{rest.restRating}</p> 

@@ -1,5 +1,4 @@
 import React,{useContext,useState}from "react";
-import { RestIdContext } from "../context/RestaurantId";
 import HomeFooter from "../components/footer/HomeFooter";
 import Header from "../components/header/Header";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ import ResCheck from "../components/restaurantComponent/ResCheck";
 import 'react-calendar/dist/Calendar.css'; // css import
 
 const Reservation =() =>{
-    const {restId} = useContext(RestIdContext);
+	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
 
     const navigate = useNavigate();

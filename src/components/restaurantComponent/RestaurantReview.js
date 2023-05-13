@@ -59,10 +59,12 @@ const ReviewContanier = styled.section`
             p {
                 font-size: 20px;
                 margin-bottom: 10px;
+                position: relative;
             }
             .title {
                     font-weight: bold;
                     font-size: 23px;
+
                 }
             .rating{
                 font-size: 20px;
@@ -75,23 +77,22 @@ const ReviewContanier = styled.section`
             }
             .date{
                 font-size: 10px;
+                bottom:25px;
+                left:100px;
             }
             .likeCount{
                 font-size: 15px;
+                top:120px
+
             }
         img{
-            width: 200px;
-            height: 100px;
-            margin-left: 55px;
-            margin-top: 10px;
-        }
-        .imgBox{
             position: relative;
-            bottom: 5px;
-            border: 1px solid;
-            width: 100%;
-            height: 120px;
+            width: 40%;
+            height: 300px;
+            bottom: 200px;
+            left: 450px;
         }
+
         }
         .like{
         position: relative;
@@ -104,10 +105,9 @@ const ReviewContanier = styled.section`
 `;
 
 const Review =() => {
-//Context API로 매장 id 받아와서 해당 id 매장 정보 출력
-    const {restId} = useContext(RestIdContext);
+    const restId = localStorage.getItem("restId");
     const isLogin=localStorage.getItem("isLogin")
-    const memId = localStorage.getItem("memId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
 // 리뷰 데이터 입력
     const [rtReview, setRtReview] = useState(""); // 모든 리뷰 데이터
     const [visibleReviews, setVisibleReviews] = useState([]); // 화면에 보이는 리뷰 데이터
@@ -143,7 +143,7 @@ const Review =() => {
     const openModal = () => {
 
         console.log(isLogin,memId);
-        if (isLogin === "TRUE") {
+        if (memId) {
             setModalOpen(true);
         } else {
             alert("로그인이 되어있지 않습니다.")

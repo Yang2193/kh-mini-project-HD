@@ -5,6 +5,8 @@ import TableRow from "../../utils/table/CommonTableRow";
 import AxiosApi from "../../api/AxiosApi";
 import PageNation from "../../utils/PageNation";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom/dist";
+
 const TableBlock = styled.div`
 .common-table {
 width: 80%;
@@ -36,6 +38,15 @@ border-bottom: 30px solid #FBF4EF;
 }
 `;
 const MyReview =() => {
+  
+  // 페이지 이동
+  const nav=useNavigate();
+  const movePage = (restId) => {
+    localStorage.setItem("restId", restId);
+    // 매장 ID를 로컬 스토리지에 저장하고 Info 컴포넌트로 이동
+    nav("/info");
+  };
+
 
     // //리뷰내역 가져오기 
     const [reviewValue, setReviewValue] = useState([]);
@@ -67,9 +78,9 @@ const MyReview =() => {
         <div className="titleName">내가 쓴 리뷰 </div>
        
         <TableBlock>
-        <Table headersName ={['날짜','매장','사진','제목','평점']}>
+        <Table headersName ={['날짜','매장','사진','제목','평점']} >
         {reviewValue && currentPageData.map((e) => (
-                <TableRow key={e.reviewId}>
+                <TableRow key={e.reviewId} onClick={()=>movePage(e.restId)}>
                     <TableColumn>{e.reviewDate}</TableColumn>
                     <TableColumn>{e.restName}</TableColumn>
                     <TableColumn>{e.reviewFileName}</TableColumn>
