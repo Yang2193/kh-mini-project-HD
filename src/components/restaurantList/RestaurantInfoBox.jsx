@@ -17,7 +17,7 @@ const Container = styled.div`
 
 `;
 
-const RestaurantInfo = styled(Link)`
+const RestaurantInfo = styled.div`
     text-decoration: none;
     color:black;
     width: 810px;
@@ -42,10 +42,16 @@ const RestaurantInfoBox = ({searchFilter}) => {
         setRestId(id);
         setRestName(name)
     } 
+    const nav=useNavigate();
+const movePage = (restId) => {
+  localStorage.setItem("restId", restId);
+  nav("/info");
+};
+    localStorage.getItem();
     const searchFilterMap = 
         searchFilter &&
         searchFilter.map(rest => (
-            <RestaurantInfo to={"/Info"} onClick={() => setRestIdName(rest.restId, rest.restName)} key={rest.restId}>
+            <RestaurantInfo  onClick={() => movePage(rest.restId)} key={rest.restId}>
                 <div className="image"/>
                 <div>
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>
