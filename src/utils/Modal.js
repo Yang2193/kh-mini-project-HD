@@ -133,6 +133,7 @@ const Modal = (props) => {
                     <main>{children}</main>
                     <footer>
                     {type === "ok" ?(<input className="inputBtn" type="button" onClick={close} autoFocus onKeyDown={handleKeyDown} value="확인"/>):null}
+                    {type === "add" ?(<button onClick={confirm}>등록</button>):null}
                     </footer>
                 </section>
             }

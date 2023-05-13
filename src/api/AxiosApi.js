@@ -102,6 +102,14 @@ const AxiosApi = {
         }
         return await axios.post(KH_DOMAIN+"/update",member);
     },
+    //사업자 로그인
+    bizMemberLogin: async(id, pw) => {
+      const login = {
+          id : id,
+          pwd : pw 
+      };
+      return await axios.post(KH_DOMAIN + "/business/login", login);
+  },
 
      // 사업자 회원 가입
    bizMemberReg: async(id, pwd, name, mail, phone) => {
@@ -301,7 +309,88 @@ const AxiosApi = {
       resId:resId
     }
     return await axios.post(KH_DOMAIN+"/restaurant/update/reservation",data)
+  },
+  //레스토랑 조회 
+  restSelect : async(id) => {
+    return await axios.get(KH_DOMAIN+`/restaurant/select?name=${id}`);
+  },
+
+  //레스토랑 상세조회 
+  restInfoSelect : async(id) =>{
+  
+    return await axios.get(KH_DOMAIN+`/business/restaurantInfo?restId=${id}`);
+  },
+
+  //레스토랑 문의내역 조회
+    restInquirySelect : async(id) =>{
+    return await axios.get(KH_DOMAIN+`/business/inquiry?id=${id}`);
+  },
+
+   //레스토랑 예약내역 조회
+   restResvSelect : async(id,stat) =>{
+    return await axios.get(KH_DOMAIN+`/business/resv?id=${id}&stat=${stat}`);
+  },
+
+    //레스토랑 Info 업데이트 
+    restInfoUpdate : async(data) => {
+      const restInfo ={
+          vo : data
+      }
+      return await axios.post(KH_DOMAIN+"/business/restInfo/update",restInfo);
+  },
+  //레스토랑 업데이트 
+   restUpdate : async(data) => {
+    const restaurant ={
+      vo : data
   }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/update",restaurant);
+  },
+  // 매장의 메뉴 정보 불러오기
+  restMenu:async(restaurantId)=>{
+    return await axios.get(KH_DOMAIN + `/business/restaurant/menu?restaurantId=${restaurantId}`)
+  },
+  // 메뉴 등록하기 
+  restMenuAdd : async(restId,menuName,menuPrice,menuDesc,menuImgFileName) => {
+    const restMenu ={
+      restId : restId,
+      menuName : menuName,
+      menuPrice : menuPrice,
+      menuDesc :menuDesc,
+      menuImgFileName :menuImgFileName
+  }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/menu/add",restMenu);
+  },
+  // 메뉴 삭제하기 
+  restMenuDel : async(menuId) => {
+    const restMenu ={
+      menuId : menuId,
+  }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/menu/delete",restMenu);
+  },
+
+  //메뉴 수정하기 
+  restMenuUpdate : async(data) => {
+    const restMenu ={
+      vo : data,
+  }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/menu/update",restMenu);
+},
+//답변 등록하기 
+inquiryAnswerUpdate : async(data) => {
+  const inquiryData ={
+    vo : data,
+}
+  return await axios.post(KH_DOMAIN+"/business/inquiry/answer/update",inquiryData);
+},
+
+//예약 확정하기 
+resvStatUpdate : async(data) => {
+  const resvList ={
+    vo : data,
+}
+  return await axios.post(KH_DOMAIN+"/business/resv/stat/update",resvList);
+}
+
 
 }
 

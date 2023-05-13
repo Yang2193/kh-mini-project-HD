@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import imgLogo from "../images/logo-removebg-preview.png";
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import AxiosApi from '../api/AxiosApi';
 import Modal from '../utils/Modal';
 import MessageModal from '../utils/MessageModal';
 import { useEffect } from 'react';
-
+import { RestaurantContext } from "../context/RestaurantContext";
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
         color : ${({ isChecked }) => (isChecked ? 'white' : 'black')};
@@ -238,6 +238,17 @@ const Login = ({children}) => {
           setIsPw(true);
       }
     }
+
+    //로그인할때 객체 저장 
+    //레스토랑 정보
+    const {setRestValue} =useContext(RestaurantContext);
+    const restaurant = async () => {
+      const rsp = await AxiosApi.restSelect(localStorage.getItem("userId"));
+      if (rsp.status === 200) setRestValue(rsp.data);
+
+    };
+
+
     const onClickLogin = async() => {
       //멤버 타입 여부에 따라서 다른 AxiosAPI 호출
 
@@ -253,6 +264,15 @@ const Login = ({children}) => {
         }
       } else {
         // 사업자회원 로그인 쪽 axios 호출, 사업자 로그인쪽 여기다가 만드시면 됩니다.
+        const res = await AxiosApi.bizMemberLogin(inputId, inputPw);
+        console.log(res.data);
+        if(res.data === true) {
+          window.localStorage.setItem("userId",inputId);
+          restaurant();
+          navigate('/BusinessPage');  
+        } else {
+          setModalOpen(true);
+        }
       } 
      
     }

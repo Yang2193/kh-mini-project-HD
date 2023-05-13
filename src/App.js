@@ -13,11 +13,14 @@ import Reservation from './pages/Reservation';
 import ReviewDetail from './pages/ReviewDetail';
 import IdPwFind from './pages/IdPwFind';
 import BizSignUp from './pages/BizSignup';
+import RestaurantContexts from './context/RestaurantContext';
+import BusinessPage from './pages/BusinessPage';
 function App() {
   return (
     <UserStore>
       <RestaurantProvider>
         <MemberProvider>
+          <RestaurantContexts>
           <Router>
             <Routes>
               <Route path="/" element={<Home/>} />
@@ -32,9 +35,10 @@ function App() {
               <Route path='/Mypage' element={<Mypage/>}/>
               <Route path='/Signup' element={<Signup/>}/>
               <Route path='/BizSignup' element={<BizSignUp/>}/>
-
+              <Route path='/BusinessPage' element={<BusinessPage/>}/>
             </Routes>
           </Router>
+          </RestaurantContexts>
         </MemberProvider>
       </RestaurantProvider>
     </UserStore>
