@@ -216,12 +216,14 @@ const IdPwFind = () => {
     const [inputMail, setInputMail] = useState("");
     
     // 오류메시지
+    const [checkMessage, setCheckMessage] = useState("");
     const [MailMessage, setMailMessage] = useState("");
 
 
     // 유효성 검사
     const [isPw, setIsPw] = useState("");
     const [isMail, setIsMail] = useState("");
+    const [isCheck, setIsCheck] = useState("");
 
 
     //ID입력
@@ -254,11 +256,13 @@ const IdPwFind = () => {
             const rsp = await AxiosApi.findIdStep2(inputMail);
             if(rsp.data === true){
                 setIsSuccess(true);
+                setCheckMessage("입력하신 이메일로 ID를 보냈습니다.");
+                setIsCheck("success");
             }
-            //여기 보완해야 할 거 같은 디테일이 있는데 기억이 안 난다. 기억이 나면 다시 메모할 것
-            //재입력시 문구 남아있는 문제 수정 할 것
         } else {
             setCheckId(false);
+            setCheckMessage("가입되지 않은 이메일입니다.");
+            setIsCheck("error");
         }
     }
 
@@ -271,14 +275,30 @@ const IdPwFind = () => {
           const rsp = await AxiosApi.findPwStep2(inputId, inputMail);
           if(rsp.data === true){
             setIsSuccessPw(true);
+            setCheckMessage("입력하신 이메일로 임시 비밀번호를 발급하였습니다.");
+            setIsCheck("success");
           }
       } else {
           setCheckId(false);
+          setCheckMessage("가입되지 않은 이메일이거나 ID입니다.");
+          setIsCheck("error");
       }
     }
 
     const onClickPrev = () => {
         navigate('/login');
+    }
+
+    const handleKeyDownId = (e) =>{
+      if(e.keyCode === 13){
+        onClickFindId();
+      }
+    }
+
+    const handleKeyDownPw = (e) => {
+      if(e.keyCode === 13){
+        onClickFindPw();
+      }
     }
 
     return (
@@ -300,14 +320,16 @@ const IdPwFind = () => {
                         <p>가입하실 때 입력하신 이메일 주소를 입력해주세요.</p>
                     </div>
                     <div className="item2">
-                        <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} />
+                        <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} onKeyDown={handleKeyDownId} />
                     </div>
-                
-                    {checkId===false && <p>가입되지 않은 이메일입니다.</p>}
-                    {isSuccess===true && <p>입력하신 이메일로 ID를 보냈습니다.</p>}
+                    <div className='hint'>
+                      {(checkId===false&&isCheck==='error') && <span className="error">{checkMessage}</span>}
+                      {(isSuccess===true&&isCheck==="success") && <span className="success">{checkMessage}</span>}
+                    </div>
+                    
                     <div className="item2">
                         {(isMail) ?
-                        <button className="enable-button" onClick={onClickFindId}>ID찾기</button> :
+                        <input type="button" className="enable-button" onClick={onClickFindId} value="ID찾기"/> :
                         <button className="disable-button" >ID찾기</button>}
                     </div>
                 </>
@@ -320,17 +342,19 @@ const IdPwFind = () => {
                         <Input placeholder="ID" value ={inputId} onChange={onChangeId}/>
                     </div>
                     <div className="item2">
-                        <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} />
+                        <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} onKeyDown={handleKeyDownPw}/>
                     </div>
-                    {checkId===false && <p>가입되지 않은 ID거나 등록되지 않은 이메일입니다.</p>}
-                    {isSuccessPw===true && <p>입력하신 이메일로 임시 비밀번호를 발급하였습니다.</p>}
+                    <div className="hint">
+                        {(checkId===false&&isCheck==='error') && <span className='error'>{checkMessage}</span>}
+                        {(isSuccessPw===true&&isCheck==="success") && <span className='success'>{checkMessage}</span>}
+                    </div>
                     <div className="hint">
                         {inputMail.length > 0 && (
                         <span className={`${isMail ? "success" : "error"}`}>{MailMessage}</span>)}
                     </div>
                     <div className="item2">
                         {(isMail) ?
-                        <button className="enable-button" onClick={onClickFindPw} >PW찾기</button> :
+                        <input type="button" className="enable-button" onClick={onClickFindPw} value="PW찾기"/> :
                         <button className="disable-button" >PW찾기</button>}
                     </div>
                 </>
