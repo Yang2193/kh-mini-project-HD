@@ -6,7 +6,6 @@ import { storage } from "../../firebase/firebase";
 import { ref,uploadBytes,getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 import { RestIdContext } from "../../context/RestaurantId";
-
 const ModalStyle = styled.div`
 
      .modal {
@@ -125,9 +124,8 @@ const ModalStyle = styled.div`
 `;
 
 const InquiryModal = (props) => {
-    const {restId} = useContext(RestIdContext); // context api로 매장 id 입력 받음
     const memId= localStorage.getItem("userId");
-
+    const restId = localStorage.getItem("restId");
     // 팝업 열고 닫음
     const {open,close} = props;
     // 팝업창 초기화

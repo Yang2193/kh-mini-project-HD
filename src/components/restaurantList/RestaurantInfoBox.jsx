@@ -36,7 +36,12 @@ const RestaurantInfo = styled.div`
 `;
 
 const RestaurantInfoBox = ({searchFilter}) => {
+    const nav = useNavigate();
 
+    const movePage =(restId) =>{
+        localStorage.setItem("restId",restId);
+        nav("Info");
+    }
 
     const searchFilterMap = 
         searchFilter &&
