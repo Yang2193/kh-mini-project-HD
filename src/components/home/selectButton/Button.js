@@ -2,6 +2,7 @@ import React from "react";
 import styled, {css} from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosApi from "../../../api/AxiosApi";
+import DetailedCheck from "../../search/DetailedCheck";
 
 const Container = styled.div`
     width : 100%;
@@ -42,7 +43,7 @@ const Box = styled.div`
 
 const Box1 = styled.div`
     width: 630px;
-    height: 120px;
+    height: 200px;
     margin-bottom: 20px;
     display: flex;
     justify-content: space-evenly;
@@ -50,7 +51,7 @@ const Box1 = styled.div`
 `;
 const Box2 = styled.div`
     width: 630px;
-    height: 120px;
+    height: 200px;
     display: flex;
     justify-content: space-evenly;
     box-sizing: border-box;
@@ -104,14 +105,12 @@ const Button = ({ handleType, handleFilter }) => {
         <Container>
             <Box>
                 <div className="box">
-                    <Btn>지역</Btn>
-                    <Btn>메뉴</Btn>
-                    <Btn>평점</Btn>
+                    <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
+                    
                 </div>
                 <div className="box2">
-                    <Btn>가격대</Btn>
+                    
                     <Btn onClick={onClickReviewList}>인기 리뷰</Btn>
-                    <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
                 </div>
             </Box>
         </Container>

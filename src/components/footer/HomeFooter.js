@@ -13,9 +13,10 @@ const Container = styled.div`
     align-items: center;
     margin-top: 30px;
    
-    @media (min-height: 1080px) {
+    @media (min-height: 1200px) {
+        margin-top: 30px;
         position: absolute;
-        bottom: 0px;
+        bottom: -10px;
         width : 100%;
     }
 

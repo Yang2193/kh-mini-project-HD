@@ -227,10 +227,9 @@ const AxiosApi = {
     return await axios.get(KH_DOMAIN + `/review/detail?reviewId=${reviewId}`)
   },
 // 문의 등록
-  addInquiry:async(restId,restName,memId,title,content,image)=>{
+  addInquiry:async(restId,memId,title,content,image)=>{
     const inquiry={
       restId:restId,
-      restName:restName,
       memberId:memId,
       title:title,
       content:content,

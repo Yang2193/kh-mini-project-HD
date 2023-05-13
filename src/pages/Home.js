@@ -15,7 +15,7 @@ const Body = styled.div`
     background-color: ivory;
     position: relative;
 
-    @media (min-height: 1080px) {
+    @media (min-height: 1200px) {
         height: 100vh;
 }
 `;
@@ -43,6 +43,7 @@ const Home = () => {
                 </HomeHeader>
                 {type === "Main" && (
                     <>
+                        <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                         <Button handleType={handleType} handleFilter={handleFilter}/>
                         <HomeCarousel/>  
                     </>
@@ -74,7 +75,7 @@ const Home = () => {
                         <Reviews/>
                     </>
                 )}
-                <HomeFooter/>
+                <HomeFooter/>    
             </Body>
             
         </>
