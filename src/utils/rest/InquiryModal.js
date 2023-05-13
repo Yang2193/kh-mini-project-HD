@@ -5,6 +5,7 @@ import AxiosApi from "../../api/AxiosApi";
 import { storage } from "../../firebase/firebase";
 import { ref,uploadBytes,getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
+import { RestIdContext } from "../../context/RestaurantId";
 
 const ModalStyle = styled.div`
 
@@ -167,7 +168,7 @@ const InquiryModal = (props) => {
 
     const addInquiry = async() =>{
         uploadImage();
-        const rsp = await AxiosApi.addInquiry(restId,restName,memId,inputTttle,inputContent,imageUrl);
+        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,imageUrl);
 
         if(rsp.data === true) {
             alert("문의가 등록되었습니다.")

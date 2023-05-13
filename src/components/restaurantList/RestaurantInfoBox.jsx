@@ -36,16 +36,12 @@ const RestaurantInfo = styled(Link)`
 `;
 
 const RestaurantInfoBox = ({searchFilter}) => {
-    const {setRestId, setRestName} = useContext(RestIdContext);
+    const {setRestId} = useContext(RestIdContext);
 
-    const setRestIdName = (id, name) => {
-        setRestId(id);
-        setRestName(name)
-    } 
     const searchFilterMap = 
         searchFilter &&
         searchFilter.map(rest => (
-            <RestaurantInfo to={"/Info"} onClick={() => setRestIdName(rest.restId, rest.restName)} key={rest.restId}>
+            <RestaurantInfo to={"/Info"} onClick={() => setRestId(rest.restId)} key={rest.restId}>
                 <div className="image"/>
                 <div>
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>

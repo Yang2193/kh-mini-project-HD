@@ -83,7 +83,7 @@ const CheckBox = styled.div`
   
 `;
 
-const DetailedCheck = ({handleFilter}) => {
+const DetailedCheck = ({handleFilter, handleType}) => {
     const [isOpen, setIsOpen] = useState(false);
     
     const context = useContext(UserContext);
@@ -115,11 +115,10 @@ const DetailedCheck = ({handleFilter}) => {
     const confirm = async() => {
         console.log(keywordArr, address, category, price, rating);
         const searchFilter = await AxiosApi.filterRestaurant(keywordArr, address, category, price, rating);
-        
         handleFilter(searchFilter.data);
         console.log(searchFilter.data);
         setIsOpen(!isOpen);
-
+        handleType("List");
     }
 
  
