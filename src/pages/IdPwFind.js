@@ -323,8 +323,8 @@ const IdPwFind = () => {
                         <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} onKeyDown={handleKeyDownId} />
                     </div>
                     <div className='hint'>
-                      {(checkId===false&&isCheck==='error') && <span className="error">{checkMessage}</span>}
-                      {(isSuccess===true&&isCheck==="success") && <span className="success">{checkMessage}</span>}
+                      {checkId===false && <span className="error">{checkMessage}</span>}
+                      {isSuccess===true && <span className="success">{checkMessage}</span>}
                     </div>
                     
                     <div className="item2">
@@ -345,8 +345,8 @@ const IdPwFind = () => {
                         <Input placeholder="이메일" value ={inputMail} onChange={onChangeMail} onKeyDown={handleKeyDownPw}/>
                     </div>
                     <div className="hint">
-                        {(checkId===false&&isCheck==='error') && <span className='error'>{checkMessage}</span>}
-                        {(isSuccessPw===true&&isCheck==="success") && <span className='success'>{checkMessage}</span>}
+                        {checkId===false && <span className='error'>{checkMessage}</span>}
+                        {isSuccessPw===true && <span className='success'>{checkMessage}</span>}
                     </div>
                     <div className="hint">
                         {inputMail.length > 0 && (
