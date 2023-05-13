@@ -324,8 +324,17 @@ const SignUp = () => {
     }
     const onChangeMail = (e) => {
         // 이메일 정규식 추가
-        setInputEmail(e.target.value);
-        setIsMail(true);
+        const emailRegex = /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+        const email = e.target.value;
+        setInputEmail(email);
+        setIsSend(false);
+        if(emailRegex.test(email)){
+            setMailMessage("올바른 형식입니다.")
+            setIsMail(true);
+        } else{
+            setMailMessage("올바른 형식이 아닙니다.")
+            setIsMail(false);
+        }
         
     }
 
@@ -351,9 +360,16 @@ const SignUp = () => {
     }
     const onChangePhone = (e) => {
         // 전화번호 정규식 추가
+        const phoneRegex = /^\+?[0-9]{2,4}-?[0-9]{3,4}-?[0-9]{4}$/;
         const phone = e.target.value;
         setInputPhone(phone);
-        setIsPhone(true);
+        if(phoneRegex.test(phone)){
+            setIsPhone(true);
+            setPhoneMessage("올바른 형식입니다.");
+        } else{
+            setIsPhone(false);
+            setPhoneMessage("올바르지 않은 형식입니다.");
+        }
         }
 
     const onChangeNickname = (e) => {
@@ -442,6 +458,9 @@ const SignUp = () => {
                         <button onClick={onClickEmail}>이메일 인증</button>
                     </div>
                     <div className="hint">
+                        {(inputEmail.length > 0 && !isSend) && (
+                            <span className={`message ${isMail ? 'success' : 'error'}`}>{mailMessage}</span>
+                        )}
                         {isSend && <span className="success">{mailMessage}</span>}    
                     </div>
                     <div className="item6">
@@ -450,10 +469,15 @@ const SignUp = () => {
                     <div className="hint">
                         {inputKey.length > 0 && (
                                 <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
-                            )}
+                        )}
                     </div>
                     <div className="item2">
-                        <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone}/>
+                        <Input type="text" placeholder="전화번호 '-' 포함해서 입력해주세요." value={inputPhone} onChange={onChangePhone}/>
+                    </div>
+                    <div className="hint">
+                        {inputPhone.length > 0 && (
+                                <span className={`message ${isPhone ? 'success' : 'error'}`}>{phoneMessage}</span>
+                        )}
                     </div>
                     <div className="item2">
                         <Input type="text" placeholder="닉네임" value={inputNickname} onChange={onChangeNickname} onKeyDown={onKeyDownSignUp} />

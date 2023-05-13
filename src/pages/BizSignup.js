@@ -75,6 +75,13 @@ const Container = styled.div`
     }
   }
 
+  .item6{
+    margin: 10px;
+    display: flex;
+    justify-content: right;
+    width: 500px;
+  }
+
   
 
   .hint {
@@ -294,8 +301,17 @@ const BizSignUp = () => {
     }
     const onChangeMail = (e) => {
         // 이메일 정규식 추가
-        setInputEmail(e.target.value);
-        setIsMail(true);
+        const emailRegex = /^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+        const email = e.target.value;
+        setInputEmail(email);
+        setIsSend(false);
+        if(emailRegex.test(email)){
+            setMailMessage("올바른 형식입니다.")
+            setIsMail(true);
+        } else{
+            setMailMessage("올바른 형식이 아닙니다.")
+            setIsMail(false);
+        }
         
     }
 
@@ -304,7 +320,7 @@ const BizSignUp = () => {
 
         const rsp = await AxiosApi.bizMailConfirm(inputEmail);
         setAuthKey(rsp.data);
-        setKeyMessage("이메일로 인증코드가 전송되었습니다.");
+        setMailMessage("이메일로 인증코드가 전송되었습니다.");
         setIsSend(true);
     }
 
@@ -322,9 +338,16 @@ const BizSignUp = () => {
     }
     const onChangePhone = (e) => {
         // 전화번호 정규식 추가
+        const phoneRegex = /^\+?[0-9]{2,4}-?[0-9]{3,4}-?[0-9]{4}$/;
         const phone = e.target.value;
         setInputPhone(phone);
-        setIsPhone(true);
+        if(phoneRegex.test(phone)){
+            setIsPhone(true);
+            setPhoneMessage("올바른 형식입니다.");
+        } else{
+            setIsPhone(false);
+            setPhoneMessage("올바르지 않은 형식입니다.");
+        }
         }
 
 
@@ -398,21 +421,31 @@ const BizSignUp = () => {
                 <div className="item2">
                     <Input type="text" placeholder="이름" value ={inputName} onChange={onChangeName}/>
                 </div>
-                <div className="item2">
-                    <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-                </div>
                 <div className="item5">
-                    <Input type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
+                    <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
                     <button onClick={onClickEmail}>이메일 인증</button>
                 </div>
                 <div className="hint">
-                    {isSend && <span className="success">{keyMessage}</span>}
+                    {(inputEmail.length > 0 && !isSend) && (
+                        <span className={`message ${isMail ? 'success' : 'error'}`}>{mailMessage}</span>
+                    )}
+                    {isSend && <span className="success">{mailMessage}</span>}    
+                </div>
+                <div className="item6">
+                    <Input className="input2" type="text" placeholder="인증코드를 입력하세요" onChange={onChangeKey}/>
+                </div>
+                <div className="hint">
                     {inputKey.length > 0 && (
                             <span className={`message ${isKey ? 'success' : 'error'}`}>{keyMessage}</span>
-                        )}
-                </div>
+                    )}
+                </div>                    
                 <div className="item2">
-                    <Input type="text" placeholder="전화번호" value={inputPhone} onChange={onChangePhone} onKeyDown={onKeyDownSignUp}/>
+                    <Input type="text" placeholder="전화번호 '-' 포함해서 입력해주세요." value={inputPhone} onChange={onChangePhone} onKeyDown={onKeyDownSignUp}/>
+                </div>
+                <div className="hint">
+                        {inputPhone.length > 0 && (
+                                <span className={`message ${isPhone ? 'success' : 'error'}`}>{phoneMessage}</span>
+                        )}
                 </div>
 
                 <div className="item2">

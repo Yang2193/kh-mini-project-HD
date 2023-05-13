@@ -2,6 +2,7 @@ import React,{useContext, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Info from "../../pages/RestaurantInfo";
+import { RestIdContext } from "../../context/RestaurantId";
 const Container = styled.div`
     width: 100%;
     border: 1px solid black;
@@ -35,15 +36,16 @@ const RestaurantInfo = styled(Link)`
 `;
 
 const RestaurantInfoBox = ({searchFilter}) => {
-    const movePage = (restId) => {
-       window.localStorage.setItem("restId",restId);
-      };
-  
+    const {setRestId, setRestName} = useContext(RestIdContext);
 
-        const searchFilterMap = 
+    const setRestIdName = (id, name) => {
+        setRestId(id);
+        setRestName(name)
+    } 
+    const searchFilterMap = 
         searchFilter &&
         searchFilter.map(rest => (
-            <RestaurantInfo to="/Info" onClick={()=>movePage(rest.restId)} key={rest.restId}>
+            <RestaurantInfo to={"/Info"} onClick={() => setRestIdName(rest.restId, rest.restName)} key={rest.restId}>
                 <div className="image"/>
                 <div>
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>

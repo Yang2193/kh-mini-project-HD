@@ -203,11 +203,7 @@ const Login = ({children}) => {
 
     //팝업 처리(로그인 환영)
     const [loginModalOpen, setLoginModalOpen] = useState(false);
-    const closeLoginModal = () =>{
-      setLoginModalOpen(false);
-    }
 
-  
     //일반회원 / 사업자회원 체크하는 메소드
     const onChangeMemberType = (e) => {
       const value = e.target.value;
@@ -268,6 +264,7 @@ const Login = ({children}) => {
     }
 
     const onClickConfirm = () => {
+      setLoginModalOpen(false);
       navigate('/');
     }
 

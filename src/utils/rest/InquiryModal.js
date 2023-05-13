@@ -124,7 +124,7 @@ const ModalStyle = styled.div`
 `;
 
 const InquiryModal = (props) => {
-	const restId = localStorage.getItem("restId");
+    const {restId} = useContext(RestIdContext); // context api로 매장 id 입력 받음
     const memId= localStorage.getItem("userId");
 
     // 팝업 열고 닫음
@@ -167,7 +167,7 @@ const InquiryModal = (props) => {
 
     const addInquiry = async() =>{
         uploadImage();
-        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,imageUrl);
+        const rsp = await AxiosApi.addInquiry(restId,restName,memId,inputTttle,inputContent,imageUrl);
 
         if(rsp.data === true) {
             alert("문의가 등록되었습니다.")
