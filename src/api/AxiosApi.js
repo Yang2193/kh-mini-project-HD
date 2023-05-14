@@ -389,7 +389,28 @@ resvStatUpdate : async(data) => {
     vo : data,
 }
   return await axios.post(KH_DOMAIN+"/business/resv/stat/update",resvList);
+},
+//찜 숫자 조회
+//찜가게 조회 
+likeCntGet : async(id) => {
+  return await axios.get(KH_DOMAIN + `/restLike/cnt?id=${id}` );
+},
+
+//문의 수정하기 
+inquiryUpdate : async(data) => {
+  const inquiryData ={
+    vo : data,
 }
+  return await axios.post(KH_DOMAIN+"/inquiry/update",inquiryData);
+},
+// 예약 취소하기 
+resvDel : async(resvId) => {
+  const resvData ={
+    resvId : resvId,
+}
+  return await axios.post(KH_DOMAIN+"/resv/delete",resvData);
+}
+
 
 
 }

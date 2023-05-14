@@ -21,9 +21,9 @@ const RatingBox = styled.div`
     }
     
 `;
-const RatingView = () => {
+const RatingView = ({ratingAvg}) => {
 
-    const AVG_RATING = 3.3;
+    const AVG_RATING = ratingAvg;
 
     return(
     

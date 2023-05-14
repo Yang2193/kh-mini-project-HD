@@ -42,14 +42,14 @@ const BusinessPage = () => {
   const location =useLocation();
   const queryParams = new URLSearchParams(location.search);
   const headerSelect = queryParams.get("category");
-
+  const [ratingAvg,setRatingAvg] = useState();
 
     const [category,setCategory] = useState(null);
     const onSelect = useCallback(category => setCategory(category),[]);
 
     const [restInfoList, setRestInfoList] = useState('');
    
-
+    const [likeCnt, setLikeCnt] = useState('');
    
     //매장 정보 조회 
    const {restValue,setRestValue} =useContext(RestaurantContext);
@@ -68,13 +68,31 @@ const BusinessPage = () => {
        if (rsp.status === 200) setRestInfoList(rsp.data);
        
       };
+      //평점 가져오기 
+        const rtInfoFix = async()=>{
+          if (restValue && restValue.restId) {
+            const rsp = await AxiosApi.restaurantInfoFixed(restValue.restId);
+            if (rsp.status === 200) setRatingAvg(rsp.data[0].avgRating);
+        }
+        };
+
+      //찜가게 조회
+      const likeCount= async()=> {
+        if (restValue && restValue.restId) {
+        const rsp = await AxiosApi.likeCntGet(restValue.restId);
+        if(rsp.data)setLikeCnt(rsp.data);
+        }
+    }
+    
       useEffect(() => {
         restaurant();
-  
+        
         }, []);
   
         useEffect(()=> {
           restInfo();
+          rtInfoFix();
+          likeCount();
         },[restValue]);
 
         useEffect(() => {
@@ -85,10 +103,10 @@ const BusinessPage = () => {
     <BizBlock>
     <Header>사업자 페이지</Header>
     <div className="pageTitle"> BUSINESS PAGE </div>
-    <BizProfile restInfoList={restInfoList} setRestInfoList={setRestInfoList} restName ={restValue.restName}/>
+    <BizProfile restInfoList={restInfoList} setRestInfoList={setRestInfoList} restName ={restValue.restName}likeCnt={likeCnt}/>
     <MenuBlock>
     <BizMenuBar category={category} onSelect={onSelect}/>
-    <RatingView/>
+    <RatingView ratingAvg={ratingAvg}/>
     </MenuBlock>
     {category!==null &&
     <BizSection category={category} restInfoList={restInfoList} setRestInfoList={setRestInfoList} restName ={restValue.restName}/>}

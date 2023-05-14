@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import shop from "../../images/shop.png";
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import Modal from "../../utils/Modal";
+import {BsFillHeartFill} from 'react-icons/bs';
 const ProfileBlock = styled.div`  
 width: 70%;
 height: auto;
@@ -15,12 +16,35 @@ flex-wrap: wrap;
 justify-content: center;
 align-items: center;
 padding: 20px;
-
+position: relative;
 //프로필 이미지
 .profileImg img{
     width: 300px;
     height: 200px;
     
+}
+
+.likeCnt{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right:10px;
+    top:15px;
+    color :red;
+}
+.likeValue{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right:10px;
+    top:10px;
+    color :white;
+    font-size :30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 //버튼
 .confirmBtn{
@@ -59,18 +83,17 @@ padding: 20px;
             }
 
         }
-
-
-
 `;
-const BizProfile = ({restInfoList,setRestInfoList,restName}) => {
+const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
+    
+   
     const [showInput, setShowInput] = useState(false);
     //팝업 처리
     const [modalOpen, setModalOpen] = useState(false);
     const closeModal = () => {
            setModalOpen(false);
        };
-       const onClickUpate =  async()=> {
+    const onClickUpate =  async()=> {
 
         const rsp = await AxiosApi.restInfoUpdate(restInfoList);
         if(rsp.data){
@@ -80,6 +103,12 @@ const BizProfile = ({restInfoList,setRestInfoList,restName}) => {
              setShowInput(false);
          } 
     }
+    useEffect(()=> {
+        
+      
+        
+    },[]);
+
 
     const onChange= (e) => { 
         const{name,value} = e.target;
@@ -87,6 +116,8 @@ const BizProfile = ({restInfoList,setRestInfoList,restName}) => {
     }
     return(
             <ProfileBlock>
+            <BsFillHeartFill className="likeCnt"/>
+            <span className="likeValue">{likeCnt}</span>
             <div className="profileImg"><img src={shop} alt="Logo" /></div>
             <div className="info">
             <div>가게명 : <span className="result">{restName}</span></div>

@@ -7,7 +7,7 @@ import AxiosApi from "../../api/AxiosApi";
 import Select from "react-select";
 import ko from "date-fns/locale/ko";
 import moment from "moment";
-
+import Modal from "../../utils/Modal";
 
 //리뷰 상세정보
 const ResvModal = styled.div`
@@ -81,8 +81,9 @@ const ResvModal = styled.div`
    
 `;
 
-const ResvView = ({data}) => {
+const ResvView = ({data,setModalOpen}) => {
 const {memberValue} = useContext(MemberContext);
+
 // 예약 변경
 const [showInput, setShowInput] = useState(false);
 // 날짜 시간
@@ -122,6 +123,14 @@ const onClickUpate =  async(resvId)=> {
         setShowInput(false);
     } 
 }
+// 예약 취소 
+const onClickDel = async(resvId) => {
+    const rsp = await AxiosApi.resvDel(resvId);
+    if(rsp.data){
+       console.log("삭제완료");
+       setModalOpen("delOK");
+    } 
+}
 
     return(
     <ResvModal data={data}>
@@ -136,7 +145,10 @@ const onClickUpate =  async(resvId)=> {
       showTimeSelect
       locale={ko}
       dateFormat="yyyy-MM-dd a h:mm"/> 
-      : <span className="result">{data.applicationDate}</span>}
+      : <span className="result">{moment(data.resvDate).format("YYYY-MM-DD")}</span>}
+    <br />
+    <label htmlFor ="date">시간 : </label>
+    <span className="result">{data.resvTime}</span>
     <br />
     <label htmlFor ="date">인원수 : </label>
     {showInput ? <Select options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} /> :
@@ -160,7 +172,7 @@ const onClickUpate =  async(resvId)=> {
     <div>
     {showInput? <button className="updateBtn btn" onClick={()=>onClickUpate(data.resvId)} style={{backgroundColor : "#FFA07A"}}>예약변경완료</button>:
                 <button className="updateBtn btn" onClick={()=> setShowInput(true)} >예약변경</button>}
-        <button className="cancelBtn btn">예약취소</button>
+        <button className="cancelBtn btn" onClick={()=> onClickDel(data.resvId)}>예약취소</button>
     </div>
     
     </ResvModal>

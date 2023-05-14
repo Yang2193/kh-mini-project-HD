@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import restSampleImg from "../../images/restSample.jpg"
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import StarRatings from "react-star-ratings";
 const RsetBlock = styled.div`
       
     
@@ -24,10 +24,13 @@ const RsetBlock = styled.div`
             text-align: center;
             display: none;
         }
+        .ratingBox{
+           display: none;
+        }
 
         &:hover{
 
-            div{
+            .hoverBox{
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -39,6 +42,14 @@ const RsetBlock = styled.div`
             display: block;
             font-weight: bold;
            }
+           .ratingBox{
+            display: block;
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+           }
+           
+           
         
         }
          
@@ -52,6 +63,7 @@ const RsetBlock = styled.div`
         cursor: pointer;
 
     }
+    
    
    
     
@@ -83,8 +95,14 @@ const movePage=(restId)=>{
         <div className="container" style={{height: height}}>
         {visibleLike && visibleLike.map(rest=>(
             <div onClick={()=>movePage(rest.restId)}  key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
-            <div>
+            <div className="hoverBox">
             <p>{rest.restName}</p> 
+            <span className="ratingBox">
+              <StarRatings rating={rest.restRating}
+                starDimension="30px"
+                starSpacing="4px"
+                starRatedColor="yellow"/>
+            </span>
             <p>{rest.restRating}</p> 
             </div>
             </div>

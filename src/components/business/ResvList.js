@@ -9,7 +9,7 @@ import TableColumn from '../../utils/table/CommonTableColumn';
 import TableRow from '../../utils/table/CommonTableRow';
 import AxiosApi from '../../api/AxiosApi';
 import Modal from '../../utils/Modal';
-import ResvView from '../myPage/ResvView';
+import BizResvView from '../business/BizResvView';
 import WatingList from './WaitingList';
 const TableBlock = styled.div`
         margin: 10px;
@@ -183,8 +183,6 @@ const ResvList = ({restValue}) => {
           hour: 'numeric',
           minute: 'numeric',
           hour12: true,
-          //timeZone: 'Asia/Seoul', // 한국 시간대 설정
-          //timeZoneName: 'short',
         };
       
         return date.toLocaleString('ko-KR', options);
@@ -212,7 +210,7 @@ const ResvList = ({restValue}) => {
                         <TableColumn>{e.resvId}</TableColumn>
                         <TableColumn>{e.resvDate}</TableColumn>
                         <TableColumn>{e.memId}</TableColumn>
-                        <TableColumn>{formatTime(new Date(e.resvDate))}</TableColumn>
+                        <TableColumn>{e.resvTime}</TableColumn>
                         <TableColumn>{e.resvPeople}명</TableColumn>
                         <TableColumn>{e.resvSeat}번</TableColumn>
                         </TableRow>
@@ -220,7 +218,7 @@ const ResvList = ({restValue}) => {
                     </Table>
                 </TableBlock>
                 <Modal open={modalOpen === "wait"} close={closeModal} header="예약 확정하기" type="resv"><WatingList restResv={restResv} resvList={resvList} formatTime={formatTime}/></Modal>
-                <Modal open={modalOpen ==="click"} close={closeModal} header="예약 정보" type="ok">{selectedResv&& <ResvView data={selectedResv}/>}</Modal>
+                <Modal open={modalOpen ==="click"} close={closeModal} header="예약 정보" type="ok">{selectedResv&& <BizResvView data={selectedResv}/>}</Modal>
         </>
        
       

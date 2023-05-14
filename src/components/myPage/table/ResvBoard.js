@@ -47,22 +47,22 @@ const ResvBoard = ({stat}) => {
     const [resvValue, setResvValue] = useState([]);
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호
     //팝업 처리
-    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(null);
     //클릭한 행 상태 
     const [selectedResv, setSelectedResv] = useState(null);
     const closeModal = () => {
-            setModalOpen(false);
+            setModalOpen(null);
+            resvInfo();
         };
     //보여질 페이지 개수
     const ITEMS_PAGE = 3;
-    useEffect(() => {
     const resvInfo = async() => {
         const rsp = await AxiosApi.resvGet(localStorage.getItem("userId"),stat);
         if(rsp.status === 200) setResvValue(rsp.data);
         console.log(rsp.data);
     };
-   resvInfo();
-
+    useEffect(() => {
+    resvInfo();
     },[]);
     const handlePageClick = (selectedPage) => {
         setCurrentPage(selectedPage.selected);
@@ -72,7 +72,7 @@ const ResvBoard = ({stat}) => {
       const currentPageData = resvValue.slice(offset, offset + ITEMS_PAGE);
 
     const resvClick = (resv) => {
-        setModalOpen(true);
+        setModalOpen("resv");
         setSelectedResv(resv);
     }
     return(
@@ -82,7 +82,7 @@ const ResvBoard = ({stat}) => {
         <Table headersName={['날짜','매장명','인원수','시간','상태']}>
         {resvValue && currentPageData.map((e) => (
             <TableRow key={e.resvId} onClick = {() =>resvClick(e)}>
-            <TableColumn >{e.applicationDate}</TableColumn>
+            <TableColumn >{e.resvDate}</TableColumn>
             <TableColumn>{e.restName}</TableColumn>
             <TableColumn>{e.resvPeople}</TableColumn>
             <TableColumn>{e.applicationDate}</TableColumn>
@@ -93,8 +93,8 @@ const ResvBoard = ({stat}) => {
         </Table>
         <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
         </ResvBlock>
-        <Modal open={modalOpen} close={closeModal} header="예약 정보" type="resv">{selectedResv&& <ResvView data={selectedResv}/>}</Modal>
-
+        <Modal open={modalOpen==="resv"} close={closeModal} header="예약 정보" type="resv">{selectedResv&& <ResvView data={selectedResv} setModalOpen={setModalOpen}/>}</Modal>
+        <Modal open={modalOpen==="delOK"} close={closeModal} header="예약 취소" type="ok">예약이 취소되었습니다.</Modal>
         </>
     );
    

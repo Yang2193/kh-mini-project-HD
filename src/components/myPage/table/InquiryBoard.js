@@ -5,7 +5,8 @@ import TableRow from "../../../utils/table/CommonTableRow";
 import styled from "styled-components";
 import AxiosApi from "../../../api/AxiosApi";
 import PageNation from "../../../utils/PageNation";
-
+import Modal from '../../../utils/Modal';
+import InquiryModal from '../InquiryModal';
 const TableBlock = styled.div`
         .common-table {
         width: 80%;
@@ -41,12 +42,13 @@ const InquiryBoard = props => {
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지 번호
     //보여질 페이지 개수
     const ITEMS_PAGE = 5;
-  useEffect(() => {
     const inquiryInfo = async() => {
       const rsp = await AxiosApi.inquiryGet(localStorage.getItem("userId"));
       if(rsp.status === 200) setInquiryValue(rsp.data);
-      console.log(rsp.data);
+
     };
+  useEffect(() => {
+   
     inquiryInfo();
 
   },[])
@@ -58,12 +60,22 @@ const InquiryBoard = props => {
   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
   const currentPageData = inquiryValue.slice(offset, offset + ITEMS_PAGE);
 
+  const [modalOpen,setModalOpen] = useState(false);
+  const closeModal =() => {
+    setModalOpen(false);
+   
+  }
+  const [selectRow, setSelectRow] = useState('');
+  const inquiryRowClick=(selectRow) => {
+    setModalOpen(true);
+    setSelectRow(selectRow);
+  }
     return (
       <>
       <TableBlock>
         <Table headersName={['NO.', '매장명', '제목', '상태','작성일시']}>
         {inquiryValue && currentPageData.map((e) => (
-            <TableRow key ={e.inquiryId}>
+            <TableRow key ={e.inquiryId} onClick={()=>inquiryRowClick(e)}>
               <TableColumn>{e.inquiryId}</TableColumn>
               <TableColumn>{e.restName}</TableColumn>
               <TableColumn>{e.inquiryTitle}</TableColumn>
@@ -74,6 +86,8 @@ const InquiryBoard = props => {
         </Table>
       </TableBlock>
       <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
+      <Modal open={modalOpen} close={closeModal} header="문의 내역" type="resv"><InquiryModal data={selectRow} inquiryInfo={inquiryInfo}/></Modal>
+
       </>
     );
   }

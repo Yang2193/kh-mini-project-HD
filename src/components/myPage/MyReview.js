@@ -6,6 +6,7 @@ import AxiosApi from "../../api/AxiosApi";
 import PageNation from "../../utils/PageNation";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom/dist";
+import StarRatings from "react-star-ratings";
 
 const TableBlock = styled.div`
 .common-table {
@@ -85,7 +86,14 @@ const MyReview =() => {
                     <TableColumn>{e.restName}</TableColumn>
                     <TableColumn>{e.reviewFileName}</TableColumn>
                     <TableColumn>{e.reviewTitle}</TableColumn>
-                    <TableColumn>{e.rating}</TableColumn>
+                    <TableColumn>
+                    <StarRatings rating={e.rating}
+                    starDimension="20px"
+                    starSpacing="2px"
+                    starRatedColor="#ffab2c"/>
+                    <br />
+                    {e.rating}
+                    </TableColumn>
                 </TableRow>
         ))}
         </Table>
