@@ -5,7 +5,7 @@ import {useState,useEffect,useContext} from "react";
 import { RestIdContext } from "../../context/RestaurantId";
 
 const MenuContanier = styled.section `
-        width: 100%;
+        /* width: 100%; */
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -30,16 +30,24 @@ const MenuContanier = styled.section `
         }
         .box{
             padding: 10px;
-            width: 300px;
+            width: 350px;
             height: 200px;
             border: 1px solid;
             margin-bottom: 40px;
             position: relative;
-            left:250px;
+            left:200px;
             p{
                 font-size: 20px;
                 margin-bottom: 40px;
             }
+            img{
+            position: absolute;
+            border: 1px solid;
+            width: 350px;
+            height: 200px;
+            right:450px;
+            bottom:10px
+        }
         }
 }
 `;
@@ -78,6 +86,7 @@ const Menu =() => {
                             <p>메뉴 이름 : {rest.menuName} </p>
                             <p>설명 : {rest.menuDesc}</p>
                             <p>가격 : {rest.menuPrice} </p>
+                            <img src="" alt="이미지" />
                         </div>
                     ))}
                     <button onClick={handleLoadMore}>더보기</button>

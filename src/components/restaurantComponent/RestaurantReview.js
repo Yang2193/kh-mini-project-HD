@@ -5,6 +5,7 @@ import {useState,useEffect,useContext} from "react";
 import { RestIdContext,ReviewIdContext } from "../../context/RestaurantId";
 import ReviewModal from "../../utils/rest/ReviewModal";
 import { Link, useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 
 const ReviewContanier = styled.section`
     width: 100%;
@@ -66,11 +67,17 @@ const ReviewContanier = styled.section`
                     font-size: 23px;
 
                 }
-            .rating{
+            .ratingBox{
                 font-size: 20px;
+                top:120px
+            }
+            .rating{
+                left:250px;
+                top:65px;
             }
             .content{
                 font-size: 20px;
+                top:10px
             }
             .nick{
                 font-size: 17px;
@@ -82,14 +89,14 @@ const ReviewContanier = styled.section`
             }
             .likeCount{
                 font-size: 15px;
-                top:120px
+                top:70px
 
             }
         img{
             position: relative;
             width: 40%;
             height: 300px;
-            bottom: 200px;
+            bottom: 260px;
             left: 450px;
         }
 
@@ -173,7 +180,14 @@ const Review =() => {
                         <Link to={"/Detail" } className="content" onClick={()=>setReviewId(rest.reviewId)}>
                             {rest.reviewContent}
                         </Link>
-                        <p className="rating">평점 : {rest.reviewRating}</p>
+                        <p className="ratingBox">
+                        평점 : 
+                        <StarRatings rating={rest.reviewRating}
+                            starDimension="30px"
+                            starSpacing="4px"
+                            starRatedColor="yellow"/>
+                        </p>
+                        <p className="rating">{rest.reviewRating}</p> 
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         <div className="imgBox">
                             <img src={rest.reviewImage}/>

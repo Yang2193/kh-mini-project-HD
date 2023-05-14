@@ -8,7 +8,18 @@ import Select from "react-select";
 import ko from "date-fns/locale/ko";
 import moment from "moment";
 import Modal from "../../utils/Modal";
+const CustomSelect = styled(Select)`
+position: relative;
+left: 100px;
+bottom:30px;
+    width: 200px;
+    height: 20px;
+    .css-13cymwt-control{
+        height: 5px;
+        font-size: 15px;
 
+    }
+`;
 //리뷰 상세정보
 const ResvModal = styled.div`
     font-family:"Nanum Gadic";
@@ -22,6 +33,15 @@ const ResvModal = styled.div`
     justify-content: center;
     padding: 20px 0;
     position: relative; 
+    input{
+        position: relative;
+        left:100px;
+        bottom:35px
+    }
+    #seat{
+        position: relative;
+        bottom:30px;
+    }
     .stat{
         //모달창 상단에 상태 두기 위해서 사용
         position: absolute;
@@ -87,8 +107,9 @@ const {memberValue} = useContext(MemberContext);
 // 예약 변경
 const [showInput, setShowInput] = useState(false);
 // 날짜 시간
-const [startDate, setStartDate] = useState(new Date());
-const date = moment(startDate).format("YYYY-MM-DD HH:mm:ss");
+const [value, setValue] = useState(new Date());// 날짜 저장
+const [time,setTime] = useState(new Date());// 시간 저장
+const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss")
 
 // 인원 수
 const [people, setPeople] = useState(1);
@@ -140,22 +161,29 @@ const onClickDel = async(resvId) => {
     <div className="section1">
     <label htmlFor ="date">날짜 : </label>
     {showInput ?  <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      showTimeSelect
+      selected={value}
+      onChange={(date) => setValue(date)}
+      id="date"
       locale={ko}
-      dateFormat="yyyy-MM-dd a h:mm"/> 
+      dateFormat="yyyy-MM-dd"/> 
       : <span className="result">{moment(data.resvDate).format("YYYY-MM-DD")}</span>}
     <br />
-    <label htmlFor ="date">시간 : </label>
-    <span className="result">{data.resvTime}</span>
+    <label htmlFor ="time">시간 : </label>
+    {showInput ?<DatePicker
+      selected={time}
+      onChange={(date) => setTime(date)}
+      showTimeSelect
+      showTimeSelectOnly
+      locale={ko}
+      dateFormat="a h:mm"/>  :
+    <span className="result">{data.resvTime}</span>}
     <br />
-    <label htmlFor ="date">인원수 : </label>
-    {showInput ? <Select options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} /> :
+    <label htmlFor ="peo">인원수 : </label>
+    {showInput ? <CustomSelect options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} /> :
                  <span className="result">{data.resvPeople}명</span>}
     <br />
-    <label htmlFor ="date">좌석 : </label>
-    {showInput ? <Select options={optionSeats} defaultValue={optionSeats[0]} onChange={selSeat} /> :
+    <label htmlFor ="seat">좌석 : </label>
+    {showInput ? <CustomSelect options={optionSeats} defaultValue={optionSeats[0]} onChange={selSeat} /> :
                  <span className="result">{data.resvSeat}번</span>}
     </div>
     <br />

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Header from "../components/header/Header";
 import HomeFooter from "../components/footer/HomeFooter";
 import { useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 const ReviewPage = styled.div`
     display: flex;
     align-items: center;
@@ -20,9 +21,16 @@ const ReviewPage = styled.div`
         border: 1px solid;
         height: 30px;
         width: 40px;
-        top: 140px;
+        top: 50px;
         cursor: pointer;
+        border-radius: 50px;
     }
+    .rating{
+            position: relative;
+            left:250px;
+            top:48px;
+            font-size: 20px;
+        }
     .box{
         margin-top: 30px;
         width: 800px;
@@ -42,7 +50,7 @@ const ReviewPage = styled.div`
             width: 40%;
             height: 80%;
             left: 350px;
-            bottom: 260px;
+            bottom: 320px;
   
         }
         .title {
@@ -50,9 +58,9 @@ const ReviewPage = styled.div`
         font-weight: bold;
         bottom: 20px;
     }
-        .rating{
-            top:150px;
+        .ratingBox{
             font-size: 20px;
+            top:100px;
         }
         .content{
             font-size: 20px;
@@ -67,7 +75,7 @@ const ReviewPage = styled.div`
         }
         .likeCount{
             font-size: 15px;
-            top:220px
+            top:150px
 
         }
         .return{
@@ -77,7 +85,7 @@ const ReviewPage = styled.div`
             background-color: lightsalmon;
             border: none;
             cursor: pointer;
-            bottom: 220px;
+            bottom: 280px;
             left: 700px;
         }
     }
@@ -166,7 +174,14 @@ const ReviewDetail = () =>{
                         <p className="date">작성일 : {rest.reviewDate}</p>
                         <p className="title">{rest.reviewTitle}</p>
                         <p className="content">{rest.reviewContent}</p>
-                        <p className="rating">평점 : {rest.reviewRating}</p>
+                        <p className="ratingBox">
+                        평점 : 
+                        <StarRatings rating={rest.reviewRating}
+                            starDimension="30px"
+                            starSpacing="4px"
+                            starRatedColor="yellow"/>
+                        </p>
+                        <p className="rating">{rest.reviewRating}</p> 
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
                         <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>

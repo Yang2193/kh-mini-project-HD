@@ -5,6 +5,7 @@ import AxiosApi from "../../api/AxiosApi";
 import { RestIdContext } from "../../context/RestaurantId";
 import {  useNavigate } from "react-router-dom";
 import InquiryModal from "../../utils/rest/InquiryModal";
+import StarRatings from "react-star-ratings";
 
 const FixContent = styled.section`
 
@@ -42,7 +43,7 @@ const FixContent = styled.section`
         .like{
             position: relative;        
             left: 540px;
-            bottom: 180px;
+            bottom: 250px;
             width: 40px;
             background-color: white;
             border: 1px solid;
@@ -50,25 +51,33 @@ const FixContent = styled.section`
         .res{
             position: relative;
             left: 410px;
-            bottom: 0px;
+            bottom: 50px;
         }
         .inq{
             position: relative;
             left: 40px;
-            bottom: -60px;
+            bottom: -10px;
         }
         p{
             padding: 10px;
             margin: 0;
             font-size: 20px;
         }
+        .rating{
+            position: relative;
+            left:250px;
+            bottom:53px;
+        }
      
 `;
 
 const RestaurantContainer =() =>{
+    
 	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const possible = localStorage.getItem("resPossible");
     // 매장 정보 호출
+
     const [rtInfoFix, setRtInfoFix] = useState("");
  
     useEffect(() => {
@@ -172,11 +181,18 @@ const checklogin =()=>{
                         <p>매장 이름 : {rest.name}</p>
                         <p>전화 번호 : {rest.phone}</p>
                         <p>주소 : {rest.addr}</p>
-                        <p>평점 : {rest.avgRating}</p>
+                        <p className="ratingBox">
+                        평점 : 
+                        <StarRatings rating={rest.avgRating}
+                            starDimension="30px"
+                            starSpacing="4px"
+                            starRatedColor="yellow"/>
+                        </p>
+                        <p className="rating">{rest.avgRating}</p> 
                         <button className="inq" onClick={openModal}>문의 하기</button>
                         <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
                         <button className="like" onClick={()=>onClickLiked(rest.name)} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
-                        <button className="res" onClick={checklogin}>예약 하기</button>
+                        <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
 
                     </div>
                 ))}
