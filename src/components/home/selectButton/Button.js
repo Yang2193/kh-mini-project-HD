@@ -7,7 +7,7 @@ import DetailedCheck from "../../search/DetailedCheck";
 const Container = styled.div`
     width : 100%;
     margin-top: 60px;
-    height : 270px;
+    height : 320px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,29 +16,36 @@ const Container = styled.div`
 const Box = styled.div`
     box-sizing: border-box;
     width : 630px;
-    height: 270px;
+    height: 320px;
     border: none;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-around;
     align-content: space-evenly;
 
     .box{
         width: 630px;
-        height: 120px;
+        height: 150px;
         margin-bottom: 20px;
         display: flex;
         justify-content: space-evenly;
+        align-items: center;
         box-sizing: border-box;
+        flex-direction: column;
+
     }
 
     .box2{
         width: 630px;
-        height: 120px;
+        height: 150px;
         display: flex;
         justify-content: space-evenly;
         box-sizing: border-box;
+        flex-direction: column;
+        align-items: center;
     }
+
 `;
 
 const Box1 = styled.div`
@@ -105,11 +112,12 @@ const Button = ({ handleType, handleFilter }) => {
         <Container>
             <Box>
                 <div className="box">
+                    <p>어디가 제일 인기있을까?</p>
                     <Btn onClick={onClickRestaurantList}>인기 식당</Btn>
                     
                 </div>
                 <div className="box2">
-                    
+                    <p>누가 제일 리뷰를 잘 썼는지 궁금하다면?</p>
                     <Btn onClick={onClickReviewList}>인기 리뷰</Btn>
                 </div>
             </Box>

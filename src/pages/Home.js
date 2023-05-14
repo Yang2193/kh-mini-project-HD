@@ -15,6 +15,10 @@ const Body = styled.div`
     background-color: ivory;
     position: relative;
 
+    p {
+        text-align: center;
+    }
+
     @media (min-height: 1200px) {
         height: 100vh;
 }
@@ -43,6 +47,7 @@ const Home = () => {
                 </HomeHeader>
                 {type === "Main" && (
                     <>
+                        <p>무엇으로 검색해야 할지 생각이 안 날 땐? 지역, 메뉴, 가격대, 평점으로 맞춤 검색! </p>
                         <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                         <Button handleType={handleType} handleFilter={handleFilter}/>
                         <HomeCarousel/>  
@@ -54,22 +59,7 @@ const Home = () => {
                      <RestaurantInfoBox searchFilter={searchFilter}/>
                     </>
                 )}
-                {type === "Region" && (
-                    <>
-                    </>
-                )}
-                {type === "Category" && (
-                    <>
-                    </>
-                )}
-                {type === "Rating" && (
-                    <>
-                    </>
-                )}
-                {type === "Price" && (
-                    <>
-                    </>
-                )}
+ 
                 {type === "Review" && (
                     <>
                         <Reviews/>

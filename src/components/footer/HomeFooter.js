@@ -12,11 +12,12 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 30px;
+    
    
     @media (min-height: 1200px) {
         margin-top: 30px;
         position: absolute;
-        bottom: -10px;
+        bottom: -100px;
         width : 100%;
     }
 
