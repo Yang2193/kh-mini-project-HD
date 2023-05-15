@@ -6,6 +6,7 @@ import { RestIdContext,ReviewIdContext } from "../../context/RestaurantId";
 import ReviewModal from "../../utils/rest/ReviewModal";
 import { Link, useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import Modal from "../../utils/Modal";
 
 const ReviewContanier = styled.section`
     width: 100%;
@@ -145,6 +146,7 @@ const Review =() => {
 
 // 리뷰 작성 버튼 입력시 팝업 창
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalCheck,setModalCheck] = useState(false);
     const navigate= useNavigate();
 
     const openModal = () => {
@@ -153,13 +155,14 @@ const Review =() => {
         if (memId) {
             setModalOpen(true);
         } else {
-            alert("로그인이 되어있지 않습니다.")
+            setModalCheck(true);
             navigate("/login");
         }
     }
 
     const closeModal = () => {
         setModalOpen(false);
+        setModalCheck(false);
     }
 // 리뷰 Id context api 로 전송
     const {setReviewId} = useContext(ReviewIdContext)
@@ -169,6 +172,8 @@ const Review =() => {
             <div className="cont" style={{height: rvHeight}}>
                 <button className="modalBtn" onClick={openModal}>리뷰 작성 하기</button>
                 <ReviewModal open={modalOpen} close={closeModal}></ReviewModal>
+                <Modal open={modalCheck} close={closeModal} type ="ok" header="수정 완료"> 로그인이 되어 있지 않습니다. </Modal>
+
                 {visibleReviews&&visibleReviews.map(rest=>(
                     <div className="box" key={rest.reviewId}>
                         <p className="nick">{rest.nickName}</p>

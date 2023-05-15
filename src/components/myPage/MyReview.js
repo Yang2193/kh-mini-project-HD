@@ -7,6 +7,8 @@ import PageNation from "../../utils/PageNation";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom/dist";
 import StarRatings from "react-star-ratings";
+import { ReviewIdContext } from "../../context/RestaurantId";
+import { useContext } from "react";
 
 const TableBlock = styled.div`
 .common-table {
@@ -39,13 +41,15 @@ border-bottom: 30px solid #FBF4EF;
 }
 `;
 const MyReview =() => {
-  
+  const {setReviewId} = useContext(ReviewIdContext)
+
   // 페이지 이동
   const nav=useNavigate();
-  const movePage = (restId) => {
-    localStorage.setItem("restId", restId);
+  const movePage = (reviewId) => {
+    // 리뷰 Id context api 로 전송
+    setReviewId(reviewId);
     // 매장 ID를 로컬 스토리지에 저장하고 Info 컴포넌트로 이동
-    nav("/info");
+    nav("/Detail");
   };
 
 
@@ -81,7 +85,7 @@ const MyReview =() => {
         <TableBlock>
         <Table headersName ={['날짜','매장','사진','제목','평점']} >
         {reviewValue && currentPageData.map((e) => (
-                <TableRow key={e.reviewId} onClick={()=>movePage(e.restId)}>
+                <TableRow key={e.reviewId} onClick={()=>movePage(e.reviewId)}>
                     <TableColumn>{e.reviewDate}</TableColumn>
                     <TableColumn>{e.restName}</TableColumn>
                     <TableColumn>{e.reviewFileName}</TableColumn>

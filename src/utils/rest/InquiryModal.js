@@ -5,7 +5,7 @@ import AxiosApi from "../../api/AxiosApi";
 import { storage } from "../../firebase/firebase";
 import { ref,uploadBytes,getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
-import { RestIdContext } from "../../context/RestaurantId";
+import Modal from "../Modal";
 const ModalStyle = styled.div`
 
      .modal {
@@ -126,33 +126,37 @@ const ModalStyle = styled.div`
 const InquiryModal = (props) => {
     const memId= localStorage.getItem("userId");
     const restId = localStorage.getItem("restId");
+       //팝업 처리
+       const [modalOpen, setModalOpen] = useState(false);
+       const closeModal = () => {
+              setModalOpen(false);
+              close();
+              resetInput();
+
+          };
     // 팝업 열고 닫음
     const {open,close} = props;
     // 팝업창 초기화
     const resetInput = () => {
         setInputTitle("");
         setInputContent("");
-        setImageUrl(null);
         setImageUpload(null);
       }
     // 이미지 업로드 기능
     const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
-    const [imageUrl,setImageUrl] =useState(null);//url 저장
 
     const onChangeImage =(e) =>{
         setImageUpload(e.target.files[0])
     }
 
-    const uploadImage=()=>{ // 이미지 업로드 하는 함수
+    const uploadImage= async()=>{ 
         if(imageUplod===null) return;
 
-    const imageRef = ref(storage,`images/${imageUplod.name + v4() }`) //폴더 생성 (이름이 같지 않게 파일 일름뒤에 랜덤함수를 붙임)
-    uploadBytes(imageRef,imageUplod).then((snapshot)=>{ // 이미지 파이어 베이스에 보내기 
-        return getDownloadURL(snapshot.ref).then((url)=>{ 
-            setImageUrl(url);
-          });
-    })
-};
+        const imageRef = ref(storage, `images/${imageUplod.name + v4()}`);
+        const uploadSnapshot = await uploadBytes(imageRef, imageUplod);
+        const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+        return imageUrl;
+      };
     // 문의 데이터 입력 받고 데이터 추가 전송
     const [inputTttle, setInputTitle] = useState("");
     const [inputContent, setInputContent] = useState("");
@@ -163,19 +167,19 @@ const InquiryModal = (props) => {
     const onChangeContent = e =>{
         setInputContent(e.target.value)
     }
-
-    const addInquiry = async() =>{
-        uploadImage();
-        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,imageUrl);
-
-        if(rsp.data === true) {
-            alert("문의가 등록되었습니다.")
-            close();
-            resetInput();
+    const addInquiry = async () => {
+        let reviewImageUrl = null;
+        if (imageUplod) {
+            reviewImageUrl = await uploadImage();
+            console.log(reviewImageUrl);
+        }
+        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,reviewImageUrl);
+        if (rsp.data === true) {
+            setModalOpen(true);
         } else {
             console.log("전송 실패");
         }
-    }
+        };
 
     return (
         <ModalStyle>
@@ -193,6 +197,8 @@ const InquiryModal = (props) => {
                     </main>
                     <footer>
                         <button className="add" onClick={addInquiry}>문의 등록</button>
+                        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 문의 등록이 완료 되었습니다. </Modal>
+
                         <button className="clo" onClick={close}>취소</button>
                     </footer>
                 </section>

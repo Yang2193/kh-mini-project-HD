@@ -12,6 +12,94 @@ import Select from 'react-select';
 import ResCheck from "../components/restaurantComponent/ResCheck";
 import 'react-calendar/dist/Calendar.css'; // css import
 
+const Style = styled.div`
+.cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+button {
+    width: 100px;
+    height: 30px;
+    position: relative;
+}
+.back{
+        left:600px;
+        background-color: #FF7F50;
+    }
+    .next{
+        top:30px;
+        left:800px;
+        background-color: #FF7F50;
+    }
+
+    //달력 커스텀
+    //오늘 표시 변경
+    .react-calendar {
+        margin: 30px;
+        width: 700px;
+        max-width: 100%;
+        background-color: #fff;
+        color: #222;
+        border-radius: 8px;
+        /* box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); */
+        line-height: 1.125em;
+        font-size: 20px;
+        }
+ 
+        .react-calendar__navigation button {
+        color: #FF7F50;
+        min-width: 44px;
+        background: none;
+        font-size: 20px;
+        margin-top: 8px;
+        font-weight:bold;
+        }
+        
+        .react-calendar__navigation button:enabled:hover,
+        .react-calendar__navigation button:enabled:focus {
+        background-color: #f8f8fa;
+        }
+        .react-calendar__navigation button[disabled] {
+        background-color: #f0f0f0;
+        }
+        abbr[title] {
+        text-decoration: none;
+        }
+
+        .react-calendar__tile:enabled:hover,
+        .react-calendar__tile:enabled:focus {
+        background: #FFA07A;
+        color: #fff;
+        border-radius: 40px;
+        }
+        
+        .react-calendar__tile--now {
+        background: #FBF4EF;
+        border-radius: 6px;
+        font-weight: bold;
+        color: black;
+        }
+        
+
+        
+        .react-calendar__tile--active {
+        background: #FFA07A;
+        border-radius: 40px;
+        font-weight: bold;
+        color: white;
+        }
+        
+        .react-calendar__tile--active:enabled:hover,
+        .react-calendar__tile--active:enabled:focus {
+        background: #FF7F50;
+        color: white;
+        }
+
+`;
+
+
 const Reservation =() =>{
 	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
@@ -61,10 +149,10 @@ const Reservation =() =>{
         window.localStorage.setItem("data", data);
     
     return(
-        <>
+        <Style>
             <Header/>
             {type ==="booking"&&(
-                <div>
+                <div className="cont">
                     <div>
                         <Calendar 
                         onChange={setValue} 
@@ -73,8 +161,8 @@ const Reservation =() =>{
                         minDate={new(Date)}
                         />
                     </div>
-                    <div>
-                        <p>시간을 선택해 주세요:</p>
+                    <div className="">
+                        <p>시간을 선택해 주세요 :</p>
                         <DatePicker
                         selected={time}
                         onChange={(date) => setTime(date)}
@@ -89,22 +177,22 @@ const Reservation =() =>{
                         />
                     </div>
                     <div>
-                        <p>인원을 선택해 주세요:</p>
+                        <p>인원을 선택해 주세요 :</p>
                         <Select options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} />
                     </div>
                     <div>
-                        <p>좌석을 선택해 주세요:</p>
+                        <p>좌석을 선택해 주세요 :</p>
                         <Select options={optionSeats} defaultValue={optionSeats[0]} onChange={selSeat} />
                     </div>
-                    <button onClick={changeType}>다음</button>
-                    <button onClick={()=>navigate(-1)}>취소</button>
+                    <button className="next" onClick={changeType}>다음</button>
+                    <button className="back" onClick={()=>navigate(-1)}>취소</button>
                 </div>
             )}
             {type==="check"&& (
                 <ResCheck data = {data}/>
             )}
             <HomeFooter/>        
-        </>
+        </Style>
     );
 }
 
