@@ -437,6 +437,25 @@ resvDel : async(resvId) => {
     resvId : resvId,
 }
   return await axios.post(KH_DOMAIN+"/resv/delete",resvData);
+},
+// 리뷰 수정
+reviewUpdate:async(title,content,rating,image,revId)=>{
+  const data={
+    title: title,
+    content: content,
+    rating: rating,
+    image:image,
+    reviewId:revId
+  }
+  return await axios.post(KH_DOMAIN+"/review/update",data);
+
+},
+// 리뷰 삭제
+reviewDelete:async(revId)=>{
+  const data={
+    reviewId:revId
+  }
+  return await axios.post(KH_DOMAIN+"/review/delete",data);
 }
 
 

@@ -6,12 +6,25 @@ import Header from "../components/header/Header";
 import HomeFooter from "../components/footer/HomeFooter";
 import { useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import Modal from "../utils/Modal";
+import ReviewUpdate from "../utils/rest/ReviewUpdate";
 const ReviewPage = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: ivory;
     height: 800px;
+    .btns{
+        position: relative;
+        left: 650px;
+        bottom:380px;
+        button{
+            margin-left: 20px;
+        }
+    }
+    .cont{
+        width: 430px;
+    }
     .like{
         position: relative;
         display: flex;
@@ -50,7 +63,7 @@ const ReviewPage = styled.div`
             width: 40%;
             height: 80%;
             left: 350px;
-            bottom: 320px;
+            bottom: 350px;
   
         }
         .title {
@@ -85,7 +98,7 @@ const ReviewPage = styled.div`
             background-color: lightsalmon;
             border: none;
             cursor: pointer;
-            bottom: 280px;
+            top: 100px;
             left: 700px;
         }
     }
@@ -164,12 +177,31 @@ const ReviewDetail = () =>{
         localStorage.setItem("restId", restId);
         nav("/Info");
       };
+    // 팝업  
+    const[modalUpdate,setModalUpdate]=useState(false); // 리뷰 수정
+    const [deleteModal,setDeleteModal] = useState(false); // 리뷰 삭제 완료
+
+    const update =() =>{
+        setModalUpdate(true);
+
+    }
+    const closeModal = () => {
+        setModalUpdate(false);
+        setDeleteModal(false);
+    }
+    const deleteReview = async(revId)=>{
+        const rsp = await AxiosApi.reviewDelete(revId);
+        if (rsp) {
+            setDeleteModal(true);
+        }
+    }
     return(
         <>
         <Header/>
         <ReviewPage>
              {rtReview&&rtReview.map(rest=>(
                     <div className="box" key={rest.reviewId}>
+                        <div className="cont">
                         <p className="nick">{rest.nickName}</p>
                         <p className="date">작성일 : {rest.reviewDate}</p>
                         <p className="title">{rest.reviewTitle}</p>
@@ -181,10 +213,20 @@ const ReviewDetail = () =>{
                             starSpacing="4px"
                             starRatedColor="yellow"/>
                         </p>
+                        </div>
                         <p className="rating">{rest.reviewRating}</p> 
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
                         <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>
+                        {(memId === rest.memId) ? (
+                            <div className="btns">
+                                <button className="update" onClick={update}>수정하기</button>
+                                <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>삭제</button>
+                                <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
+                            </div>
+                        ) : null}
+                        <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
+
                         <img src={rest.image}/>
                     </div>
                 ))}

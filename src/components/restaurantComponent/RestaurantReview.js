@@ -7,6 +7,7 @@ import ReviewModal from "../../utils/rest/ReviewModal";
 import { Link, useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import Modal from "../../utils/Modal";
+import ReviewUpdate from "../../utils/rest/ReviewUpdate";
 
 const ReviewContanier = styled.section`
     width: 100%;
@@ -25,7 +26,10 @@ const ReviewContanier = styled.section`
 		background-color: white;
 		width: 845px;
 		border: 1px solid;
-        
+        button{
+            border: none;
+            border-radius: 5px;
+        }
         a {
             display: flex;
             text-decoration: none;
@@ -36,7 +40,7 @@ const ReviewContanier = styled.section`
         a:hover{
             text-decoration: underline;
         }
-        button {
+        .more {
             background-color: #fff;
             font-size: 20px;
             border:none;
@@ -50,6 +54,7 @@ const ReviewContanier = styled.section`
             margin-bottom: 30px;
             position: relative;
             right: 345px;
+            font-size: 20px;
         }
         .box{
             padding: 10px;
@@ -57,28 +62,26 @@ const ReviewContanier = styled.section`
             width: 820px;
             height: 350px;
             border: 1px solid;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             p {
-                font-size: 20px;
                 margin-bottom: 10px;
                 position: relative;
             }
             .title {
                     font-weight: bold;
-                    font-size: 23px;
-
+                    font-size: 20px;
+                    margin-bottom: 10px;
                 }
             .ratingBox{
                 font-size: 20px;
-                top:120px
+                top:100px
             }
             .rating{
                 left:250px;
-                top:65px;
+                top:55px;
             }
             .content{
-                font-size: 20px;
-                top:10px
+                font-size: 15px;
             }
             .nick{
                 font-size: 17px;
@@ -95,20 +98,37 @@ const ReviewContanier = styled.section`
             }
         img{
             position: relative;
-            width: 40%;
-            height: 300px;
-            bottom: 260px;
-            left: 450px;
+            width: 300px;
+            height: 200px;
+            bottom: 200px;
+            left: 500px;
         }
 
         }
-        .like{
-        position: relative;
-        left:750px;
-        bottom:200px;
-        border: 1px solid;
-        background-color: white;
     }
+    .main{
+        width: 420px;
+    }
+    .btns{
+        position: relative;
+        left:300px;
+    }
+    .update{
+        position: relative;
+        width: 100px;
+        height: 30px;
+        background-color: lightsalmon;
+        bottom:150px;
+        left:250px;
+    }
+    .delete{
+        position: relative;
+        width: 100px;
+        height: 30px;
+        background-color: lightsalmon;
+        bottom:150px;
+        left:300px;
+
     }
 `;
 
@@ -132,25 +152,25 @@ const Review =() => {
         };
         rtReview();
     },[]);
-    
 // 화면에 나올 리뷰 수 관리
     useEffect(() => {
         setVisibleReviews(rtReview.slice(0, rvCount));
-    }, [rtReview, rvCount]);
-
+    }, [rtReview, rvCount]);   
 // onClick 으로 클릭시 3개씩 화면에 나올 데이터 개수 추가 + 화면 높이 증가
     function handleLoadMore() {
         setRvCount(rvCount + 3);  // 개수 추가
         setRvHeight(rvHeight + 300); // 높이를 300px 증가시킴
     }
 
-// 리뷰 작성 버튼 입력시 팝업 창
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalCheck,setModalCheck] = useState(false);
+// 버튼 입력시 팝업 창
+    const [modalOpen, setModalOpen] = useState(false); // 리뷰작성
+    const[modalUpdate,setModalUpdate]=useState(false); // 리뷰 수정
+    const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
+    const [deleteModal,setDeleteModal] = useState(false); // 리뷰 삭제 완료
+
     const navigate= useNavigate();
 
     const openModal = () => {
-
         console.log(isLogin,memId);
         if (memId) {
             setModalOpen(true);
@@ -159,10 +179,21 @@ const Review =() => {
             navigate("/login");
         }
     }
+    const update =() =>{
+        setModalUpdate(true);
 
+    }
     const closeModal = () => {
         setModalOpen(false);
         setModalCheck(false);
+        setModalUpdate(false);
+        setDeleteModal(false);
+    }
+    const deleteReview = async(revId)=>{
+        const rsp = await AxiosApi.reviewDelete(revId);
+        if (rsp) {
+            setDeleteModal(true);
+        }
     }
 // 리뷰 Id context api 로 전송
     const {setReviewId} = useContext(ReviewIdContext)
@@ -176,6 +207,7 @@ const Review =() => {
 
                 {visibleReviews&&visibleReviews.map(rest=>(
                     <div className="box" key={rest.reviewId}>
+                        <div className="main">
                         <p className="nick">{rest.nickName}</p>
                         <p className="date">작성일 : {rest.reviewDate}</p>
 
@@ -194,12 +226,19 @@ const Review =() => {
                         </p>
                         <p className="rating">{rest.reviewRating}</p> 
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
-                        <div className="imgBox">
-                            <img src={rest.reviewImage}/>
                         </div>
+                        <img src={rest.reviewImage}/>
+                        {(memId === rest.memId) ? (
+                            <div className="btns">
+                                <button className="update" onClick={update}>수정하기</button>
+                                <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>삭제</button>
+                                <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
+                            </div>
+                        ) : null}
+                        <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
                     </div>
                 ))}
-                <button onClick={handleLoadMore}>더보기</button>
+                <button className="more" onClick={handleLoadMore}>더보기</button>
             </div>
         </ReviewContanier>
     )
