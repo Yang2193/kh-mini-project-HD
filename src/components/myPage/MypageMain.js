@@ -44,28 +44,31 @@ const MypageMain = () => {
 useEffect(() => {
     const resvInfo = async() => {
         const rsp = await AxiosApi.resvGet(localStorage.getItem("userId"),"예약확정");
-        if(rsp.status === 200){
-            setResvValue(rsp.data);
+        const rsp2 = await AxiosApi.resvGet(localStorage.getItem("userId"),"예약대기");
+        if(rsp.status === 200 && rsp2.status === 200){
+            const resvData = rsp.data.concat(rsp2.data);
+            setResvValue(resvData);
+            console.log(resvData);
         } 
     };
    resvInfo();
     },[]);
 
-    const filterData = resvValue.filter(item => new Date(item.applicationDate) >= new Date());
+    const filterData = resvValue.filter(item => new Date(item.resvDate) >= new Date());
 
     return(
        
         <Container>
 
         <div className="titleName">예정된 예약 목록</div>
-        {filterData.length>0 ? (
+        {filterData.length  > 0 ? (
         <div className="box">
-        <p> <span className="name">{memberValue.name}</span>님 </p>
-        <p> <span className="date">{filterData[0].resvDate}</span> 에 </p>
-        <p><span className="restName">{filterData[0].restName}</span>  에서 </p>
-        <p><span className="seat">{filterData[0].resvTime}</span></p>
-        <p> <span className="count">{filterData[0].resvPeople}</span>명 <span className="seat">{filterData[0].resvSeat}</span>좌석에 </p>
-        <p>{filterData[0].resvStat === "예약확정" ? "예약이 완료되었습니다." : "예약 대기중입니다."}</p>
+        <p> <span className="name">{memberValue&&memberValue.name}</span>님 </p>
+        <p> <span className="date">{filterData[filterData.length-1].resvDate}</span> 에 </p>
+        <p><span className="restName">{filterData[filterData.length-1].restName}</span>  에서 </p>
+        <p><span className="seat">{filterData[filterData.length-1].resvTime}</span></p>
+        <p> <span className="count">{filterData[filterData.length-1].resvPeople}</span>명 <span className="seat">{filterData[0].resvSeat}</span>좌석에 </p>
+        <p>{filterData[filterData.length-1].resvStat === "예약확정" ? "예약이 완료되었습니다." : "예약 대기중입니다."}</p>
         </div>) :(<div className="box">예약 정보가 없습니다.</div>)}
 
         </Container>

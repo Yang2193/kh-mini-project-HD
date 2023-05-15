@@ -5,6 +5,7 @@ import {RestaurantContext} from "../../context/RestaurantContext";
 import AxiosApi from "../../api/AxiosApi";
 import Modal from "../../utils/Modal";
 import {useNavigate } from "react-router-dom";
+import AddressModal from "../../utils/AddressModal";
 const RestInsertBlock = styled.div`
         display: flex;
         flex-direction: column;
@@ -15,17 +16,31 @@ const RestInsertBlock = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+        justify-content: center;
+        position: relative;
+         .addrBtn{
+            position: absolute;
+            right: -100px;
+            width: 100px;
+            height: 30px;
+            background-color: #FFA07A;
+            border: none;
+            cursor: pointer;
+        }
+        .option{
+            width: 150px;
+            text-align: center;
+        }
         
             label{
-                width: 150px;
+                width: 120px;
                 text-align: right;
                 }
         margin: 1em;
             .btn{
                 width: 100px;
                 height: 50px;
-                margin: 0  20px;
+                margin: 10px;
                 display: inline-block;
                 border: none;
                 border-radius: 4px;
@@ -83,6 +98,7 @@ const RestInsertBlock = styled.div`
 
         label{
             width: auto;
+           
         }
     
     
@@ -152,6 +168,20 @@ const closeModal = () => {
     }
      //navigate사용
      const navigate = useNavigate();
+
+     // 주소찾기 팝업 및 조건부 렌더링 용
+    const [isOpenPost, setIsOpenPost] = useState(false);
+    const [inputAddress, setInputAddress] = useState(restInfoList.restAddr);
+    const openPost = () => {
+        setIsOpenPost(true);
+      };
+      const closePost = () => {
+        setIsOpenPost(false);
+    }
+    const searchAddress = (address) => {
+        setInputAddress(address);
+        setRestInfoList((state) => ({ ...state, restAddr: address }));
+    }
     
     return(
             <RestInsertBlock>
@@ -172,10 +202,12 @@ const closeModal = () => {
                   <label htmlFor='id'>전화 번호 : </label>
                   <input id='id' value={restInfoList.restPhoneNum||''} name='restPhoneNum'onChange={restInfoOnChange}/>
                   </div>
-                  <div className='box'>
-                  <label htmlFor='id'>주소 : </label>
-                  <input id='id' value={restInfoList.restAddr||''} name='restAddr'onChange={restInfoOnChange}/>
-                  </div>
+                   <div className='box'>
+                    <label htmlFor='addr'>주소</label>
+                    <input id='addr' name='restAddr' value={inputAddress} onChange={restInfoOnChange} />
+                    <button onClick={openPost} className='addrBtn'>주소찾기</button>
+                    {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
+                    </div>
                   <div className='box'>
                   <label htmlFor='id'> 공지사항 : </label>
                   <input id='id' value={restInfoList.restNotice||''} name='restNotice'onChange={restInfoOnChange}/>
@@ -198,11 +230,11 @@ const closeModal = () => {
                   </div>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>매장 분류 : </label>
+                  <label htmlFor='id'>매장 분류 :  </label>
                  <Select
                     options={options}
                     value={defaultOption}
-                    onChange={selectChange}  placeholder="메뉴선택" isSearchable={true} />
+                    onChange={selectChange}  placeholder="메뉴선택" isSearchable={true} className="option"/>
                  </div> 
                 <div className="box">
                 <button className='btn' type="submit" onClick={onClickUpate}>수정</button>

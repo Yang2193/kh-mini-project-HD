@@ -130,7 +130,7 @@ const WatingList = ({restResv,resvList,formatTime}) => {
           ))}
         </tbody>
       </table>
-      <button className="btn" onClick={resvStatUpdate}>확정하기</button>
+      <button className="btn" onClick={resvStatUpdate}>예약확정</button>
 
       <Modal open={modalOpen} close={closeModal} type ="ok" header="확정 완료">예약이 확정 되었습니다. </Modal>
     </ResvBlock>
