@@ -27,21 +27,30 @@ const AxiosApi = {
     //인기 리뷰 가져오는 메소드
 
     popularReviewListGet : async(review) => {
-        return await axios.get(KH_DOMAIN + `/?review=${review})`)
+        return await axios.get(KH_DOMAIN + `/?review=${review})`);
     },
 
-    // Carousel에서 이 주의 인기 매장, 이 달의 인기 매장, 이 주의 리뷰 가져오는 메솓,
+    // Carousel에서 이 주의 인기 매장, 이 달의 인기 매장, 이 주의 리뷰 가져오는 용도
 
     weeklyTop3RestListGet : async() => {
-        return await axios.get(KH_DOMAIN + `/weeklyTop3Rest`)
+        return await axios.get(KH_DOMAIN + `/weeklyTop3Rest`);
     },
 
     monthlyTop3RestListGet : async() => {
-        return await axios.get(KH_DOMAIN + `/monthlyTop3Rest`)
+        return await axios.get(KH_DOMAIN + `/monthlyTop3Rest`);
     },
 
     weeklyTop3ReviewListGet : async() => {
-        return await axios.get(KH_DOMAIN + `/weeklyTop3Review`)
+        return await axios.get(KH_DOMAIN + `/weeklyTop3Review`);
+    },
+    //Carousel에서 인기식당 리스트 불러오는 용도
+    
+    carouselPopularListGet : async() =>{
+      return await axios.get(KH_DOMAIN + `/carouselPopularList`);
+    },
+
+    carouselReviewListGet : async() => {
+      return await axios.get(KH_DOMAIN + `/carouselReviewList`);
     },
 
     // 로그인

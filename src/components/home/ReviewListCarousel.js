@@ -108,7 +108,7 @@ const StyledSlider = styled(Slider)`
 
 
 
-const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
+const ReviewListCarousel = ({carouselReviewList}) => {
 // 페이지이동
   const nav=useNavigate();
   const movePage = (restId) => {
@@ -122,12 +122,11 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     nav("/Detail");
   };
   //슬라이드에 따라서 출력 문구 설정
-  const [title, setTitle] = useState("이 주의 인기 매장");
+  const [title, setTitle] = useState("가장 유명한 후기를 보고 싶다면?");
 
-  //TOP3 세팅을 위한 useState
-  const [wt3r, setWt3r] = useState(null);
-  const [mt3r, setMt3r] = useState(null);
-  const [wt3review, setWt3review] = useState(null);
+  //리뷰리스트 세팅을 위한 useState
+
+  const [reviewList, setReviewList] = useState(null);
 
   //slick 라이브러리 세팅
   const settings = {
@@ -138,19 +137,19 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     slidesToScroll: 3,
     beforeChange: (currentSlide, nextSlide) => {
       if (nextSlide === 0) {
-        setTitle("이 주의 인기 매장");
+        setTitle("가장 유명한 후기를 보고 싶다면?");
       } else if (nextSlide === 3) {
-        setTitle("이 달의 인기 매장");
+        setTitle("유명한 후기 목록 공유!");
       } else {
-        setTitle("이 주의 인기 리뷰");
+        setTitle("클릭 시 후기를 보여드립니다!");
       }
     }
   };
 
-  useEffect(()=>{
-    setWt3r(weeklyTop3Rest);
-    setWt3review(weeklyTop3Review);
-  },[weeklyTop3Rest, weeklyTop3Review]);
+  useEffect(() => {
+
+    setReviewList(carouselReviewList);
+  }, [carouselReviewList])
 
 
     return (
@@ -159,13 +158,7 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
             <div>
             <h2> {title} </h2>
             <StyledSlider {...settings}>
-              {wt3r && wt3r.map(e => (
-                <div onClick={()=>movePage(e.restId)} key={e.restId} imgUrl={e.imgUrl}>
-                  <h3>{e.restName}({e.category})</h3>
-                  <p>평점 : {e.rating}</p>
-                </div>
-              ))}
-              {wt3review && wt3review.map(e=>(
+              {reviewList && reviewList.map(e=>(
                 <div onClick={()=>movePageReview(e.reviewId)} key={e.reviewId} imgUrl={e.reviewFileName}>
                   <h2>{e.restName}</h2>
                   <h3>{e.reviewTitle}</h3>
@@ -179,4 +172,4 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     );
 }
 
-export default HomeCarousel;
+export default ReviewListCarousel;

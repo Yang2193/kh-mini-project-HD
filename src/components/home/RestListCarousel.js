@@ -108,7 +108,7 @@ const StyledSlider = styled(Slider)`
 
 
 
-const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
+const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
 // 페이지이동
   const nav=useNavigate();
   const movePage = (restId) => {
@@ -122,12 +122,11 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     nav("/Detail");
   };
   //슬라이드에 따라서 출력 문구 설정
-  const [title, setTitle] = useState("이 주의 인기 매장");
+  const [title, setTitle] = useState("어디가 제일 인기 있을까?");
 
-  //TOP3 세팅을 위한 useState
-  const [wt3r, setWt3r] = useState(null);
-  const [mt3r, setMt3r] = useState(null);
-  const [wt3review, setWt3review] = useState(null);
+  // 매장목록 세팅을 위한 useState
+
+  const [restList, setRestList] = useState(null);
 
   //slick 라이브러리 세팅
   const settings = {
@@ -138,40 +137,37 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     slidesToScroll: 3,
     beforeChange: (currentSlide, nextSlide) => {
       if (nextSlide === 0) {
-        setTitle("이 주의 인기 매장");
+        setTitle("어디가 제일 인기 있을까?");
       } else if (nextSlide === 3) {
-        setTitle("이 달의 인기 매장");
+        setTitle("무슨 매장인지 궁금하다면, 클릭!");
       } else {
-        setTitle("이 주의 인기 리뷰");
+        setTitle("클릭하시면 인기매장 목록으로 이동합니다!");
       }
     }
   };
 
-  useEffect(()=>{
-    setWt3r(weeklyTop3Rest);
-    setWt3review(weeklyTop3Review);
-  },[weeklyTop3Rest, weeklyTop3Review]);
+  useEffect(() => {
+    setRestList(carouselRestList);
+  }, [carouselRestList]);
+
+
+  const onClickCarousel = () => {
+    handleType("List");
+  }
 
 
     return (
       <Container>
-        <Box>
+        <Box >
             <div>
             <h2> {title} </h2>
-            <StyledSlider {...settings}>
-              {wt3r && wt3r.map(e => (
-                <div onClick={()=>movePage(e.restId)} key={e.restId} imgUrl={e.imgUrl}>
+            <StyledSlider {...settings} >
+              {restList && restList.map(e => (
+                <div key={e.restId} imgUrl={e.imgUrl} onClick={onClickCarousel}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>
               ))}
-              {wt3review && wt3review.map(e=>(
-                <div onClick={()=>movePageReview(e.reviewId)} key={e.reviewId} imgUrl={e.reviewFileName}>
-                  <h2>{e.restName}</h2>
-                  <h3>{e.reviewTitle}</h3>
-                </div>
-              ))}
-           
             </StyledSlider>
             </div>
         </Box>
@@ -179,4 +175,4 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
     );
 }
 
-export default HomeCarousel;
+export default RestListCarousel;

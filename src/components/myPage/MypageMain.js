@@ -43,6 +43,7 @@ const MypageMain = () => {
   
 useEffect(() => {
     const resvInfo = async() => {
+        console.log(localStorage.getItem("userId"));
         const rsp = await AxiosApi.resvGet(localStorage.getItem("userId"),"예약확정");
         const rsp2 = await AxiosApi.resvGet(localStorage.getItem("userId"),"예약대기");
         if(rsp.status === 200 && rsp2.status === 200){
