@@ -14,12 +14,12 @@ const Container = styled.div`
     margin-top: 30px;
     
    
-    @media (min-height: 1200px) {
+    /* @media (min-height: 1200px) {
         margin-top: 30px;
         position: absolute;
         bottom: -100px;
         width : 100%;
-    }
+    } */
 
 `;
 

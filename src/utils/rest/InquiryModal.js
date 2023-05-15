@@ -126,6 +126,7 @@ const ModalStyle = styled.div`
 const InquiryModal = (props) => {
     const memId= localStorage.getItem("userId");
     const restId = localStorage.getItem("restId");
+    const restName = localStorage.getItem("restName");
        //팝업 처리
        const [modalOpen, setModalOpen] = useState(false);
        const closeModal = () => {
@@ -167,18 +168,38 @@ const InquiryModal = (props) => {
     const onChangeContent = e =>{
         setInputContent(e.target.value)
     }
+
+   
     const addInquiry = async () => {
         let reviewImageUrl = null;
+
         if (imageUplod) {
             reviewImageUrl = await uploadImage();
             console.log(reviewImageUrl);
         }
+
         const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,reviewImageUrl);
         if (rsp.data === true) {
             setModalOpen(true);
+            
+            const inquiryRsp = await AxiosApi.sendInquiryEmail(restName, memId);
+            console.log(inquiryRsp.status);
+            if(inquiryRsp.status === 200){
+                console.log(inquiryRsp.data);
+            }else console.log("이메일 전송실패");
+
+            const inquiryBizRsp = await AxiosApi.sendInquiryEmailBiz(restId, restName, memId);
+            if(inquiryBizRsp.status === 200){
+                console.log(inquiryBizRsp.data);
+
+            }else console.log("이메일 전송실패");
+
+
+
         } else {
             console.log("전송 실패");
         }
+
         };
 
     return (

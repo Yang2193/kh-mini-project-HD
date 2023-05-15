@@ -99,8 +99,8 @@ const StyledSlider = styled(Slider)`
   
   @media screen and (min-width: 1920px) and (min-height: 1080px) {
   .slick-slide div {
-    width: 360px;
-    height: 360px;
+    width: 320px;
+    height: 320px;
     }
   }
 `;

@@ -23,9 +23,9 @@ const Body = styled.div`
         text-align: center;
     }
 
-    @media (min-height: 1200px) {
+    /* @media (min-height: 1200px) {
         height: 100vh;
-}
+} */
 `;
 
 const Home = () => {
@@ -107,7 +107,7 @@ const Home = () => {
                         {restList && <RestListCarousel handleType={handleType} handleFilter={handleFilter} carouselRestList={restList}/>}
                         {reviewList && <ReviewListCarousel carouselReviewList={reviewList}/>}
                         {/* <Button handleType={handleType} handleFilter={handleFilter}/> */}
-                        <HomeCarousel weeklyTop3Rest={wt3r} weeklyTop3Review={wt3review}/>  
+                        {(wt3r&&wt3review) && <HomeCarousel weeklyTop3Rest={wt3r} weeklyTop3Review={wt3review}/> } 
                     </>
                 )}
                 {type === "List" && (

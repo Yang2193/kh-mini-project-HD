@@ -254,6 +254,25 @@ const AxiosApi = {
     }
     return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry",inquiry);
   },
+  //문의 등록 시 이메일 보내기
+  sendInquiryEmail : async(restName, memId)=>{
+    const inquiry = {
+      restName: restName,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsg", inquiry)
+  },
+
+  //문의 등록 시 사업자 쪽에게 이메일 보내기
+  sendInquiryEmailBiz : async(restId, restName, memId) =>{
+    const inquiry = {
+      restId: restId,
+      restName: restName,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsgBiz", inquiry)
+  },
+    
   //찜 등록
   addRestLike:async(restId,memId,name)=>{
     const addLike={
