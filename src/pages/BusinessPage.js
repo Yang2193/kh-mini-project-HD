@@ -59,6 +59,7 @@ const BusinessPage = () => {
       const restaurant = async () => {
         const rsp = await AxiosApi.restSelect(localStorage.getItem("userId"));
         if (rsp.status === 200) setRestValue(rsp.data);
+    
   
       };
       //레스토랑 상세정보

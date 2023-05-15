@@ -6,6 +6,7 @@ import {useNavigate } from "react-router-dom";
 import { MemberContext } from '../../context/MemberContext';
 import Modal from '../../utils/Modal';
 import Password from '../../utils/Password';
+import AddressModal from '../../utils/AddressModal';
 const MemberInfoBlock = styled.div`
        
         display: flex;
@@ -18,7 +19,18 @@ const MemberInfoBlock = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+        justify-content: center;
+        width: 400px;
+        position: relative;
+        .addrBtn{
+            position: absolute;
+            right: -100px;
+            width: 100px;
+            height: 30px;
+            background-color: #FFA07A;
+            border: none;
+            cursor: pointer;
+        }
             label{
                 width: 150px;
                 text-align: center;
@@ -27,7 +39,7 @@ const MemberInfoBlock = styled.div`
             .btn{
                 width: 100px;
                 height: 50px;
-                margin: 0  20px;
+                margin: 10px;
                 display: inline-block;
                 border: none;
                 border-radius: 4px;
@@ -45,19 +57,7 @@ const MemberInfoBlock = styled.div`
                     background-color: #FFA07A;
                 }
             }
-            .delBtn{
-                font-family: inherit;
-                background-color: #FBF4EF;
-                font-size: 18px;
-                border: none;
-                position: absolute;
-                right: 0;
-                bottom:0;
-                cursor: pointer;
-                &:hover{
-                    font-weight: bolder;
-                }
-             }
+            
            
    
         }
@@ -73,6 +73,19 @@ const MemberInfoBlock = styled.div`
         border-radius: 18px;
         
     }
+    .delBtn{
+                font-family: inherit;
+                background-color: #FBF4EF;
+                font-size: 18px;
+                border: none;
+                position: absolute;
+                right: 0;
+                bottom:0;
+                cursor: pointer;
+                &:hover{
+                    font-weight: bolder;
+                }
+             }
    
   
 
@@ -129,6 +142,19 @@ const MemberInfo = () => {
             }
            
     }
+    // 주소찾기 팝업 및 조건부 렌더링 용
+    const [isOpenPost, setIsOpenPost] = useState(false);
+    const [inputAddress, setInputAddress] = useState(memberValue.addr);
+    const openPost = () => {
+        setIsOpenPost(true);
+      };
+      const closePost = () => {
+        setIsOpenPost(false);
+    }
+    const searchAddress = (address) => {
+        setInputAddress(address);
+        setMemberValue((state) => ({ ...state, addr: address }));
+    }
 
  
     if(!memberValue) return<div>로그인이 필요합니다.</div>;
@@ -157,9 +183,11 @@ const MemberInfo = () => {
                   <input id='phoneNum' name='phoneNum' value={memberValue.phoneNum} onChange={onChange}/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='addr'>주소</label>
-                  <input id='addr' name='addr' value={memberValue.addr} onChange={onChange}/>
-                  </div>
+                    <label htmlFor='addr'>주소</label>
+                    <input id='addr' name='addr' value={inputAddress} onChange={onChange} />
+                    <button onClick={openPost} className='addrBtn'>주소찾기</button>
+                    {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
+                    </div>
                   <div className='box'>
                   <label htmlFor='imgfile'>프로필 사진</label>
                   <input id='imgfile' name='imgFileName' type="text" value={memberValue.imgFileName||''} onChange={onChange}/>
@@ -171,8 +199,9 @@ const MemberInfo = () => {
                 <div className="box">
                 <button className='btn' type="submit" onClick={submit}>수정</button>
                 <button className='btn' onClick={()=>navigate(0)} style={{backgroundColor : "#EEE4DC"}}> 취소 </button>
-                <button className='delBtn' onClick={() => openModal('del')}>회원탈퇴</button>
                 </div>
+                <button className='delBtn' onClick={() => openModal('del')}>회원탈퇴</button>
+               
                 
                 <Modal open={modalType === 'ok'} close={closeModal} type ="ok" header="수정 완료">회원 정보 수정이 완료 되었습니다.</Modal>
                 <Modal open={modalType === 'delCompleted'} close={closeCompletedModal} type ="ok" header="탈퇴 완료">탈퇴가 완료 되었습니다.</Modal>

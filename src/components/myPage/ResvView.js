@@ -198,8 +198,9 @@ const onClickDel = async(resvId) => {
     
     </div>
     <div>
-    {showInput? <button className="updateBtn btn" onClick={()=>onClickUpate(data.resvId)} style={{backgroundColor : "#FFA07A"}}>예약변경완료</button>:
-                <button className="updateBtn btn" onClick={()=> setShowInput(true)} >예약변경</button>}
+    {data.resvStat !=="예약확정" &&(<>
+    {showInput ? <button className="updateBtn btn" onClick={()=>onClickUpate(data.resvId)} style={{backgroundColor : "#FFA07A"}}>예약변경완료</button>:
+                <button className="updateBtn btn" onClick={()=> setShowInput(true)} >예약변경</button>}</>)}
         <button className="cancelBtn btn" onClick={()=> onClickDel(data.resvId)}>예약취소</button>
     </div>
     

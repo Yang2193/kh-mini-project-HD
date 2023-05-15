@@ -196,7 +196,7 @@ const ResvList = ({restValue}) => {
         <>
             <ResvListBlock>
              <div className='titleName'> 예약 리스트 </div>
-             <button className='addBtn' onClick={()=> setModalOpen("wait")}>예약확정</button>
+             <button className='addBtn' onClick={()=> setModalOpen("wait")}>예약대기목록</button>
                 <Calendar
                             value={selectedDate}
                             onChange={handleDateChange}
