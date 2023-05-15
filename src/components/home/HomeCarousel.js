@@ -10,10 +10,10 @@ import { ReviewIdContext } from "../../context/RestaurantId";
 const Container = styled.div`
     margin-top: 60px;
     width: 100%;
-    height: 300px;
+    height: 360px;
     display: flex;
     justify-content: center;
-    margin-bottom: 60px;
+    margin-bottom: 100px;
 
 `;
 
