@@ -46,6 +46,17 @@ const ResCheck = (props) =>{
         } else {
             console.log("전송 실패");
         }
+
+        const reservationRsp = await AxiosApi.sendReservationEmail(
+            props.data.restId,
+            props.data.memberId,
+            props.data.resDate
+        );
+
+        if(reservationRsp.status === 200){
+            console.log(reservationRsp.data);
+            console.log("회원에게 예약등록 이메일 전송");
+        } else console.log("회원에게 예약등록 이메일 전송 실패");
     }
 
 
