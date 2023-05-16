@@ -570,7 +570,7 @@ reviewDelete:async(revId)=>{
       restName : restName,
       memberId: memId,
       resDate: date,
-      restTime: time
+      resTime: time
     }
     return await axios.post(KH_DOMAIN + "/reservation/cancel/email", reservation);
   },

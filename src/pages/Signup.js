@@ -255,8 +255,7 @@ const SignUp = () => {
     // 회원가입 시 환영 팝업
     const [signUpModalOpen, setSignUpModalOpen] = useState(false);
 
-    // modal에 들어갈 props.confirm, props.close 함수 -> 엔터와 ESC를 눌렀을 때 서로 다른 동작을 하게 하려면 다른 함수를 넣으면 된다.
-
+    // modal의 close, confirm에 들어갈 함수 -> 엔터와 ESC를 눌렀을 때 서로 다른 동작을 하게 하려면 다른 함수를 넣으면 된다.
     const closeSignUpModal = () => {
         setSignUpModalOpen(false);
         navigate("/login");

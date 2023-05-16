@@ -109,7 +109,8 @@ const [showInput, setShowInput] = useState(false);
 // 날짜 시간
 const [value, setValue] = useState(new Date());// 날짜 저장
 const [time,setTime] = useState(new Date());// 시간 저장
-const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss")
+const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss");
+const inputDate = moment(value).format("YYYY-MM-DD"); //날짜 이메일 보낼 떄 따로 넣기 위해서 수정.
 
 // 인원 수
 const [people, setPeople] = useState(1);
@@ -136,6 +137,18 @@ const[resReq,setResReq] = useState();
 const onChange=(e)=>{
     setResReq(e.target.value)
 }
+
+// 오전/ 오후 표시하기 위해서 가져왔어요
+function formatTime(date) {
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+  
+    return date.toLocaleString('ko-KR', options);
+  }
+
 // 업데이트
 const onClickUpate =  async(resvId)=> {
     const rsp = await AxiosApi.updateRes(date,resReq,seat,people,resvId);
@@ -143,14 +156,17 @@ const onClickUpate =  async(resvId)=> {
     if(rsp.data){
         setShowInput(false);
     } 
-    // date를 분리해서 업데이트 해야 resvTime이 제대로 나오나? emailRsp, emailBizRsp에선 data.date, data.time으로 넣을 시 변경 전 데이터로 입력되는 거 같음.
-    const emailRsp = await AxiosApi.sendReservationUpdateEmail(data.restId, data.restName, data.memId, date, "테스트");
+    // 업데이트는 해결함
+
+    const inputTime = formatTime(new Date(date));
+
+    const emailRsp = await AxiosApi.sendReservationUpdateEmail(data.restId, data.restName, data.memId, inputDate, inputTime);
     if(emailRsp.status === 200){
         console.log(emailRsp.data);
         console.log("예약 변경 메일 발송")
     } else console.log("예약 변경 메일 발송 실패");
 
-    const emailBizRsp = await AxiosApi.sendReservationUpdateEmailBiz(data.restId, data.restName, data.memId, date, "테스트", data.resvId);
+    const emailBizRsp = await AxiosApi.sendReservationUpdateEmailBiz(data.restId, data.restName, data.memId, inputDate, inputTime, data.resvId);
     if(emailBizRsp.status === 200){
         console.log(emailBizRsp.data);
         console.log("사업자 회원에게 예약 변경 메일 발송")
@@ -164,7 +180,7 @@ const onClickDel = async(resvId) => {
        console.log("삭제완료");
        setModalOpen("delOK");
     } 
-    //  예약 취소 resvTime NULL로 뜸... 이 문제도 해결해야하고.
+    //  예약 변경 후 바로 취소 눌렀을 때 변경사항이 업데이트 안 돼서 최신정보로 취소가 되어있지 않다.
     const emailRsp = await AxiosApi.sendReservationCancelEmail(data.restId, data.restName, data.memId, data.resvDate, data.resvTime);
     if(emailRsp.status === 200){
         console.log(emailRsp.data);

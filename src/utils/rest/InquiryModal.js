@@ -184,6 +184,7 @@ const InquiryModal = (props) => {
             
             const inquiryRsp = await AxiosApi.sendInquiryEmail(restName, memId);
             console.log(inquiryRsp.status);
+
             if(inquiryRsp.status === 200){
                 console.log(inquiryRsp.data);
             }else console.log("이메일 전송실패");
@@ -191,9 +192,7 @@ const InquiryModal = (props) => {
             const inquiryBizRsp = await AxiosApi.sendInquiryEmailBiz(restId, restName, memId);
             if(inquiryBizRsp.status === 200){
                 console.log(inquiryBizRsp.data);
-
             }else console.log("이메일 전송실패");
-
 
 
         } else {
