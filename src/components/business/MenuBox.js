@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import menu from "../../images/menu.png";
-const MenuBoxBlock = styled.div`
 
+const MenuBoxBlock = styled.div`
     background-color:#EEE4DC;
     border-radius: 5px;
     height: auto;
@@ -81,20 +81,34 @@ const MenuBoxBlock = styled.div`
 
 `;
 
-const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick}) => {
-    const [selectImg, setSelectImg] = useState(null);
-
-    const ImgUpload = (e) => {
+const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,setImageUpload}) => {
+    // const ImgUpload = (e) => {
+    //     const file = e.target.files[0];
+    //     if(type==='add') {
+    //     if (file) {
+    //         setImageUpload(file);
+    //       };
+    //   }
+    //   }
+    const ImgUpload = (e, menuId) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            setSelectImg(e.target.result);
-        };
-
-        if(file) {
-            reader.readAsDataURL(file);
+        if(type==='add' && file){setImageUpload(file)}
+        else {
+            ImageUploadUpdate(file, menuId);
         }
-    };
+      };
+      
+      const ImageUploadUpdate = (file, menuId) => {
+        setImageUpload((prevState) => ({
+          ...prevState,
+          [menuId]: {
+            file: file,
+            imageUrl: null, // 이미지 URL을 저장할 프로퍼티
+          },
+        }));
+      };
+    
+   
     const onChange = (e) => {
         const { name, value } = e.target;
         if(type==='add') {
@@ -109,16 +123,15 @@ const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick}) => {
               setMenuList(updatedMenuList);
         }
       };
-     
-      
+
     return(
 
         <MenuBoxBlock>
         <div className="imgBox">
-            {selectImg ? ( <img src={selectImg} alt="메뉴사진" />
-            ) : (<div className="placeholder" style={{backgroundImage :`url(${menu})`}}></div>)}
-           
-            <input type="file" onChange={ImgUpload}/>
+           <img src={menuInfo.menuImgFileName} alt="메뉴사진" />
+           {/* <div className="placeholder" style={{backgroundImage :`url(${menu})`}}></div> */}
+            <input type="file" name = "menuImgFileName" onChange={(e) => ImgUpload(e, menuInfo.menuId)}/>
+            
         </div>
             <div className="inputBox">
             <div className="box">

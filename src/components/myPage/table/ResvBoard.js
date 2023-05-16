@@ -86,7 +86,7 @@ const ResvBoard = ({stat}) => {
             <TableColumn >{e.resvDate}</TableColumn>
             <TableColumn>{e.restName}</TableColumn>
             <TableColumn>{e.resvPeople}</TableColumn>
-            <TableColumn>{e.applicationDate}</TableColumn>
+            <TableColumn>{e.resvTime}</TableColumn>
             <TableColumn>{e.resvStat}</TableColumn>
             </TableRow>
         
@@ -96,6 +96,7 @@ const ResvBoard = ({stat}) => {
         </ResvBlock>
         <Modal open={modalOpen==="resv"} close={closeModal} header="예약 정보" type="resv">{selectedResv&& <ResvView data={selectedResv} setModalOpen={setModalOpen}/>}</Modal>
         <Modal open={modalOpen==="delOK"} close={closeModal} header="예약 취소" type="ok">예약이 취소되었습니다.</Modal>
+        <Modal open={modalOpen==="updateOK"} close={closeModal} header="예약 변경" type="ok">예약이 변경되었습니다.</Modal>
         </>
     );
    

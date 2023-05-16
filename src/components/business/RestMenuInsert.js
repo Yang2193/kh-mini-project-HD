@@ -4,7 +4,9 @@ import styled from "styled-components";
 import Modal from "../../utils/Modal";
 import{RestaurantContext} from "../../context/RestaurantContext";
 import AxiosApi from "../../api/AxiosApi";
-
+import { storage } from "../../firebase/firebase";
+import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 const RestMenuBlock = styled.div`
 
     position: relative;
@@ -77,26 +79,52 @@ const RestMenuInsert = () => {
         restMenu();
     };
 
-    const [newData,setNewData] =useState({
+    //이미지 업로드 파일
+    const [imageUpload, setImageUpload] = useState(null);
+      const [newData,setNewData] =useState({
         menuDesc : "",
-        menuImgFileName : "",
+        menuImgFileName : '',
         menuName:"",
         menuPrice:"",
         restId:restValue.restId,
         menuId:""
     });
 
+    // const uploadImage = async () => {
+    //     if(imageUpload===null) return;
+
+    //     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    //     const uploadSnapshot = await uploadBytes(imageRef, imageUpload);
+    //     const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+    //     return imageUrl;
+    //   };
+    const uploadImage = async (file) => {
+        if (!file) return;
+      
+        const imageRef = ref(storage, `images/${file.name + v4()}`);
+        const uploadSnapshot = await uploadBytes(imageRef, file);
+        const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+        return imageUrl;
+      };
+    
+
+
     const menuAddClick= async() => {
-        console.log(newData);
-        const {menuDesc,menuImgFileName,menuName,menuPrice,restId} =newData;
+        let menuImgFileName = null;
+        if (imageUpload) {
+            menuImgFileName = await uploadImage(imageUpload);
+            console.log(menuImgFileName);
+        }
+        const {menuDesc,menuName,menuPrice,restId} =newData;
         const rsp = await AxiosApi.restMenuAdd(restId,menuName,menuPrice,menuDesc,menuImgFileName);
         if(rsp.data){
            setModalOpen("addOk");
            console.log("추가 성공");
+           
         } 
         
     }
-    
+    console.log(newData);
     const deleteClick = async (menuId) => {
         console.log("삭제");
         const rsp = await AxiosApi.restMenuDel(menuId);
@@ -107,14 +135,25 @@ const RestMenuInsert = () => {
      }
      const updateClick = async () => {
         console.log("업데이트");
-        const rsp = await AxiosApi.restMenuUpdate(menuList);
+        const updatedMenuList = await Promise.all(
+            menuList.map(async (menu) => {
+              const upload = imageUpload[menu.menuId];
+              if (upload && upload.file) {
+                const imageUrl = await uploadImage(upload.file); // 수정된 부분
+                return { ...menu, menuImgFileName: imageUrl };
+              } else {
+                return { ...menu, menuImgFileName: menu.menuImgFileName };
+              }
+            })
+          );        
+          console.log(updatedMenuList);
+        const rsp = await AxiosApi.restMenuUpdate(updatedMenuList);
         if(rsp.data){
             console.log("업데이트 성공");
             setModalOpen("update");
         }
      }
-   
-
+     
        
         return(
     
@@ -128,11 +167,14 @@ const RestMenuInsert = () => {
                     menuList={menuList}
                     setMenuList={setMenuList}
                     deleteClick={deleteClick}
+                    imageUpload={imageUpload}
+                    setImageUpload={setImageUpload}
                     />
                 </div>
                 ))}
              <button  className="menuBtn updateBtn" onClick={()=>updateClick()}>수정 완료</button>
-             <Modal open={modalOpen==="add"} close={closeModal} header="메뉴 추가" type='add' confirm={menuAddClick}><MenuBox menuInfo={newData} setMenuList={setNewData} type="add"/></Modal>
+             <Modal open={modalOpen==="add"} close={closeModal} header="메뉴 추가" type='add' confirm={menuAddClick}><MenuBox menuInfo={newData} setMenuList={setNewData} imageUpload={imageUpload}
+                    setImageUpload={setImageUpload} type="add"/></Modal>
              <Modal open={modalOpen==="del"} close={closeModal} header="메뉴 삭제" type='ok'>메뉴가 삭제되었습니다.</Modal>
              <Modal open={modalOpen==="update"} close={closeModal} header="메뉴 수정" type='ok' >수정이 완료되었습니다.</Modal>
              <Modal open={modalOpen==="addOk"} close={closeModal} header="메뉴 추가완료" type='ok'>메뉴추가가 완료되었습니다.</Modal>

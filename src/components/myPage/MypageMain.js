@@ -68,7 +68,7 @@ useEffect(() => {
         <p> <span className="date">{filterData[filterData.length-1].resvDate}</span> 에 </p>
         <p><span className="restName">{filterData[filterData.length-1].restName}</span>  에서 </p>
         <p><span className="seat">{filterData[filterData.length-1].resvTime}</span></p>
-        <p> <span className="count">{filterData[filterData.length-1].resvPeople}</span>명 <span className="seat">{filterData[0].resvSeat}</span>좌석에 </p>
+        <p> <span className="count">{filterData[filterData.length-1].resvPeople}</span>명</p>
         <p>{filterData[filterData.length-1].resvStat === "예약확정" ? "예약이 완료되었습니다." : "예약 대기중입니다."}</p>
         </div>) :(<div className="box">예약 정보가 없습니다.</div>)}
 

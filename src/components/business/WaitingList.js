@@ -105,7 +105,6 @@ const WatingList = ({restResv,resvList,formatTime}) => {
             <th>회원ID</th>
             <th>시간</th>
             <th>인원</th>
-            <th>좌석번호</th>
             <th>요청사항</th>
           </tr>
         </thead>
@@ -122,9 +121,8 @@ const WatingList = ({restResv,resvList,formatTime}) => {
             <td>{e.resvDate}</td>
             <td>{e.resvId}</td>
             <td>{e.memId}</td>
-            <td>{formatTime(new Date(e.resvDate))}</td>
+            <td>{e.resvTime}</td>
             <td>{e.resvPeople}</td>
-            <td>{e.resvSeat}</td>
             <td>{e.resvRequest}</td>
           </tr>
           ))}

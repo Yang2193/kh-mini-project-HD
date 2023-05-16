@@ -7,6 +7,9 @@ import { MemberContext } from '../../context/MemberContext';
 import Modal from '../../utils/Modal';
 import Password from '../../utils/Password';
 import AddressModal from '../../utils/AddressModal';
+import { storage } from "../../firebase/firebase";
+import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 const MemberInfoBlock = styled.div`
        
         display: flex;
@@ -86,10 +89,32 @@ const MemberInfoBlock = styled.div`
                     font-weight: bolder;
                 }
              }
-   
+
   
 
 `;
+
+// const FileInputContainer = styled.label` 
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-end;
+// `;
+
+// const FileInput = styled.input`
+//   /* 숨겨진 원본 input 스타일 */
+//   /* display: none; */
+
+// `;
+
+// const FileInputLabel = styled.span`
+//   /* 버튼 스타일 */
+//   background-color: #ccc;
+//   padding: 8px 16px;
+//   border-radius: 4px;
+//   cursor: pointer;
+// `;
+
+
 //내정보 수정
 const MemberInfo = () => {
     //컨텍스 api를 사용
@@ -120,7 +145,11 @@ const MemberInfo = () => {
 
     //수정버튼 클릭 시
     const submit = async()=> {
-
+        let ImageUrl = null;
+        if (imageUplod) {
+            ImageUrl = await uploadImage();
+            memberValue.imgFileName =ImageUrl;
+        }
         const rsp = await AxiosApi.memberUpdate(memberValue);
         if(rsp.data){
             //console.log("회원정보 업데이트 완료!");
@@ -156,6 +185,22 @@ const MemberInfo = () => {
         setMemberValue((state) => ({ ...state, addr: address }));
     }
 
+     // 이미지 업로드 기능
+     const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
+
+     const onChangeImage =(e) =>{
+         setImageUpload(e.target.files[0]);
+     }
+ 
+     const uploadImage = async () => {
+         if(imageUplod===null) return;
+ 
+         const imageRef = ref(storage, `images/${imageUplod.name + v4()}`);
+         const uploadSnapshot = await uploadBytes(imageRef, imageUplod);
+         const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+         return imageUrl;
+       };
+
  
     if(!memberValue) return<div>로그인이 필요합니다.</div>;
 	return (
@@ -188,10 +233,15 @@ const MemberInfo = () => {
                     <button onClick={openPost} className='addrBtn'>주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
-                  <div className='box'>
-                  <label htmlFor='imgfile'>프로필 사진</label>
-                  <input id='imgfile' name='imgFileName' type="text" value={memberValue.imgFileName||''} onChange={onChange}/>
+                   <div className='box'>
+                  <label htmlFor='input-file'>프로필 사진</label>
+                  {/* <FileInputContainer>
+                    <FileInput type="file" onChange={onChangeImage} />
+                    <FileInputLabel>파일 선택</FileInputLabel>
+                    </FileInputContainer> */}
+                  <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/>
                   </div>
+                    
                   <div className='box'>
                   <label htmlFor='email'>이메일</label>
                   <input id='email' name='email' value={memberValue.email} onChange={onChange}/>

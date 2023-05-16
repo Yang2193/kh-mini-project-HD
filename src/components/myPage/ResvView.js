@@ -155,6 +155,7 @@ const onClickUpate =  async(resvId)=> {
     console.log(date,resReq,seat,people,resvId);
     if(rsp.data){
         setShowInput(false);
+        setModalOpen("updateOK");
     } 
     // 업데이트는 해결함
 

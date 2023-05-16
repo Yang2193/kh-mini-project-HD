@@ -204,7 +204,7 @@ const ResvList = ({restValue}) => {
                         />
             </ResvListBlock> 
                 <TableBlock>
-                    <Table headersName={['NO.','날짜', '예약ID', '예약시간', '인원수','좌석']}>
+                    <Table headersName={['NO.','날짜', '예약ID', '예약시간', '인원수']}>
                     {filteredResvList && filteredResvList.map((e) => (
                         <TableRow key ={e.resvId} onClick = {() =>resvClick(e)}>
                         <TableColumn>{e.resvId}</TableColumn>
@@ -212,7 +212,6 @@ const ResvList = ({restValue}) => {
                         <TableColumn>{e.memId}</TableColumn>
                         <TableColumn>{e.resvTime}</TableColumn>
                         <TableColumn>{e.resvPeople}명</TableColumn>
-                        <TableColumn>{e.resvSeat}번</TableColumn>
                         </TableRow>
                     ))}
                     </Table>

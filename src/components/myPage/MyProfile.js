@@ -21,6 +21,7 @@ const MyProfileBlock = styled.div`
     .profileImg img{
         width: 200px;
         height: 200px;
+        border-radius :100px;
         
     }
     //버튼
@@ -122,7 +123,7 @@ const MyProfile =  () => {
     if(!memberValue) return<MyProfileBlock>로그인이 필요합니다.</MyProfileBlock>;//추후 업데이트
     return( 
         <MyProfileBlock>
-        <div className="profileImg"><img src={ProfileImg} alt="Logo" /></div>
+        <div className="profileImg"><img src={memberValue.imgFileName} alt="Logo" /></div>
         <div className="profileInfo">
             <div className="text">
             <div className="box">
@@ -135,21 +136,21 @@ const MyProfile =  () => {
             {showInput ? <input type="text" id="nickName" name='nickName' value={memberValue.nickName} onChange={onChange}/> :
                         <span className="result">{memberValue.nickName}</span>}
             </div>
-            <div className="box">
+            {/* <div className="box">
             <label htmlFor ="intro">소개글</label>
             {showInput ? <input type="text" id="intro"/> :
                          <span className="result">소개글입니다.</span>}
-            </div>
-            <div className="box">
+            </div> */}
+            {/* <div className="box">
             <label htmlFor ="area">지역</label>
             {showInput ? <input type="text" id="area" name='addr' value={memberValue.addr.slice(0,9)} onChange={onChange}/> :
                         <span className="result">{memberValue.addr.slice(0,9)}</span>}
-            </div>
-            <div className="box">
+            </div> */}
+            {/* <div className="box">
             <label htmlFor ="tag">해시태그</label>
             {showInput ? <input type="text" id="tag"/> :
                          <span className="result">해시태그.</span>}
-            </div>
+            </div> */}
             </div> 
         </div>
         {showInput? <button className="confirmBtn" onClick={onClickUpate} style={{backgroundColor : "#FFA07A"}}>수정완료</button> :

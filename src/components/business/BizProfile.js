@@ -123,7 +123,7 @@ const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
         console.log(restInfoList);
     },[]);
 
-
+ 
     const onChange= (e) => { 
         const{name,value} = e.target;
         setRestInfoList(state => ({...state,[name]:value}));
@@ -132,7 +132,7 @@ const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
             <ProfileBlock>
             <BsFillHeartFill className="likeCnt"/>
             <span className="likeValue">{likeCnt===null ? 0 : likeCnt}</span>
-            <div className="profileImg"><img src={shop} alt="Logo" /></div>
+            <div className="profileImg"><img src={restInfoList&&restInfoList.restImgFileName} alt="Logo" /></div>
             <div className="info">
             <div>가게명 : <span className="result">{typeof restName === 'undefined'? "매장등록이 필요합니다." : restName}</span></div>
             <label htmlFor ="notice">공지사항</label>

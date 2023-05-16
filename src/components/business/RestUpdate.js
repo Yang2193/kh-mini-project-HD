@@ -6,6 +6,11 @@ import AxiosApi from "../../api/AxiosApi";
 import Modal from "../../utils/Modal";
 import {useNavigate } from "react-router-dom";
 import AddressModal from "../../utils/AddressModal";
+import { storage } from "../../firebase/firebase";
+import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
+
+
 const RestInsertBlock = styled.div`
         display: flex;
         flex-direction: column;
@@ -159,7 +164,11 @@ const closeModal = () => {
     //    navigate(0);
    };
    const onClickUpate =  async()=> {
-
+     let ImageUrl = null;
+     if (imageUplod) {
+            ImageUrl = await uploadImage();
+            restInfoList.restImgFileName =ImageUrl;
+    }
     const rsp = await AxiosApi.restInfoUpdate(restInfoList);
     const rsp2 = await AxiosApi.restUpdate(restValue);
     if(rsp.data && rsp2.data){
@@ -184,6 +193,22 @@ const closeModal = () => {
         setInputAddress(address);
         setRestInfoList((state) => ({ ...state, restAddr: address }));
     }
+
+    // 이미지 업로드 기능
+     const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
+
+     const onChangeImage =(e) =>{
+         setImageUpload(e.target.files[0]);
+     }
+ 
+     const uploadImage = async () => {
+         if(imageUplod===null) return;
+ 
+         const imageRef = ref(storage, `images/${imageUplod.name + v4()}`);
+         const uploadSnapshot = await uploadBytes(imageRef, imageUplod);
+         const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+         return imageUrl;
+       };
     
     return(
             <RestInsertBlock>
@@ -210,6 +235,10 @@ const closeModal = () => {
                     <button onClick={openPost} className='addrBtn'>주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
+                    <div className='box'>
+                     <label htmlFor='input-file'>프로필 사진</label>
+                    <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/>
+                  </div>
                   <div className='box'>
                   <label htmlFor='id'> 공지사항 : </label>
                   <input id='id' value={restInfoList.restNotice||''} name='restNotice'onChange={restInfoOnChange} className="inputBox"/>
