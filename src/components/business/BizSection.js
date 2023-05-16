@@ -5,6 +5,7 @@ import RestInquiry from "./RestInquiry";
 import ResvList from "./ResvList";
 import RestMenuInsert from "./RestMenuInsert";
 import { RestaurantContext } from "../../context/RestaurantContext";
+import RestUpdate from "./RestUpdate";
 const SectionBlock = styled.div`
     margin : 0 auto;
     background-color:#FBF4EF;
@@ -31,7 +32,7 @@ const BizSection = ({category,restInfoList,setRestInfoList,restName}) => {
     const menuSelect = (name) => {
         switch(name){
             case "menu1" : 
-            return <RestInsert restInfoList={restInfoList}setRestInfoList={setRestInfoList}/>;
+            return restInfoList === ""?(<RestInsert/>) : (<RestUpdate restInfoList={restInfoList}setRestInfoList={setRestInfoList}/>);
            
             case "menu2" : 
             return <RestInquiry restValue={restValue}/>;

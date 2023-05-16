@@ -373,6 +373,21 @@ const AxiosApi = {
   }
     return await axios.post(KH_DOMAIN+"/business/restaurant/update",restaurant);
   },
+  //레스토랑 Info 업데이트 
+  restInfoInsert : async(data) => {
+    const restInfo ={
+        vo : data
+    }
+    return await axios.post(KH_DOMAIN+"/business/restInfo/insert",restInfo);
+},
+  //레스토랑 업데이트 
+  restInsert : async(data) => {
+    const restaurant ={
+      vo : data
+  }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/insert",restaurant);
+  },
+  
   // 매장의 메뉴 정보 불러오기
   restMenu:async(restaurantId)=>{
     return await axios.get(KH_DOMAIN + `/business/restaurant/menu?restaurantId=${restaurantId}`)

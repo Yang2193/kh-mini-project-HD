@@ -47,9 +47,9 @@ const BusinessPage = () => {
     const [category,setCategory] = useState(null);
     const onSelect = useCallback(category => setCategory(category),[]);
 
-    const [restInfoList, setRestInfoList] = useState('');
+    const [restInfoList, setRestInfoList] = useState(null);
    
-    const [likeCnt, setLikeCnt] = useState('');
+    const [likeCnt, setLikeCnt] = useState(null);
    
     //매장 정보 조회 
    const {restValue,setRestValue} =useContext(RestaurantContext);
@@ -67,6 +67,7 @@ const BusinessPage = () => {
         console.log(restValue.restId);
        const rsp = await AxiosApi.restInfoSelect(restValue.restId);
        if (rsp.status === 200) setRestInfoList(rsp.data);
+      
        
       };
       //평점 가져오기 
