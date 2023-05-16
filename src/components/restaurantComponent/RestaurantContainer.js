@@ -2,36 +2,42 @@ import React from "react"
 import styled from "styled-components"
 import {useState,useEffect,useContext} from "react";
 import AxiosApi from "../../api/AxiosApi";
-import { RestIdContext } from "../../context/RestaurantId";
 import {  useNavigate } from "react-router-dom";
 import InquiryModal from "../../utils/rest/InquiryModal";
 import StarRatings from "react-star-ratings";
-
+import { MemberContext } from "../../context/MemberContext";
 const FixContent = styled.section`
-
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ivory;
-    border-top: 3px solid;
-    border-color: #eee;
-    img{
-        width: 400px;
-        margin-right: 100px;
-        height: 300px;
-        background-color: white;
-    }
+        width: 70%;
+        height: auto;
+        margin: 30px auto;
+        background-color: #FBF4EF;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        position: relative;
     .cont{
+        position: relative;
+        border-radius: 15px;
+        left:250px;
         border: 1px solid;
         width: 600px;
         height: 300px;
-        background-color: white;
+        background-color: #fff;
         display: flex;
         flex-direction: column;
     }
-        
+    img{
+        position: absolute;
+        border-radius: 15px;
+        left:130px;
+        width:400px;
+        height: 300px;
+        background-color: #fff;
+    }
     button{
             font-size: 20px;
             width: 150px;
@@ -165,6 +171,17 @@ const closeModal = () => {
             deleteLike();
         }    
 // 예약 페이지
+const {setMemberValue} = useContext(MemberContext);
+
+useEffect(()=>{ // 로그인한 회원id를 기준으로 찜 매장 리스트를 db에서 불러와 확인하고 배열에 삽입
+    const getMember = async() => {
+        const rsp = await AxiosApi.memberGet(memId);
+        setMemberValue(rsp.data);
+        console.log(rsp.data);
+    }
+    getMember();
+},[]);
+
 const checklogin =()=>{
     if(!memId){
         alert("로그인이 되어있지 않습니다.")
@@ -175,9 +192,10 @@ const checklogin =()=>{
 }
     return(
             <FixContent>
-                <img src="" alt="이미지" />
                 {rtInfoFix&& rtInfoFix.map(rest =>(
-                    <div className="cont" key={rest.name}>
+                    <div key={rest.name}>
+                        <img src={rest.image} alt="이미지" />
+                        <div className="cont">
                         <p>매장 이름 : {rest.name}</p>
                         <p>전화 번호 : {rest.phone}</p>
                         <p>주소 : {rest.addr}</p>
@@ -193,7 +211,7 @@ const checklogin =()=>{
                         <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
                         <button className="like" onClick={()=>onClickLiked(rest.name)} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
                         <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
-
+                        </div>
                     </div>
                 ))}
             </FixContent>

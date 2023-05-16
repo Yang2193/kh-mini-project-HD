@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import {useState,useEffect,useContext} from "react";
-import { RestIdContext,ReviewIdContext } from "../../context/RestaurantId";
+import { ReviewIdContext } from "../../context/RestaurantId";
 import ReviewModal from "../../utils/rest/ReviewModal";
 import { Link, useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
@@ -10,12 +10,13 @@ import Modal from "../../utils/Modal";
 import ReviewUpdate from "../../utils/rest/ReviewUpdate";
 
 const ReviewContanier = styled.section`
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
     .cont{
+        margin-top: 30px;
+		border-radius: 15px;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -57,6 +58,7 @@ const ReviewContanier = styled.section`
             font-size: 20px;
         }
         .box{
+            border-radius: 15px;
             padding: 10px;
             padding-top: 0px;
             width: 820px;
@@ -100,7 +102,7 @@ const ReviewContanier = styled.section`
             position: relative;
             width: 300px;
             height: 200px;
-            bottom: 200px;
+            bottom: 190px;
             left: 500px;
         }
 
@@ -130,6 +132,12 @@ const ReviewContanier = styled.section`
         left:300px;
 
     }
+    .sort{
+        position: relative;
+        left:370px;
+        bottom:70px;
+    }
+
 `;
 
 const Review =() => {
@@ -153,15 +161,43 @@ const Review =() => {
         rtReview();
     },[]);
 // 화면에 나올 리뷰 수 관리
-    useEffect(() => {
-        setVisibleReviews(rtReview.slice(0, rvCount));
-    }, [rtReview, rvCount]);   
+const [sortOrder, setSortOrder] = useState('date'); // 'date' 또는 'likes'
+
+useEffect(() => {
+    let sortedReviews = [...rtReview];
+  
+    if (sortOrder === 'date') {
+      sortedReviews.sort((a, b) => {
+        // 작성일을 비교하여 오름차순으로 정렬
+        return new Date(b.reviewDate) - new Date(a.reviewDate);
+      });
+    } else if (sortOrder === 'likes') {
+      sortedReviews.sort((a, b) => {
+        // 공감 수를 비교하여 내림차순으로 정렬
+        return b.likeCnt - a.likeCnt;
+      });
+    }
+  
+    setVisibleReviews(sortedReviews.slice(0, rvCount));
+  }, [rtReview, rvCount, sortOrder]);
 // onClick 으로 클릭시 3개씩 화면에 나올 데이터 개수 추가 + 화면 높이 증가
     function handleLoadMore() {
-        setRvCount(rvCount + 3);  // 개수 추가
-        setRvHeight(rvHeight + 300); // 높이를 300px 증가시킴
-    }
-
+        setRvCount(rvCount + 3);
+        setRvHeight(rvHeight + 300);
+        let sortedReviews = [...rtReview];
+    
+        if (sortOrder === 'date') {
+        sortedReviews.sort((a, b) => {
+            return new Date(a.reviewDate) - new Date(b.reviewDate);
+        });
+        } else if (sortOrder === 'likes') {
+        sortedReviews.sort((a, b) => {
+            return b.likeCnt - a.likeCnt;
+        });
+        }
+  
+    setVisibleReviews(sortedReviews.slice(0, rvCount + 3));
+  }
 // 버튼 입력시 팝업 창
     const [modalOpen, setModalOpen] = useState(false); // 리뷰작성
     const[modalUpdate,setModalUpdate]=useState(false); // 리뷰 수정
@@ -205,6 +241,11 @@ const Review =() => {
                 <ReviewModal open={modalOpen} close={closeModal}></ReviewModal>
                 <Modal open={modalCheck} close={closeModal} type ="ok" header="수정 완료"> 로그인이 되어 있지 않습니다. </Modal>
 
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="sort">
+                    <option value="date">최신 날짜순</option>
+                    <option value="likes">공감순</option>
+                </select>
+
                 {visibleReviews&&visibleReviews.map(rest=>(
                     <div className="box" key={rest.reviewId}>
                         <div className="main">
@@ -238,7 +279,7 @@ const Review =() => {
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
                     </div>
                 ))}
-                <button className="more" onClick={handleLoadMore}>더보기</button>
+         {visibleReviews.length ===rtReview.length ? <></>  : <button onClick={handleLoadMore} className="more">▼ 더보기</button>}
             </div>
         </ReviewContanier>
     )

@@ -117,8 +117,9 @@ const ReviewListCarousel = ({carouselReviewList}) => {
   };
   const {setReviewId} = useContext(ReviewIdContext)
 
-  const movePageReview = (reviewId) => {
+  const movePageReview = (reviewId,reservation) => {
     setReviewId(reviewId);
+    localStorage.setItem("resPossible",reservation);
     nav("/Detail");
   };
   //슬라이드에 따라서 출력 문구 설정
@@ -159,7 +160,7 @@ const ReviewListCarousel = ({carouselReviewList}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {reviewList && reviewList.map(e=>(
-                <div onClick={()=>movePageReview(e.reviewId)} key={e.reviewId} imgUrl={e.reviewFileName}>
+                <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId} imgUrl={e.reviewFileName}>
                   <h2>{e.restName}</h2>
                   <h3>{e.reviewTitle}</h3>
                 </div>

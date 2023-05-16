@@ -1,32 +1,29 @@
 import styled from "styled-components";
 
 const Nav = styled.div`
-  /* position: relative; */
-  /* bottom: 25px; */
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ivory;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    & > * {
+        margin: 10px;
+    }
 
   button{
-    color : black;
-    text-decoration: none;
+    width: 200px;
+    height: 100px;
+    background : #FF7F50;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 80px;
-    background-color: lightsalmon;
-    border: 1px solid;
-    border-right: none;
-    border-bottom:5px solid ;
     font-size: 20px;
+    font-family: inherit;
+    border : 1px solid white;
+    border-radius: 5px;
     cursor: pointer;
-  }
-  .rev{
-    border-right: 1px solid;
   }
 `;
 

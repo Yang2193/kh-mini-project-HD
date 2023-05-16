@@ -7,31 +7,38 @@ import RestaurantContainer from "../components/restaurantComponent/RestaurantCon
 import RestaurantNav from "../components/restaurantComponent/RestaurantNav";
 import Menu from "../components/restaurantComponent/RestaurantMenu";
 import Review from "../components/restaurantComponent/RestaurantReview";
-const InfoContainer = styled.section`
-		
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: ivory;
-		.cont{
-        position: relative;
-		top:15px;
-		padding: 30px;
-		background-color: white;
-		width: 845px;
-		border: 1px solid;
-		p{
-			margin: 10px;
-			font-size: 20px;
-		}
-		.box{
-			margin-bottom: 80px;
-		}
-	}
-	
-`;
 
+const InfoContainer = styled.section`
+		font-family: "NanumGothic";
+		background-color:#EEE4DC;
+		.all{
+		display: flex;
+        justify-content: center;
+        align-items: center;
+		}
+		.infoCont{
+		border-radius: 15px;
+		margin-top: 30px;
+        position: relative;
+		padding: 30px;
+		width: 845px;
+		border: 1px solid;		
+		background-color: #fff;
+	}
+	.box{
+		margin: 50px 0px;
+	}
+`;
+const MenuBlock =styled.div`
+ width: 70%;
+    margin: 0 auto;
+    background-color:#F0B7A2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+`;
 
 const Info = () => {
 	// 로컬 스토리지 사용
@@ -57,16 +64,17 @@ const Info = () => {
 	}, []);
 
 	return (
-		<>
+		<InfoContainer>
 			<Header/>
 			<RestaurantContainer/>
-
+			<MenuBlock>
 			<RestaurantNav  handleType={handleType}/>
+			</MenuBlock>
 
 			{type === "default" && (
-				<InfoContainer>
+				<div className="all">
 				{restInfo&&restInfo.map(rest =>(
-					<div className="cont" key ={rest.restId}>
+					<div className="infoCont" key ={rest.restId}>
 						<div className="box">
 							<h2>공지사항</h2>
 							<p>{rest.restNotice}</p>
@@ -89,7 +97,7 @@ const Info = () => {
 						</div>
 					</div>
 				))}			
-			</InfoContainer>
+			</div>
 			)}
 
 			{type === "menu" && (
@@ -99,7 +107,7 @@ const Info = () => {
 				<Review/>
 			)}
 			<HomeFooter/>
-		</>
+		</InfoContainer>
 	);
 };
 export default Info;

@@ -183,6 +183,7 @@ const ReviewModal = (props) => {
         setModalOpen(true);
     } else {
         console.log("전송 실패");
+        console.log(restId, memId, inputTttle, inputContent, inputRating, reviewImageUrl);
     }
     };
         

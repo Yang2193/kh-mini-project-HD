@@ -34,7 +34,6 @@ const Reviews = () => {
         <ReviewInfo/>
         <ReviewInfo/>
         <ReviewInfo/>
-
     </Container>);
 
 }

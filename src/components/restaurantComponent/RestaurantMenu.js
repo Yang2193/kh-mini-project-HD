@@ -5,12 +5,12 @@ import {useState,useEffect,useContext} from "react";
 import { RestIdContext } from "../../context/RestaurantId";
 
 const MenuContanier = styled.section `
-        /* width: 100%; */
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
     .cont{
+        border-radius: 15px;
         margin-top: 30px;
         display: flex;
         justify-content: center;
@@ -29,6 +29,8 @@ const MenuContanier = styled.section `
             cursor: pointer;
         }
         .box{
+            border-radius: 15px;
+
             padding: 10px;
             width: 350px;
             height: 200px;
@@ -41,6 +43,7 @@ const MenuContanier = styled.section `
                 margin-bottom: 40px;
             }
             img{
+            border-radius: 15px;
             position: absolute;
             border: 1px solid;
             width: 350px;
@@ -56,13 +59,13 @@ const Menu =() => {
 	const restId = localStorage.getItem("restId");
 
     const [rtMenu, setRtMenu] = useState("");
-    const [menu, setMenu] = useState([]); // 현재까지 불러온 리뷰 데이터
-    const [menuLode, setMenuLode] = useState(3); // 현재까지 불러온 리뷰 데이터 개수
+    const [menu, setMenu] = useState([]); // 현재까지 불러온 메뉴 데이터
+    const [menuLode, setMenuLode] = useState(3); // 현재까지 불러온 메뉴 데이터 개수
     const [menuHeight, setMenuHeight] = useState();// 화면 높이 추가
 
 	useEffect(() => {
 		const rtMenu = async()=>{
-            const rsp = await AxiosApi.restaurantMenu(restId)
+            const rsp = await AxiosApi.restMenu(restId)
             setRtMenu(rsp.data);
         };
         rtMenu();
@@ -86,11 +89,10 @@ const Menu =() => {
                             <p>메뉴 이름 : {rest.menuName} </p>
                             <p>설명 : {rest.menuDesc}</p>
                             <p>가격 : {rest.menuPrice} </p>
-                            <img src="" alt="이미지" />
+                            <img src={rest.menuImgFileName} alt="이미지" />
                         </div>
                     ))}
-                    <button onClick={handleLoadMore}>더보기</button>
-
+         {rtMenu.length ===menu.length ? <></>  : <button onClick={handleLoadMore}>▼ 더보기</button>}
                 </div>
             </MenuContanier>
     )

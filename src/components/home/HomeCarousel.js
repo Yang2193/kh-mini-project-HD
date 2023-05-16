@@ -111,14 +111,18 @@ const StyledSlider = styled(Slider)`
 const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
 // 페이지이동
   const nav=useNavigate();
-  const movePage = (restId) => {
+  const movePage = (restId,reservation) => {
     localStorage.setItem("restId", restId);
+    localStorage.setItem("resPossible",reservation);
+
     nav("/info");
   };
   const {setReviewId} = useContext(ReviewIdContext)
 
-  const movePageReview = (reviewId) => {
+  const movePageReview = (reviewId,reservation) => {
     setReviewId(reviewId);
+    localStorage.setItem("resPossible",reservation);
+
     nav("/Detail");
   };
   //슬라이드에 따라서 출력 문구 설정
@@ -160,13 +164,13 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {wt3r && wt3r.map(e => (
-                <div onClick={()=>movePage(e.restId)} key={e.restId} imgUrl={e.imgUrl}>
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imgUrl}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>
               ))}
               {wt3review && wt3review.map(e=>(
-                <div onClick={()=>movePageReview(e.reviewId)} key={e.reviewId} imgUrl={e.reviewFileName}>
+                <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId} imgUrl={e.reviewFileName}>
                   <h2>{e.restName}</h2>
                   <h3>{e.reviewTitle}</h3>
                 </div>
