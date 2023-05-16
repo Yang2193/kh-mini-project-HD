@@ -264,7 +264,7 @@ const ReviewDetail = () =>{
                         ) : null}
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
                         <div className="imgBox">
-                            <img src={rest.image} alt="이미지"/>
+                            <img src={rest.reviewImage} alt="이미지"/>
                         </div>
                     </div>
                 ))}

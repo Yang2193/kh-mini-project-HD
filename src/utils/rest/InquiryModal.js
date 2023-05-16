@@ -28,8 +28,8 @@ const ModalStyle = styled.div`
         animation: modal-bg-show 0.8s;
     }
     section {
-        width: 900px;
-        height: 450px;
+        width: 80%;
+        height: 80%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -38,12 +38,12 @@ const ModalStyle = styled.div`
         overflow: hidden;
     }
     section > header{
+        background-color: lightsalmon;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
         padding: 16px 64px 16px 16px;
-        background-color: #f1f1f1;
         font-weight: 700;
         height: 20px;
     }
@@ -63,23 +63,39 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 300px;
+        height: 80%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
         .title{
+            padding-left: 5px;
             margin-bottom: 30px;
-            width: 800px;
-            height: 30px;
+            width: 60%;
+            height: 10%;
+            background-color:#EEE4DC;
+            font-size: 20px;
+            border-radius: 10px;
+            border: none;
         }
         .content{
-            width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: "NanumGothic";
+            width: 58%;
+            height: 50%;
             margin-bottom: 30px;
-
+            background-color:#EEE4DC;
+            font-size: 20px;
+            border: none;
         }
         .file{
-            position: relative;
-            right: 275px;
+            background-color:#EEE4DC;
+            width: 58%;
+            height: 10%;
+            padding:20px;
+            border-radius: 10px;
+            font-size: 20px;
+
         }
     }
     footer{
@@ -89,11 +105,16 @@ const ModalStyle = styled.div`
         align-items: center;
     }
     section > footer button {
-        position: relative;
-        background-color: white;
-        margin-top: 10px;
-        width: 100px;
-        height: 50px;
+        width: 200px;
+        height: 30px;
+        margin-top: 13px;
+        margin-left:100px;
+        margin-right: 100px;
+        font-size: 20px;
+        background-color: lightsalmon;
+    }
+    section > footer button:hover {
+        color:white
     }
     .add{
         right:200px;

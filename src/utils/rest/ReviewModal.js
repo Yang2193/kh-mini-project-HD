@@ -6,7 +6,7 @@ import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 import Modal from "../Modal";
-
+import { Rating } from "react-simple-star-rating";
 const ModalStyle = styled.div`
      .modal {
         display: none;  // 숨겨진 상태로 시작
@@ -32,8 +32,8 @@ const ModalStyle = styled.div`
     }
 
     section {
-        width: 900px;
-        height: 500px;
+        width: 80%;
+        height: 80%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -47,7 +47,7 @@ const ModalStyle = styled.div`
         align-items: center;
         position: relative;
         padding: 16px 64px 16px 16px;
-        background-color: #f1f1f1;
+        background-color: lightsalmon;
         font-weight: 700;
         height: 20px;
     }
@@ -67,24 +67,54 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 360px;
+        height: 80%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
         .title{
+            padding-left: 5px;
             margin-bottom: 30px;
-            width: 800px;
-            height: 30px;
+            width: 60%;
+            height: 10%;
+            background-color:#EEE4DC;
+            font-size: 20px;
+            border-radius: 10px;
+            border: none;
         }
         .content{
-            width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: "NanumGothic";
+            width: 58%;
+            height: 50%;
             margin-bottom: 30px;
-
+            background-color:#EEE4DC;
+            font-size: 20px;
+            border: none;
         }
         .file{
-            position: relative;
-            right: 275px;
+            background-color:#EEE4DC;
+            width: 58%;
+            height: 10%;
+            padding:20px;
+            border-radius: 10px;
+            font-size: 20px;
+
         }
+        .rating{
+            display: flex;
+            align-items: center;
+            width: 60%;
+            height: 10%;
+            border-radius: 10px;
+            background-color:#EEE4DC;
+            padding-left: 10px;
+        }
+        .star{
+                position: relative;
+                bottom:60px;
+                right:200px;
+            }
     }
 
     section > footer {
@@ -99,8 +129,12 @@ const ModalStyle = styled.div`
         margin-top: 13px;
         margin-left:100px;
         margin-right: 100px;
+        font-size: 20px;
+        background-color: lightsalmon;
     }
-
+    section > footer button:hover {
+        color:white
+    }
     @keyframes modal-show {
         from {
             opacity: 0;
@@ -160,7 +194,7 @@ const ReviewModal = (props) => {
     // 리뷰 데이터 입력 받고 데이터 추가 전송
     const [inputTttle, setInputTitle] = useState("");
     const [inputContent, setInputContent] = useState("");
-    const [inputRating,setInputRating] = useState("");
+    const [inputRating,setInputRating] = useState(0);
 
     const onChangeTitle = e =>{
         setInputTitle(e.target.value)
@@ -169,7 +203,7 @@ const ReviewModal = (props) => {
         setInputContent(e.target.value)
     }
     const onChangeRating = e =>{
-        setInputRating(e.target.value)
+        setInputRating(e)
     }
 
     const addReview = async () => {
@@ -199,8 +233,15 @@ const ReviewModal = (props) => {
                     <main>
                         <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
                         <textarea className="content" cols="30" rows="10"  value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
-                        <input type="number" value={inputRating} onChange={onChangeRating} placeholder="평점을 입력하세요 (0 ~ 5)"/>
-                        <input type="file" className="file" onChange={onChangeImage} />
+                        <p className="rating">평점을 선택하세요:</p>
+                        <div className="star">
+                            <Rating
+                            onClick={onChangeRating}
+                            initialValue={inputRating}
+                            allowFraction
+                            />
+                        </div>
+                    <input type="file" className="file" onChange={onChangeImage} />
                     </main>
                     <footer>
                         <button onClick={addReview}>리뷰 등록</button>
