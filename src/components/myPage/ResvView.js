@@ -143,6 +143,19 @@ const onClickUpate =  async(resvId)=> {
     if(rsp.data){
         setShowInput(false);
     } 
+    // date를 분리해서 업데이트 해야 resvTime이 제대로 나오나? emailRsp, emailBizRsp에선 data.date, data.time으로 넣을 시 변경 전 데이터로 입력되는 거 같음.
+    const emailRsp = await AxiosApi.sendReservationUpdateEmail(data.restId, data.restName, data.memId, date, "테스트");
+    if(emailRsp.status === 200){
+        console.log(emailRsp.data);
+        console.log("예약 변경 메일 발송")
+    } else console.log("예약 변경 메일 발송 실패");
+
+    const emailBizRsp = await AxiosApi.sendReservationUpdateEmailBiz(data.restId, data.restName, data.memId, date, "테스트", data.resvId);
+    if(emailBizRsp.status === 200){
+        console.log(emailBizRsp.data);
+        console.log("사업자 회원에게 예약 변경 메일 발송")
+    } else console.log("사업자 회원에게 예약 변경 메일 발송 실패");
+
 }
 // 예약 취소 
 const onClickDel = async(resvId) => {
@@ -151,6 +164,19 @@ const onClickDel = async(resvId) => {
        console.log("삭제완료");
        setModalOpen("delOK");
     } 
+    //  예약 취소 resvTime NULL로 뜸... 이 문제도 해결해야하고.
+    const emailRsp = await AxiosApi.sendReservationCancelEmail(data.restId, data.restName, data.memId, data.resvDate, data.resvTime);
+    if(emailRsp.status === 200){
+        console.log(emailRsp.data);
+        console.log("예약 취소 메일 발송")
+    } else console.log("예약 취소 메일 발송 실패");
+
+    const emailBizRsp = await AxiosApi.sendReservationCancelEmailBiz(data.restId, data.restName, data.memId, data.resvDate, data.resvTime, data.resvId);
+    if(emailBizRsp.status === 200){
+        console.log(emailBizRsp.data);
+        console.log("사업자 회원에게 예약 취소 메일 발송")
+    } else console.log("사업자 회원에게 예약 취소 메일 발송 실패");
+
 }
 
     return(

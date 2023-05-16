@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import AxiosApi from "../../api/AxiosApi";
 import styled from "styled-components";
 import Modal from "../../utils/Modal";
-import { useContext } from "react";
-import { MemberContext } from "../../context/MemberContext";
 const Res = styled.div`
     display: flex;
     justify-content: center;
@@ -122,32 +120,44 @@ const ResCheck = (props) =>{
             console.log(reservationRsp.data);
             console.log("회원에게 예약등록 이메일 전송");
         } else console.log("회원에게 예약등록 이메일 전송 실패");
+
+        const reservationBizRsp = await AxiosApi.sendReservationEmailBiz(
+            props.data.restId,
+            props.data.memberId,
+            props.data.resDate
+        );
+
+        if(reservationBizRsp.status === 200){
+            console.log(reservationBizRsp.data);
+            console.log("사업자 회원에게 예약등록 이메일 전송");
+        } else console.log("사업자 회원에게 예약등록 이메일 전송 실패");
+
     }
 
 
     return(
         <Res>  
-            <div className="cont">
-                <h1>예약 정보</h1>
-                <div className="box">
-                    <h3> 예약 날짜 </h3>
-                    <p> {props.data.resDate}</p>
-                    <h3> 인원수 </h3>
-                    <p> {props.data.resPeo}명</p>
-                </div>
-                <div className="section2Title">예약자 정보 및 요청사항</div>
-                <div className="section2">
-                    <div>이름 :{memberInfo[0].name}</div>
-                    <div>전화번호 : {memberInfo[0].phoneNum}</div>
-                    <textarea placeholder='요청사항을 적으세요' value={resReq} onChange={onChange} cols="66" rows="8" style={{ fontSize: '20px'}}/>
-                </div>
-                <div className="btn2">
-                    <button className="next" onClick={addRes}>예약 신청</button>
-                    <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 예약 신청이 완료 되었습니다. </Modal>
-                    <button className="back" onClick={()=>nav("/info")}>취소</button>
-                </div>
+        <div className="cont">
+            <h1>예약 정보</h1>
+            <div className="box">
+                <h3> 예약 날짜 </h3>
+                <p> {props.data.resDate}</p>
+                <h3> 인원수 </h3>
+                <p> {props.data.resPeo}명</p>
             </div>
-        </Res>
+            <div className="section2Title">예약자 정보 및 요청사항</div>
+            <div className="section2">
+                <div>이름 :{memberInfo[0].name}</div>
+                <div>전화번호 : {memberInfo[0].phoneNum}</div>
+                <textarea placeholder='요청사항을 적으세요' value={resReq} onChange={onChange} cols="66" rows="8" style={{ fontSize: '20px'}}/>
+            </div>
+            <div className="btn2">
+                <button className="next" onClick={addRes}>예약 신청</button>
+                <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 예약 신청이 완료 되었습니다. </Modal>
+                <button className="back" onClick={()=>nav("/info")}>취소</button>
+            </div>
+        </div>
+    </Res>
     )
 
 }

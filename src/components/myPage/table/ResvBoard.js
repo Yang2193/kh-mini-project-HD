@@ -74,6 +74,7 @@ const ResvBoard = ({stat}) => {
     const resvClick = (resv) => {
         setModalOpen("resv");
         setSelectedResv(resv);
+        console.log(resv);
     }
     return(
         <>
