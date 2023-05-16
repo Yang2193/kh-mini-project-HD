@@ -9,22 +9,49 @@ import StarRatings from "react-star-ratings";
 import Modal from "../utils/Modal";
 import ReviewUpdate from "../utils/rest/ReviewUpdate";
 const ReviewPage = styled.div`
-    display: flex;
-    align-items: center;
+    font-family: "NanumGothic";
+	background-color:#EEE4DC;
+	.all{
+	display: flex;
     justify-content: center;
-    background-color: ivory;
-    height: 800px;
+    align-items: center;
+	}
+    .cont{
+        box-shadow: 1px 1px 5px;
+
+        width: 430px;
+        border-radius: 15px;
+        position: relative;
+		padding: 30px;
+		width: 700px;
+        height: 600px;
+		background-color: #fff;
+        margin: 60px 0px;
+
+    }
     .btns{
         position: relative;
-        left: 650px;
-        bottom:380px;
+        left: 470px;
+        bottom:680px;
         button{
+            width: 100px;
+            height: 30px;
             margin-left: 20px;
+            background-color: lightsalmon;
+            border-radius: 15px;
+            border: none;
+        }
+        button:hover{
+            color:#fff;
+        }
+        .update{
+
+        }
+        .delete{
+
         }
     }
-    .cont{
-        width: 430px;
-    }
+
     .like{
         position: relative;
         display: flex;
@@ -34,49 +61,38 @@ const ReviewPage = styled.div`
         border: 1px solid;
         height: 30px;
         width: 40px;
-        top: 50px;
+        bottom:30px;
+        left:100px;
         cursor: pointer;
         border-radius: 50px;
     }
-    .rating{
-            position: relative;
-            left:250px;
-            top:48px;
-            font-size: 20px;
-        }
     .box{
-        margin-top: 30px;
-        width: 800px;
-        height: 500px;
-        border: 1px solid;
-        background-color: white;
-        border: 1px solid;
-        padding:10px;
+       /* border: 1px solid; */
+       width: 50%;
+       height: 100%;
         p{
             position: relative;
         }
         .date{
             font-size: 10px;
         }
-        img{
-            position: relative;
-            width: 40%;
-            height: 80%;
-            left: 350px;
-            bottom: 350px;
-  
-        }
         .title {
         font-size: 25px;
         font-weight: bold;
         bottom: 20px;
-    }
+        }
         .ratingBox{
             font-size: 20px;
-            top:100px;
+            top:340px;
+        }
+        .rating{
+            position: relative;
+            left:250px;
+            top:287px;
+            font-size: 20px;
         }
         .content{
-            font-size: 20px;
+            font-size: 15px;
         }
         .nick{
             font-size: 17px;
@@ -88,18 +104,38 @@ const ReviewPage = styled.div`
         }
         .likeCount{
             font-size: 15px;
-            top:150px
+            top:290px
 
         }
-        .return{
+    }
+    .return{
             position: relative;
             width: 100px;
             height: 30px;
-            background-color: lightsalmon;
+            background-color: salmon;
             border: none;
             cursor: pointer;
-            top: 100px;
-            left: 700px;
+            bottom: 70px;
+            left: 620px;
+            border-radius: 15px;
+            box-shadow: 1px 1px 2px;
+        }
+        .return:hover{
+            color:#fff;
+        }
+    .imgBox{
+        position: relative;
+        bottom:600px;
+        left:400px;
+
+        width: 300px;
+        height: 400px;
+        img{
+            border-radius: 5px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid;
+            position: absolute;
         }
     }
     `;
@@ -196,26 +232,27 @@ const ReviewDetail = () =>{
         }
     }
     return(
-        <>
-        <Header/>
         <ReviewPage>
+        <Header/>
+        <div className="all">
              {rtReview&&rtReview.map(rest=>(
-                    <div className="box" key={rest.reviewId}>
-                        <div className="cont">
-                        <p className="nick">{rest.nickName}</p>
-                        <p className="date">작성일 : {rest.reviewDate}</p>
-                        <p className="title">{rest.reviewTitle}</p>
-                        <p className="content">{rest.reviewContent}</p>
-                        <p className="ratingBox">
-                        평점 : 
-                        <StarRatings rating={rest.reviewRating}
-                            starDimension="30px"
-                            starSpacing="4px"
-                            starRatedColor="yellow"/>
-                        </p>
+                    <div className="cont" key={rest.reviewId}>
+                        <div className="box">
+                            <p className="nick">{rest.nickName}</p>
+                            <p className="date">작성일 : {rest.reviewDate}</p>
+                            <p className="title">{rest.reviewTitle}</p>
+                            <p className="content">{rest.reviewContent}</p>
+                            <p className="ratingBox">
+                                평점 : 
+                                <StarRatings rating={rest.reviewRating}
+                                    starDimension="30px"
+                                    starSpacing="4px"
+                                    starRatedColor="yellow"/>
+                            </p>
+                            <p className="rating">{rest.reviewRating}</p> 
+                            <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         </div>
-                        <p className="rating">{rest.reviewRating}</p> 
-                        <p className="likeCount">공감수 : {rest.likeCnt} </p>
+           
                         <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
                         <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>
                         {(memId === rest.memId) ? (
@@ -226,13 +263,14 @@ const ReviewDetail = () =>{
                             </div>
                         ) : null}
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
-
-                        <img src={rest.image}/>
+                        <div className="imgBox">
+                            <img src={rest.image} alt="이미지"/>
+                        </div>
                     </div>
                 ))}
-        </ReviewPage>
+        </div>
         <HomeFooter/>
-        </>
+        </ReviewPage>
     )
 
 }

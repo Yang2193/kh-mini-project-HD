@@ -80,7 +80,7 @@ const Res = styled.div`
 `;
 
 const ResCheck = (props) =>{
-const {memberValue} = useContext(MemberContext);
+    const memberInfo = JSON.parse(localStorage.getItem("forRes"));
  //팝업 처리
  const [modalOpen, setModalOpen] = useState(false);
  const closeModal = () => {
@@ -96,13 +96,7 @@ const {memberValue} = useContext(MemberContext);
     }
 
     const addRes = async() =>{
-        console.log(           
-            props.data.restId,
-            props.data.memberId,
-            props.data.resDate,
-            resReq,
-            props.data.resSeat,
-            props.data.resPeo);
+
         const rsp = await AxiosApi.addRes(
             props.data.restId,
             props.data.memberId,
@@ -143,8 +137,8 @@ const {memberValue} = useContext(MemberContext);
                 </div>
                 <div className="section2Title">예약자 정보 및 요청사항</div>
                 <div className="section2">
-                    <div>이름 :{memberValue[0].name}</div>
-                    <div>전화번호 : {memberValue[0].phoneNum}</div>
+                    <div>이름 :{memberInfo[0].name}</div>
+                    <div>전화번호 : {memberInfo[0].phoneNum}</div>
                     <textarea placeholder='요청사항을 적으세요' value={resReq} onChange={onChange} cols="66" rows="8" style={{ fontSize: '20px'}}/>
                 </div>
                 <div className="btn2">

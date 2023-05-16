@@ -1,4 +1,4 @@
-import React,{useContext,useState}from "react";
+import React,{useContext,useState,useEffect}from "react";
 import HomeFooter from "../components/footer/HomeFooter";
 import Header from "../components/header/Header";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,8 @@ import ko from "date-fns/locale/ko";
 import Select from 'react-select';
 import ResCheck from "../components/restaurantComponent/ResCheck";
 import 'react-calendar/dist/Calendar.css'; // css import
-
+import { MemberContext } from "../context/MemberContext";
+import AxiosApi from "../api/AxiosApi";
 const Style = styled.div`
 	font-family: "NanumGothic";
 	background-color:#EEE4DC;
@@ -178,7 +179,16 @@ const Reservation =() =>{
         resPeo:people
         }
         window.localStorage.setItem("data", data);
-    
+    // 회원정보 받아와서 예약하기 화면에 뿌리기
+        useEffect(()=>{ 
+            const getMember = async() => {
+                const rsp = await AxiosApi.memberGet(memId);
+                localStorage.setItem("forRes", JSON.stringify(rsp.data));
+                console.log(localStorage.getItem("forRes"));
+            }
+            getMember();
+        },[]);
+            
     return(
         <Style>
             <Header/>

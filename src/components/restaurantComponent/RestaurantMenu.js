@@ -11,6 +11,7 @@ const MenuContanier = styled.section `
 
     .cont{
         border-radius: 15px;
+        box-shadow: 1px 1px 5px;
         margin-top: 30px;
         display: flex;
         justify-content: center;
@@ -21,7 +22,6 @@ const MenuContanier = styled.section `
 		padding: 30px;
 		background-color: white;
 		width: 845px;
-		border: 1px solid;
          button {
             background-color: #fff;
             font-size: 20px;
@@ -29,27 +29,39 @@ const MenuContanier = styled.section `
             cursor: pointer;
         }
         .box{
-            border-radius: 15px;
+            box-shadow: 1px 1px 5px;
 
+            border-radius: 15px;
+            background-color:#EEE4DC;
             padding: 10px;
-            width: 350px;
-            height: 200px;
-            border: 1px solid;
+            width: 820px;
+            height: 300px;
             margin-bottom: 40px;
-            position: relative;
-            left:200px;
+            display: flex;
+            align-items: center;
+            .menuInfo{
+                width: 300px;
+                position: relative;
+                left:400px;
+                /* border: 1px solid; */
+
+            }
             p{
                 font-size: 20px;
-                margin-bottom: 40px;
+            }
+            .imgBox{
+                /* border: 1px solid; */
+                width: 350px;
+                height: 200px;
+                position: relative;
+                right:280px;
             }
             img{
-            border-radius: 15px;
             position: absolute;
-            border: 1px solid;
+            border-radius: 15px;
             width: 350px;
             height: 200px;
-            right:450px;
-            bottom:10px
+            background-color: #fff;
         }
         }
 }
@@ -86,10 +98,14 @@ const Menu =() => {
                 <div className="cont">
                     {menu && menu.map(rest =>(
                         <div className="box" key={rest.menuId}>
-                            <p>메뉴 이름 : {rest.menuName} </p>
-                            <p>설명 : {rest.menuDesc}</p>
-                            <p>가격 : {rest.menuPrice} </p>
-                            <img src={rest.menuImgFileName} alt="이미지" />
+                            <div className="menuInfo">
+                                <p>메뉴 이름 : {rest.menuName} </p>
+                                <p>설명 : {rest.menuDesc}</p>
+                                <p>가격 : {rest.menuPrice} </p>
+                            </div>
+                            <div className="imgBox">
+                                <img src={rest.menuImgFileName} alt="이미지" />
+                            </div>
                         </div>
                     ))}
          {rtMenu.length ===menu.length ? <></>  : <button onClick={handleLoadMore}>▼ 더보기</button>}

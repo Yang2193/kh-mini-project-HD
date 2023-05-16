@@ -5,8 +5,12 @@ import AxiosApi from "../../api/AxiosApi";
 import {  useNavigate } from "react-router-dom";
 import InquiryModal from "../../utils/rest/InquiryModal";
 import StarRatings from "react-star-ratings";
-import { MemberContext } from "../../context/MemberContext";
+import MessageModal from "../../utils/MessageModal";
 const FixContent = styled.section`
+button:hover{
+    box-shadow: 1px 1px 5px;
+
+}
         width: 70%;
         height: auto;
         margin: 30px auto;
@@ -23,7 +27,6 @@ const FixContent = styled.section`
         position: relative;
         border-radius: 15px;
         left:250px;
-        border: 1px solid;
         width: 600px;
         height: 300px;
         background-color: #fff;
@@ -78,7 +81,8 @@ const FixContent = styled.section`
 `;
 
 const RestaurantContainer =() =>{
-    
+    const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
+
 	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
     const possible = localStorage.getItem("resPossible");
@@ -104,8 +108,7 @@ const openModal = () => {
     if (memId) {
         setModalOpen(true);
     } else {
-        alert("로그인이 되어있지 않습니다.")
-        navigate("/login");
+        setModalCheck(true);
     }
 }
 
@@ -162,8 +165,7 @@ const closeModal = () => {
 
     const onClickLiked = (name) =>{
         if(!memId) {  
-        alert("로그인이 되어있지 않습니다.")
-        navigate("/login");
+        setModalCheck(true);
     } 
         if (!isLiked) {
             addLike(name);
@@ -171,25 +173,18 @@ const closeModal = () => {
             deleteLike();
         }    
 // 예약 페이지
-const {setMemberValue} = useContext(MemberContext);
-
-useEffect(()=>{ // 로그인한 회원id를 기준으로 찜 매장 리스트를 db에서 불러와 확인하고 배열에 삽입
-    const getMember = async() => {
-        const rsp = await AxiosApi.memberGet(memId);
-        setMemberValue(rsp.data);
-        console.log(rsp.data);
-    }
-    getMember();
-},[]);
-
 const checklogin =()=>{
     if(!memId){
-        alert("로그인이 되어있지 않습니다.")
-        navigate("/login");
+        setModalCheck(true);
     }else{
         navigate("/Reservation")
     }
 }
+
+const checkLogin=() => {
+    setModalOpen(false);
+    navigate('/Login');
+  }
     return(
             <FixContent>
                 {rtInfoFix&& rtInfoFix.map(rest =>(
@@ -208,6 +203,8 @@ const checklogin =()=>{
                         </p>
                         <p className="rating">{rest.avgRating}</p> 
                         <button className="inq" onClick={openModal}>문의 하기</button>
+                        <MessageModal open={modalCheck} close={checkLogin} confirm={checkLogin} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
+
                         <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
                         <button className="like" onClick={()=>onClickLiked(rest.name)} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
                         <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>

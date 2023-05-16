@@ -22,8 +22,8 @@ const InfoContainer = styled.section`
         position: relative;
 		padding: 30px;
 		width: 845px;
-		border: 1px solid;		
 		background-color: #fff;
+		box-shadow: 1px 1px 5px;
 	}
 	.box{
 		margin: 50px 0px;

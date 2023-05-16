@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import Modal from "../../utils/Modal";
 import ReviewUpdate from "../../utils/rest/ReviewUpdate";
+import MessageModal from "../../utils/MessageModal";
 
 const ReviewContanier = styled.section`
     display: flex;
@@ -26,10 +27,11 @@ const ReviewContanier = styled.section`
 		padding: 30px;
 		background-color: white;
 		width: 845px;
-		border: 1px solid;
+        box-shadow: 1px 1px 5px;
         button{
             border: none;
             border-radius: 5px;
+            cursor: pointer;
         }
         a {
             display: flex;
@@ -57,13 +59,17 @@ const ReviewContanier = styled.section`
             right: 345px;
             font-size: 20px;
         }
+        .modalBtn:hover{
+            box-shadow: 1px 1px 5px;
+        }
         .box{
+            background-color:#EEE4DC;
+            box-shadow: 1px 1px 5px;
             border-radius: 15px;
             padding: 10px;
             padding-top: 0px;
             width: 820px;
             height: 350px;
-            border: 1px solid;
             margin-bottom: 30px;
             p {
                 margin-bottom: 10px;
@@ -114,6 +120,9 @@ const ReviewContanier = styled.section`
     .btns{
         position: relative;
         left:300px;
+        button:hover{
+            box-shadow: 1px 1px 5px ;
+        }
     }
     .update{
         position: relative;
@@ -212,7 +221,6 @@ useEffect(() => {
             setModalOpen(true);
         } else {
             setModalCheck(true);
-            navigate("/login");
         }
     }
     const update =() =>{
@@ -225,6 +233,10 @@ useEffect(() => {
         setModalUpdate(false);
         setDeleteModal(false);
     }
+    const checkLogin=() => {
+        setModalOpen(false);
+        navigate('/Login');
+      }
     const deleteReview = async(revId)=>{
         const rsp = await AxiosApi.reviewDelete(revId);
         if (rsp) {
@@ -239,7 +251,7 @@ useEffect(() => {
             <div className="cont" style={{height: rvHeight}}>
                 <button className="modalBtn" onClick={openModal}>리뷰 작성 하기</button>
                 <ReviewModal open={modalOpen} close={closeModal}></ReviewModal>
-                <Modal open={modalCheck} close={closeModal} type ="ok" header="수정 완료"> 로그인이 되어 있지 않습니다. </Modal>
+                <MessageModal open={modalCheck} close={checkLogin} confirm={closeModal} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
 
                 <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="sort">
                     <option value="date">최신 날짜순</option>
