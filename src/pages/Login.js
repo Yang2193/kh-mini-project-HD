@@ -258,6 +258,7 @@ const Login = ({children}) => {
         console.log(res.data);
         if(res.data === true) {
           window.localStorage.setItem("userId",inputId);
+          window.localStorage.setItem("memberType", "general");
           setLoginModalOpen(true);
         } else {
           setModalOpen(true);
@@ -268,6 +269,7 @@ const Login = ({children}) => {
         console.log(res.data);
         if(res.data === true) {
           window.localStorage.setItem("userId",inputId);
+          window.localStorage.setItem("memberType", "biz");
           restaurant();
           navigate('/BusinessPage');  
         } else {

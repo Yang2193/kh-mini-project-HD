@@ -96,7 +96,8 @@ const InquiryModal = ({data,inquiryInfo}) => {
             //input창 닫기 
              setShowInput(false);
              inquiryInfo();
-         } 
+         }
+         
     }
     //답변하기 버튼 클릭 
     const updateBtnClick =() => {

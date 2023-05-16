@@ -95,15 +95,19 @@ const Box = styled.div`
 
 const SideMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isBizMem, setIsBizMem] = useState(false);
     const ref = useRef(null);
     const navigate = useNavigate();
     const userId = window.localStorage.getItem("userId");
+    const memberType = window.localStorage.getItem("memberType");
 
     //팝업창
     const [modalOpen, setModalOpen] = useState(false);
 
 
     useEffect(() => {   
+
+        
         const clickOutside = (event) =>{
             if(ref.current && !ref.current.contains(event.target)){
                 setIsOpen(false);
@@ -114,7 +118,7 @@ const SideMenu = () => {
         return () => {
             document.removeEventListener("click", clickOutside);
         };
-
+      
     },[ref]);
 
     //모달창 닫기
@@ -140,6 +144,8 @@ const SideMenu = () => {
 
     const logout = () =>{
         window.localStorage.setItem("userId", '');
+        window.localStorage.setItem("memberType", '');
+        console.log(isBizMem);
         navigate("/");
         setIsOpen(!isOpen);
         setModalOpen(true);
@@ -151,17 +157,28 @@ const SideMenu = () => {
             <StyledFaBars/>
                 <Box isOpen={isOpen} >
                    <div className="header">메뉴</div>
-                    <div className="box" onClick={onClickBox}>
-                        {userId ?
-                            <div className="item" onClick={logout}>로그아웃</div>
-                        :   <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
-                        }
-                        <div className="item" onClick={()=> handleLinkClick("/MyPage")}>마이 페이지</div>
-                        <div className="item" onClick={()=> handleLinkClick("/MyPage","menu1")}>내 정보/수정</div>
-                        <div className="item" onClick={()=> handleLinkClick("/MyPage","menu3")}>찜한 가게</div>
-                        <div className="item" onClick={()=> handleLinkClick("/MyPage","menu4")}>1:1 문의 내역</div>
-                        <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>예약 현황</div>
-                    </div>
+                    {memberType==="biz" ? 
+                            <div className="box" onClick={onClickBox}>
+                            {userId ?
+                                <div className="item" onClick={logout}>로그아웃</div>
+                            :   <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
+                            }
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage")}>매장 등록</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu1")}>고객 1:1 문의</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu3")}>예약 현황</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>메뉴 추가</div>
+                            </div>
+                    :  <div className="box" onClick={onClickBox}>
+                            {userId ?
+                                <div className="item" onClick={logout}>로그아웃</div>
+                            :   <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
+                            }
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage")}>마이 페이지</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu1")}>내 정보/수정</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu3")}>찜한 가게</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu4")}>1:1 문의 내역</div>
+                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>예약 현황</div>
+                    </div>}
                 </Box>
                 <MessageModal open={modalOpen} close={onClickClose} confirm={onClickClose} header="로그아웃">로그아웃 하셨습니다.</MessageModal>
         </MenuButton>

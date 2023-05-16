@@ -98,7 +98,21 @@ const InquiryView = ({data,restInquiry}) => {
              setShowInput(false);
              restInquiry();
          } 
+
+        //이메일 보내기
+        const emailRsp = await AxiosApi.sendInquiryAnswerEmail(data.restId, data.memId);
+            if(emailRsp.status === 200){
+                console.log("회원에게 이메일 전송여부");
+                console.log(emailRsp.data);
+            } else console.log("회원에게 이메일 전송실패")
+
+        const emailBizRsp = await AxiosApi.sendInquiryAnswerEmailBiz(data.restId, data.memId);
+            if(emailBizRsp.status === 200){
+                console.log("사업자에게 이메일 전송여부");
+                console.log(emailBizRsp.data)
+            } else console.log("사업자 회원에게 이메일 전송실패");
     }
+
     //답변하기 버튼 클릭 
     const answerBtnClick =() => {
         setShowInput(true)
@@ -107,6 +121,8 @@ const InquiryView = ({data,restInquiry}) => {
             ...prevAnswer,
             inquiryStat: "답변완료"
         }));
+
+     
     }
    
 

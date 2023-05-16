@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import shop from "../../images/shop.png";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import Modal from "../../utils/Modal";
 import {BsFillHeartFill} from 'react-icons/bs';
@@ -58,7 +58,6 @@ position: relative;
         font-size: 15px;
         border-radius: 18px;
         border:none;
-        cursor: pointer;
     }
     .info{
             font-size: 20px;
@@ -83,7 +82,24 @@ position: relative;
             }
 
         }
+
 `;
+
+const StyledButton = styled.button`
+  margin: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  width: 100px; 
+  height: 40px;
+  color: white;
+  background-color: #FF7F50;
+  font-size: 15px;
+  border-radius: 18px;
+  border: none;
+  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
+`;
+
+
 const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
     
    
@@ -104,9 +120,7 @@ const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
          } 
     }
     useEffect(()=> {
-        
-      
-        
+        console.log(restInfoList);
     },[]);
 
 
@@ -117,18 +131,23 @@ const BizProfile = ({restInfoList,setRestInfoList,restName,likeCnt}) => {
     return(
             <ProfileBlock>
             <BsFillHeartFill className="likeCnt"/>
-            <span className="likeValue">{likeCnt}</span>
+            <span className="likeValue">{likeCnt===null ? 0 : likeCnt}</span>
             <div className="profileImg"><img src={shop} alt="Logo" /></div>
             <div className="info">
-            <div>가게명 : <span className="result">{restName}</span></div>
+            <div>가게명 : <span className="result">{typeof restName === 'undefined'? "매장등록이 필요합니다." : restName}</span></div>
             <label htmlFor ="notice">공지사항</label>
             <div className="box">
             {showInput ? (<input className="inputBox" type="text" id="notice" name='restNotice' value={restInfoList.restNotice||''} onChange={onChange} />)
             :
-            (<div className="result">{restInfoList.restNotice}</div>)}
+            (<div className="result">{restInfoList===null ? "":restInfoList.restNotice}</div>)}
             
-            {showInput? <button className="confirmBtn" onClick={onClickUpate} style={{backgroundColor : "#FFA07A"}}>수정완료</button> :
-                    <button className="confirmBtn" onClick={()=> setShowInput(true)}>수정</button>}
+           
+           {showInput ? (
+                <StyledButton className="confirmBtn" onClick={onClickUpate} style={{ backgroundColor: "#FFA07A" }}>수정완료</StyledButton>
+            ) : (
+                <StyledButton className="confirmBtn" onClick={() => setShowInput(true)} disabled={restInfoList === ""}>수정</StyledButton>
+            )
+            }
             </div>
           
             <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료">프로필 수정 완료 되었습니다. </Modal>

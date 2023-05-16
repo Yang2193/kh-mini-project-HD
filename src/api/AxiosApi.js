@@ -254,25 +254,7 @@ const AxiosApi = {
     }
     return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry",inquiry);
   },
-  //문의 등록 시 이메일 보내기
-  sendInquiryEmail : async(restName, memId)=>{
-    const inquiry = {
-      restName: restName,
-      memberId: memId
-    }
-    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsg", inquiry)
-  },
 
-  //문의 등록 시 사업자 쪽에게 이메일 보내기
-  sendInquiryEmailBiz : async(restId, restName, memId) =>{
-    const inquiry = {
-      restId: restId,
-      restName: restName,
-      memberId: memId
-    }
-    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsgBiz", inquiry)
-  },
-    
   //찜 등록
   addRestLike:async(restId,memId,name)=>{
     const addLike={
@@ -373,6 +355,21 @@ const AxiosApi = {
   }
     return await axios.post(KH_DOMAIN+"/business/restaurant/update",restaurant);
   },
+  //레스토랑 Info 업데이트 
+  restInfoInsert : async(data) => {
+    const restInfo ={
+        vo : data
+    }
+    return await axios.post(KH_DOMAIN+"/business/restInfo/insert",restInfo);
+},
+  //레스토랑 업데이트 
+  restInsert : async(data) => {
+    const restaurant ={
+      vo : data
+  }
+    return await axios.post(KH_DOMAIN+"/business/restaurant/insert",restaurant);
+  },
+  
   // 매장의 메뉴 정보 불러오기
   restMenu:async(restaurantId)=>{
     return await axios.get(KH_DOMAIN + `/business/restaurant/menu?restaurantId=${restaurantId}`)
@@ -409,7 +406,8 @@ inquiryAnswerUpdate : async(data) => {
     vo : data,
 }
   return await axios.post(KH_DOMAIN+"/business/inquiry/answer/update",inquiryData);
-},
+  },
+
 
 //예약 확정하기 
 resvStatUpdate : async(data) => {
@@ -456,8 +454,140 @@ reviewDelete:async(revId)=>{
     reviewId:revId
   }
   return await axios.post(KH_DOMAIN+"/review/delete",data);
-}
+},
 
+//이메일 보내는 API 모음
+
+//문의 등록 시 이메일 보내기
+  sendInquiryEmail : async(restName, memId)=>{
+    const inquiry = {
+      restName: restName,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsg", inquiry);
+  },
+
+  //문의 등록 시 사업자 쪽에게 이메일 보내기
+  sendInquiryEmailBiz : async(restId, restName, memId) =>{
+    const inquiry = {
+      restId: restId,
+      restName: restName,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/add/inquiry/sendMsgBiz", inquiry);
+  },
+//문의 답변 등록 시 이메일 보내기
+  sendInquiryAnswerEmail : async(restId, memId)=>{
+    const inquiry = {
+      restId: restId,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/inquiry/answerMsg", inquiry);
+    },
+
+  //문의 답변 등록 시 사업자 쪽에게 이메일 보내기
+  sendInquiryAnswerEmailBiz : async(restId, memId) =>{
+    const inquiry = {
+      restId: restId,
+      memberId: memId
+    }
+    return await axios.post(KH_DOMAIN + "/restaurant/inquiry/answerMsgBiz", inquiry);
+    },
+  //예약 시 회원에게 이메일 보내기
+  sendReservationEmail : async(restId, memId, date) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/email", reservation);
+  },
+  //예약 시 사업자 회원에게 알림 이메일 보내기
+  sendReservationEmailBiz : async() =>
+  {
+    const reservation = {
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/emailBiz", reservation);
+  },
+  //예약 변경 시 회원에게 이메일 보내기
+  sendReservationUpdateEmail : async(restId, memId, date) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/update/email", reservation);
+  },
+  //예약 변경 시 사업자 회원에게 이메일 보내기
+  sendReservationUpdateEmailBiz : async(restId, memId, date, resvId) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date,
+      resvId : resvId
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/update/emailBiz", reservation);
+  },
+  //예약 확정 시 회원에게 이메일 보내기
+  sendReservationConfirmEmail : async(restId, memId, date) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/confirm/email", reservation);
+  },
+  //예약 확정 시 사업자 회원에게 이메일 보내기
+  sendReservationConfirmEmailBiz : async() =>
+  {
+    const reservation = {
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/confirm/emailBiz", reservation);
+  },
+  //예약 취소 시 회원에게 이메일 보내기
+  sendReservationCancelEmail : async(restId, memId, date) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/cancel/email", reservation);
+  },
+  //예약 취소 시 사업자 회원에게 이메일 보내기
+  sendReservationCancelEmailBiz : async() =>
+  {
+    const reservation = {
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/cancel/emailBiz", reservation);
+  },
+  //사업자 측에서 예약 요청 거절 시 회원에게 이메일 보내기
+  sendReservationRejectEmail : async(restId, memId, date) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/reject/email", reservation);
+  },
+  //사업자 측에서 예약 요청 거절 시 이메일 보내기
+  sendReservationRejectEmailBiz : async() =>
+  {
+    const reservation = {
+
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/reject/emailBiz", reservation);
+  }
 
 
 }
