@@ -13,10 +13,15 @@ import { AiFillLike } from "react-icons/ai";
 const ReviewPage = styled.div`
     font-family: "NanumGothic";
 	background-color:#EEE4DC;
+    width: 100%;
+    height: 980px;
+    overflow: hidden;
 	.all{
 	display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
 	}
     .cont{
         box-shadow: 1px 1px 5px;
@@ -27,9 +32,30 @@ const ReviewPage = styled.div`
         height: 600px;
 		background-color: #fff;
         margin: 60px 0px;
-
-    }
-    .btns{
+        .return{
+            position: relative;
+            font-size: 20px;
+            width: 150px;
+            height: 50px;
+            background-color: salmon;
+            border: none;
+            cursor: pointer;
+            bottom: 50px;
+            left: 950px;
+            border-radius: 10px;
+        }
+        .return:hover{
+            box-shadow: 1px 1px 2px;
+        }
+        img{
+            border-radius: 10px;
+            width: 500px;
+            height: 400px;
+            bottom:600px;
+            left:640px;
+            position: relative;
+        }
+        .btns{
         position: relative;
         left: 900px;
         bottom:680px;
@@ -45,7 +71,7 @@ const ReviewPage = styled.div`
             color:#fff;
         }
     }
-
+    }
     .like{
         position: relative;
         height: 40px;
@@ -95,7 +121,7 @@ const ReviewPage = styled.div`
 
         }
     }
-    .return{
+    /* .return{
             position: relative;
             font-size: 20px;
             width: 150px;
@@ -110,35 +136,15 @@ const ReviewPage = styled.div`
         .return:hover{
             box-shadow: 1px 1px 2px;
         }
-    .imgBox{
-        position: relative;
-        bottom:600px;
-        left:640px;
         img{
             border-radius: 10px;
             width: 500px;
             height: 400px;
-            position: absolute;
-        }
-    }
-
-    
-@media (max-width: 768px) { /* 화면 크기가 768px 이하인 경우에만 적용 */
-  .imgBox {
-    width: auto;
-  }
-
-  .imgBox img {
-    width: 100%; /* 이미지를 화면에 꽉 차도록 설정 */
-    height: auto; /* 이미지 높이는 가로 비율에 맞게 자동 조정 */
-  }
-
-  .ratingBox {
-    font-size: 16px; /* 평점 폰트 크기를 작게 조정 */
-    bottom: 20px;
-  }
-}
-    `;
+            bottom:600px;
+            left:640px;
+            position: relative;
+        } */
+`;
 
 const ReviewDetail = () =>{
     const nav = useNavigate();
@@ -234,7 +240,6 @@ const ReviewDetail = () =>{
     }
     return(
         <ReviewPage>
-        <Header/>
         <div className="all">
              {rtReview&&rtReview.map(rest=>(
                     <div className="cont" key={rest.reviewId}>
@@ -263,13 +268,10 @@ const ReviewDetail = () =>{
                             </div>
                         ) : null}
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
-                        <div className="imgBox">
-                            <img src={rest.reviewImage} alt="이미지"/>
-                        </div>
+                        <img src={rest.reviewImage} alt="이미지가 없습니다."/>
                     </div>
                 ))}
         </div>
-        <HomeFooter/>
         </ReviewPage>
     )
 

@@ -23,19 +23,17 @@ const FixContent = styled.section`
     .cont{
         position: relative;
         border-radius: 15px;
-        left:250px;
-        width: 600px;
-        height: 300px;
+        left:50px;
+        width: 50%;
         background-color: #fff;
         display: flex;
         flex-direction: column;
     }
     img{
-        position: absolute;
+        position: relative;
         border-radius: 15px;
-        left:130px;
-        width:400px;
-        height: 300px;
+        left:-50px;
+        width:30%;
         background-color: #fff;
     }
     .btns{
@@ -52,27 +50,25 @@ const FixContent = styled.section`
             position: relative;        
         }
         .like{
-            left: 540px;
+            left: 90%;
             bottom: 340px;
-            width: 40px;
-            height: 40px;
             background-color: white;
             /* border: 1px solid; */
         }
         .res{
-            width: 150px;
+            width: 25%;
             height: 50px;
             bottom:120px;
-            left:350px;
+            left:60%;
         }
         .res:hover{
             box-shadow: 1px 1px 5px;
         }
         .inq{            
-            width: 150px;
+            width: 25%;
             height: 50px;
             bottom:70px;
-            left:60px;
+            left:10%;
         }
         .inq:hover{
             box-shadow: 1px 1px 5px;
@@ -192,9 +188,9 @@ const checkLogin=() => {
     navigate('/Login');
   }
     return(
-            <FixContent>
+            <>
                 {rtInfoFix&& rtInfoFix.map(rest =>(
-                    <div key={rest.name}>
+                    <FixContent key={rest.name}>
                         <img src={rest.image} alt="이미지" />
                         <div className="cont">
                         <p>매장 이름 : {rest.name}</p>
@@ -204,7 +200,7 @@ const checkLogin=() => {
                         평점 : <StarRatings rating={rest.avgRating}
                             starDimension="30px"
                             starSpacing="4px"
-                            starRatedColor="gold"/> {rest.avgRating}
+                            starRatedColor="gold"/> ( {rest.avgRating}점 / 5점 )
                         </p>
                         <div className="btns">
                             <button className="inq" onClick={openModal}>문의 하기</button>
@@ -212,14 +208,14 @@ const checkLogin=() => {
 
                             <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
                             <button className="like" onClick={()=>onClickLiked(rest.name)}>
-                                <FaHeart  style={{fontSize: '24px', color: isLiked ? "red" : "#999999" }}/>
+                                <FaHeart  style={{fontSize: '130%', color: isLiked ? "red" : "#999999" }}/>
                             </button>
                             <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
                         </div>
                         </div>
-                    </div>
+                    </FixContent>
                 ))}
-            </FixContent>
+            </>
     );
 }
 

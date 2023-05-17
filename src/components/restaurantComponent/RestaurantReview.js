@@ -271,7 +271,7 @@ useEffect(() => {
                         평점 : <StarRatings rating={rest.reviewRating}
                             starDimension="30px"
                             starSpacing="4px"
-                            starRatedColor="gold"/> {rest.reviewRating}
+                            starRatedColor="gold"/> ( {rest.reviewRating} )
                         </p>
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         </div>
