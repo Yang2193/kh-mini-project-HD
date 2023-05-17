@@ -69,8 +69,6 @@ const MenuBlock = styled.div`
 `;
 
 const Category = styled.div`
-    //position: relative;
-    //top: 30px;
     cursor: pointer;
     padding-bottom: 2rem;
     text-align: center;
@@ -110,7 +108,7 @@ const MenuBar = ({onSelect,category}) => {
 
     return(
         <MenuBlock>
-            <Category key="nomal" onClick={()=>navigate(0)}>
+            <Category key="nomal" onClick={()=>navigate('/MyPage')}>
             <span className="title">마이페이지</span>               
             </Category>
             <hr />

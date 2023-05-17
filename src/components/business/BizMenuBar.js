@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import styled, {css} from "styled-components";
 
 const BizMenuBlock = styled.div`
@@ -42,7 +43,7 @@ const categories = [
     
     {
         name :'menu3',
-        text : '예약리스트'
+        text : '예약 현황'
     },
     
     {
@@ -52,12 +53,18 @@ const categories = [
 ];
 
 const BizMenuBar = ({onSelect,category}) => {
- 
+    const navigate = useNavigate();
+    const handleLinkClick = (path,category) => {
+        const queryParams = new URLSearchParams();
+        if(category) queryParams.set("category", category);
+        navigate({ pathname: path, search: queryParams.toString() }); 
+        onSelect(category);
+      };
     return( 
             <BizMenuBlock>
            
             {categories.map(c => (
-                 <Category key={c.name} active={c.onSelect===c.name} onClick={()=>onSelect(c.name)}>
+                 <Category key={c.name} active={c.onSelect===c.name} onClick={()=>handleLinkClick("/BusinessPage",c.name)}>
                  {c.text}                
                  </Category>
             ))}

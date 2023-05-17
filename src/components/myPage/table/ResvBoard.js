@@ -38,6 +38,12 @@ const ResvBlock  = styled.div`
         .common-table-column {
         padding: 10px 5px;
         }
+        .defaultBox{
+          height: 200px;
+          & :hover{
+            cursor: initial;
+          }
+        }
     
 `;
 
@@ -81,7 +87,9 @@ const ResvBoard = ({stat}) => {
         <ResvBlock>
         <div className="board-title">{stat}</div>
         <Table headersName={['날짜','매장명','인원수','시간','상태']}>
-        {resvValue && currentPageData.map((e) => (
+        {resvValue.length===0? 
+        (<tr className="defaultBox"><td colSpan={5}>{stat} 리스트가 없습니다.</td></tr>):
+            (currentPageData.map((e) => (
             <TableRow key={e.resvId} onClick = {() =>resvClick(e)}>
             <TableColumn >{e.resvDate}</TableColumn>
             <TableColumn>{e.restName}</TableColumn>
@@ -90,7 +98,7 @@ const ResvBoard = ({stat}) => {
             <TableColumn>{e.resvStat}</TableColumn>
             </TableRow>
         
-        ))}
+        )))}
         </Table>
         <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
         </ResvBlock>

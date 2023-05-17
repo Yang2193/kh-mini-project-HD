@@ -31,6 +31,13 @@ const TableBlock = styled.div`
         .common-table-column {
         padding: 10px 5px;
         }
+
+        .defaultBox{
+          height: 200px;
+          & :hover{
+            cursor: initial;
+          }
+        }
 `;
 
 // 문의게시판
@@ -74,7 +81,9 @@ const InquiryBoard = props => {
       <>
       <TableBlock>
         <Table headersName={['NO.', '매장명', '제목', '상태','작성일시']}>
-        {inquiryValue && currentPageData.map((e) => (
+        {inquiryValue.length === 0 ? 
+        (<tr className="defaultBox"><td colSpan={5}>등록된 문의가 없습니다.</td></tr>) : 
+            (currentPageData.map((e) => (
             <TableRow key ={e.inquiryId} onClick={()=>inquiryRowClick(e)}>
               <TableColumn>{e.inquiryId}</TableColumn>
               <TableColumn>{e.restName}</TableColumn>
@@ -82,7 +91,7 @@ const InquiryBoard = props => {
               <TableColumn>{e.inquiryStat}</TableColumn>
               <TableColumn>{e.inquiryDate}</TableColumn>
             </TableRow>
-        ))}
+        )))}
         </Table>
       </TableBlock>
       <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>

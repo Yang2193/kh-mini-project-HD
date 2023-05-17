@@ -28,12 +28,17 @@ const Container = styled.div`
         font-weight: bolder;
         color: #FF7F50;
     }
-    .count{
-
+    .defaultbox{
+        border: 2px solid #FF7F50;
+        margin: 20px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
     }
-    .seat{
 
-    }
 
 `;
 //마이페이지 첫 화면
@@ -70,7 +75,7 @@ useEffect(() => {
         <p><span className="seat">{filterData[filterData.length-1].resvTime}</span></p>
         <p> <span className="count">{filterData[filterData.length-1].resvPeople}</span>명</p>
         <p>{filterData[filterData.length-1].resvStat === "예약확정" ? "예약이 완료되었습니다." : "예약 대기중입니다."}</p>
-        </div>) :(<div className="box">예약 정보가 없습니다.</div>)}
+        </div>) :(<div className="defaultbox">예정된 예약이 없습니다.</div>)}
 
         </Container>
     );
