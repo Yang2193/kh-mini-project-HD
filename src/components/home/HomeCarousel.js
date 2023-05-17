@@ -122,7 +122,7 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
   const movePageReview = (reviewId,reservation) => {
     setReviewId(reviewId);
     localStorage.setItem("resPossible",reservation);
-
+    console.log(reservation);
     nav("/Detail");
   };
   //슬라이드에 따라서 출력 문구 설정

@@ -71,8 +71,9 @@ const RsetBlock = styled.div`
 const RestBox = ({value}) => {
 // 페이지 이동
 const nav = useNavigate();
-const movePage=(restId)=>{
+const movePage=(restId,reservation)=>{
     localStorage.setItem("restId",restId);
+    localStorage.setItem("resPossible",reservation);
     nav("/Info");
 }
     const [visibleLike, setVisibleLike] = useState([]); // 화면에 보이는 찜한 데이터
@@ -94,7 +95,7 @@ const movePage=(restId)=>{
         <RsetBlock >
         <div className="container" style={{height: height}}>
         {visibleLike && visibleLike.map(rest=>(
-            <div onClick={()=>movePage(rest.restId)}  key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
+            <div onClick={()=>movePage(rest.restId,rest.reservation)}  key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
             <div className="hoverBox">
             <p>{rest.restName}</p> 
             <span className="ratingBox">

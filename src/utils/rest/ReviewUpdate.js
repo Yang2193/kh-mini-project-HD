@@ -196,10 +196,14 @@ const ReviewUpdate = (props) => {
     const [inputRating,setInputRating] = useState("");
 
     const onChangeTitle = e =>{
-        setInputTitle(e.target.value)
+        if (e.target.value.length <= 20) { // 최대 글자 수를 20으로 제한
+            setInputTitle(e.target.value);
+          }
     }
     const onChangeContent = e =>{
-        setInputContent(e.target.value)
+        if (e.target.value.length <= 525) { 
+            setInputContent(e.target.value);
+          }   
     }
     const onChangeRating = e =>{
         setInputRating(e.target.value)

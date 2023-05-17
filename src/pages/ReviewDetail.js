@@ -50,8 +50,8 @@ const ReviewPage = styled.div`
         position: relative;
         height: 40px;
         width: 40px;
-        bottom:35px;
-        left:100px;
+        bottom:45px;
+        left:80px;
         cursor: pointer;
         border: none;
         background-color: white;
@@ -68,7 +68,7 @@ const ReviewPage = styled.div`
         }
         .title {
             height: 30px;
-            font-size: 25px;
+            font-size: 20px;
             font-weight: bold;
             bottom: 20px;
         }
@@ -79,7 +79,7 @@ const ReviewPage = styled.div`
         .content{
             height: 400px;
             bottom:35px;
-            font-size: 15px;
+            font-size: 18px;
         }
         .nick{
             font-size: 17px;
@@ -113,7 +113,7 @@ const ReviewPage = styled.div`
     .imgBox{
         position: relative;
         bottom:600px;
-        left:600px;
+        left:640px;
         img{
             border-radius: 10px;
             width: 500px;
@@ -121,6 +121,23 @@ const ReviewPage = styled.div`
             position: absolute;
         }
     }
+
+    
+@media (max-width: 768px) { /* 화면 크기가 768px 이하인 경우에만 적용 */
+  .imgBox {
+    width: auto;
+  }
+
+  .imgBox img {
+    width: 100%; /* 이미지를 화면에 꽉 차도록 설정 */
+    height: auto; /* 이미지 높이는 가로 비율에 맞게 자동 조정 */
+  }
+
+  .ratingBox {
+    font-size: 16px; /* 평점 폰트 크기를 작게 조정 */
+    bottom: 20px;
+  }
+}
     `;
 
 const ReviewDetail = () =>{
@@ -192,8 +209,9 @@ const ReviewDetail = () =>{
             deleteLike();
         }
     }
-    const movePage = (restId) => {
+    const movePage = (restId,reservation) => {
         localStorage.setItem("restId", restId);
+        localStorage.setItem("resPossible",reservation);
         nav("/Info");
       };
     // 팝업  
@@ -231,13 +249,12 @@ const ReviewDetail = () =>{
                                     starSpacing="4px"
                                     starRatedColor="gold"/> {rest.reviewRating}
                             </p>
-                            <p className="likeCount">공감수 : {rest.likeCnt} </p>
+                            <p className="likeCount">공감수 : {rest.likeCnt}</p>
                         </div>
-           
                         <button className="like" onClick={()=>onClickLiked()} >
                             <AiFillLike style={{fontSize: '24px', color: isRevLike ? "salmon" : "#999999" }} />
                         </button>
-                        <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>
+                        <button className="return" onClick={()=>movePage(rest.restId,rest.reservation)}>매장으로 이동</button>
                         {(memId === rest.memId) ? (
                             <div className="btns">
                                 <button className="update" onClick={update}>수정하기</button>

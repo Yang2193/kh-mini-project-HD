@@ -46,9 +46,7 @@ const MyReview =() => {
   // 페이지 이동
   const nav=useNavigate();
   const movePage = (reviewId) => {
-    // 리뷰 Id context api 로 전송
     setReviewId(reviewId);
-    // 매장 ID를 로컬 스토리지에 저장하고 Info 컴포넌트로 이동
     nav("/Detail");
   };
 

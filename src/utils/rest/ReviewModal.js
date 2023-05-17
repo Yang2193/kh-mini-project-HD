@@ -200,7 +200,9 @@ const ReviewModal = (props) => {
           }
     }
     const onChangeContent = e =>{
-        setInputContent(e.target.value)
+      if (e.target.value.length <= 525) {
+            setInputContent(e.target.value);
+          }    
     }
     const onChangeRating = e =>{
         setInputRating(e)

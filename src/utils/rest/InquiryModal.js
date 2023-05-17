@@ -178,10 +178,14 @@ const InquiryModal = (props) => {
     const [inputContent, setInputContent] = useState("");
 
     const onChangeTitle = e =>{
-        setInputTitle(e.target.value)
+        if (e.target.value.length <= 30) {
+            setInputTitle(e.target.value);
+          }        
     }
     const onChangeContent = e =>{
-        setInputContent(e.target.value)
+        if (e.target.value.length <= 215) {
+            setInputContent(e.target.value);
+          }    
     }
 
    
