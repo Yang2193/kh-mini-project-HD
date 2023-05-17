@@ -21,6 +21,13 @@ const TableBlock = styled.div`
       
         }
 
+        .defaultBox{
+          height: 200px;
+          & :hover{
+            cursor: initial;
+          }
+        }
+
         .common-table-header-column {
         border-bottom: 2px solid #ff7f50;
         padding: 0;
@@ -129,6 +136,8 @@ const ResvListBlock = styled.div`
         background: #FF7F50;
         color: white;
         }
+
+       
         
 
 `;
@@ -205,7 +214,10 @@ const ResvList = ({restValue}) => {
             </ResvListBlock> 
                 <TableBlock>
                     <Table headersName={['NO.','날짜', '예약ID', '예약시간', '인원수']}>
-                    {filteredResvList && filteredResvList.map((e) => (
+                    {filteredResvList.length === 0 ? (
+                    <tr className="defaultBox"><td colSpan={5}>예약된 리스트가 없습니다.</td></tr>
+                    ) : (
+                    filteredResvList.map((e) => (
                         <TableRow key ={e.resvId} onClick = {() =>resvClick(e)}>
                         <TableColumn>{e.resvId}</TableColumn>
                         <TableColumn>{e.resvDate}</TableColumn>
@@ -213,7 +225,7 @@ const ResvList = ({restValue}) => {
                         <TableColumn>{e.resvTime}</TableColumn>
                         <TableColumn>{e.resvPeople}명</TableColumn>
                         </TableRow>
-                    ))}
+                    )))}
                     </Table>
                 </TableBlock>
                 <Modal open={modalOpen === "wait"} close={closeModal} header="예약 확정하기" type="resv"><WatingList restResv={restResv} resvList={resvList} formatTime={formatTime} setModalType={setModalOpen}/></Modal>

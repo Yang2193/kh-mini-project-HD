@@ -136,21 +136,6 @@ const MyProfile =  () => {
             {showInput ? <input type="text" id="nickName" name='nickName' value={memberValue.nickName} onChange={onChange}/> :
                         <span className="result">{memberValue.nickName}</span>}
             </div>
-            {/* <div className="box">
-            <label htmlFor ="intro">소개글</label>
-            {showInput ? <input type="text" id="intro"/> :
-                         <span className="result">소개글입니다.</span>}
-            </div> */}
-            {/* <div className="box">
-            <label htmlFor ="area">지역</label>
-            {showInput ? <input type="text" id="area" name='addr' value={memberValue.addr.slice(0,9)} onChange={onChange}/> :
-                        <span className="result">{memberValue.addr.slice(0,9)}</span>}
-            </div> */}
-            {/* <div className="box">
-            <label htmlFor ="tag">해시태그</label>
-            {showInput ? <input type="text" id="tag"/> :
-                         <span className="result">해시태그.</span>}
-            </div> */}
             </div> 
         </div>
         {showInput? <button className="confirmBtn" onClick={onClickUpate} style={{backgroundColor : "#FFA07A"}}>수정완료</button> :

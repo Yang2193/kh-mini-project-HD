@@ -163,10 +163,10 @@ const SideMenu = () => {
                                 <div className="item" onClick={logout}>로그아웃</div>
                             :   <div className="item" onClick={()=> handleLinkClick("/Login")}>로그인/회원가입</div>
                             }
-                            <div className="item" onClick={()=> handleLinkClick("/MyPage")}>매장 등록</div>
-                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu1")}>고객 1:1 문의</div>
-                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu3")}>예약 현황</div>
-                            <div className="item" onClick={()=> handleLinkClick("/MyPage","menu5")}>메뉴 추가</div>
+                            <div className="item" onClick={()=> handleLinkClick("/BusinessPage","menu1")}>매장 등록</div>
+                            <div className="item" onClick={()=> handleLinkClick("/BusinessPage","menu2")}>고객 1:1 문의</div>
+                            <div className="item" onClick={()=> handleLinkClick("/BusinessPage","menu3")}>예약 현황</div>
+                            <div className="item" onClick={()=> handleLinkClick("/BusinessPage","menu4")}>메뉴 추가</div>
                             </div>
                     :  <div className="box" onClick={onClickBox}>
                             {userId ?

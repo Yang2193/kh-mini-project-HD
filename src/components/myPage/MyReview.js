@@ -39,6 +39,13 @@ padding: 10px 5px;
 border-left: 1.5px solid #FBF4EF;
 border-bottom: 30px solid #FBF4EF;
 }
+
+.defaultBox{
+  height: 200px;
+      & :hover{
+        cursor: initial;
+      }
+ }
 `;
 const MyReview =() => {
   const {setReviewId} = useContext(ReviewIdContext)
@@ -82,7 +89,9 @@ const MyReview =() => {
        
         <TableBlock>
         <Table headersName ={['날짜','매장','사진','제목','평점']} >
-        {reviewValue && currentPageData.map((e) => (
+        {reviewValue.length === 0 ?
+        ( <tr className="defaultBox"><td colSpan={5}> 작성하신 리뷰가 없습니다.</td></tr>) :
+        (currentPageData.map((e) => (
                 <TableRow key={e.reviewId} onClick={()=>movePage(e.reviewId)}>
                     <TableColumn>{e.reviewDate}</TableColumn>
                     <TableColumn>{e.restName}</TableColumn>
@@ -97,7 +106,7 @@ const MyReview =() => {
                     {e.rating}
                     </TableColumn>
                 </TableRow>
-        ))}
+        )))}
         </Table>
         </TableBlock>
         

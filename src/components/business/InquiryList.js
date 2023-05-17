@@ -37,6 +37,13 @@ const InquiryBlock  = styled.div`
         .common-table-column {
         padding: 10px 5px;
         }
+
+        .defaultBox{
+          height: 200px;
+          & :hover{
+            cursor: initial;
+          }
+        }
     
 `;
 
@@ -57,7 +64,10 @@ const InquiryList = ({data,children,stat,restInquiry}) => {
         <InquiryBlock>
          <div className="inquiryTitle">{children}</div>
         <Table headersName={['날짜','NO.','매장명','문의제목','상태']}>
-        {data.map((e) => {
+        {data.length === 0 ? (
+        <tr className="defaultBox"><td colSpan={5}> {children}이 없습니다.</td></tr>
+      ) : (
+        data.map((e) => {
           if (e.inquiryStat === stat) {
             return (
               <TableRow key={e.inquiryId} onClick={()=>inquiryRowClick(e)}>
@@ -71,7 +81,7 @@ const InquiryList = ({data,children,stat,restInquiry}) => {
           } else {
             return null; // 조건에 맞지 않으면 null을 반환하여 출력하지 않음
           }
-        })}
+        }))}
         </Table>
         <Modal open={modalOpen} close={closeModal} header="문의 내역" type="resv"><InquiryView data={selectRow} restInquiry={restInquiry}/></Modal>
 
