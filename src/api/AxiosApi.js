@@ -411,11 +411,14 @@ inquiryAnswerUpdate : async(data) => {
 
 //예약 확정하기 
 resvStatUpdate : async(data) => {
+ 
   const resvList ={
     vo : data,
 }
+console.log(resvList);
   return await axios.post(KH_DOMAIN+"/business/resv/stat/update",resvList);
 },
+
 //찜 숫자 조회
 //찜가게 조회 
 likeCntGet : async(id) => {

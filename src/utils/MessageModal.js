@@ -40,8 +40,9 @@ const ModalStyle = styled.div`
     }
 
     section {
-        width: 90%;
-        max-width: ${props => props.maxWidth};
+        width: 450px;
+        /* max-width: ${props => props.maxWidth}; */
+        max-width:450px;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -126,9 +127,9 @@ const MessageModal = (props) => {
 
     
     //console.log("Modal Component : " + type);
-    const maxWidth = type ==="resv" ? 'none' : '450px';
+    // const maxWidth = type ==="resv" ? 'none' : '450px';
     return (
-        <ModalStyle maxWidth={maxWidth}>
+        <ModalStyle>
             <div className={open ? 'openModal modal' : 'modal'} onClick={close}>
             {open &&
                 <section>
