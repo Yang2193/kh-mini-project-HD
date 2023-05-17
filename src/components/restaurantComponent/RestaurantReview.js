@@ -82,13 +82,10 @@ const ReviewContanier = styled.section`
                 }
             .ratingBox{
                 font-size: 20px;
-                top:100px
-            }
-            .rating{
-                left:250px;
-                top:55px;
+                bottom:10px;
             }
             .content{
+                height: 150px;
                 font-size: 15px;
             }
             .nick{
@@ -101,14 +98,14 @@ const ReviewContanier = styled.section`
             }
             .likeCount{
                 font-size: 15px;
-                top:70px
+                top:0px
 
             }
         img{
             position: relative;
             width: 300px;
             height: 200px;
-            bottom: 190px;
+            bottom: 280px;
             left: 500px;
         }
 
@@ -129,7 +126,7 @@ const ReviewContanier = styled.section`
         width: 100px;
         height: 30px;
         background-color: lightsalmon;
-        bottom:150px;
+        bottom:250px;
         left:250px;
     }
     .delete{
@@ -137,7 +134,7 @@ const ReviewContanier = styled.section`
         width: 100px;
         height: 30px;
         background-color: lightsalmon;
-        bottom:150px;
+        bottom:250px;
         left:300px;
 
     }
@@ -265,19 +262,17 @@ useEffect(() => {
                         <p className="date">작성일 : {rest.reviewDate}</p>
 
                         <Link to={"/Detail" } className="title" onClick={()=>setReviewId(rest.reviewId)}>
-                            {rest.reviewTitle}
+                            {rest.reviewTitle.length > 10 ? `${rest.reviewTitle.slice(0, 10)}...` : rest.reviewTitle}
                         </Link>
                         <Link to={"/Detail" } className="content" onClick={()=>setReviewId(rest.reviewId)}>
-                            {rest.reviewContent}
+                            {rest.reviewContent.length > 180 ? `${rest.reviewContent.slice(0, 180)}...` : rest.reviewContent}
                         </Link>
                         <p className="ratingBox">
-                        평점 : 
-                        <StarRatings rating={rest.reviewRating}
+                        평점 : <StarRatings rating={rest.reviewRating}
                             starDimension="30px"
                             starSpacing="4px"
-                            starRatedColor="yellow"/>
+                            starRatedColor="gold"/> {rest.reviewRating}
                         </p>
-                        <p className="rating">{rest.reviewRating}</p> 
                         <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         </div>
                         <img src={rest.reviewImage}/>
@@ -285,10 +280,11 @@ useEffect(() => {
                             <div className="btns">
                                 <button className="update" onClick={update}>수정하기</button>
                                 <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>삭제</button>
-                                <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
                             </div>
                         ) : null}
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
+                        <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
+
                     </div>
                 ))}
          {visibleReviews.length ===rtReview.length ? <></>  : <button onClick={handleLoadMore} className="more">▼ 더보기</button>}

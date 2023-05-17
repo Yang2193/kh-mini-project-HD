@@ -7,6 +7,7 @@ import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 import Modal from "../Modal";
 import { ReviewIdContext } from "../../context/RestaurantId";
+import { Rating } from "react-simple-star-rating";
 
 const ModalStyle = styled.div`
      .modal {
@@ -32,9 +33,9 @@ const ModalStyle = styled.div`
         border: 0;
     }
 
-    section {
-        width: 900px;
-        height: 500px;
+    .section {
+        width: 80%;
+        height: 80%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -42,17 +43,17 @@ const ModalStyle = styled.div`
         animation: modal-show 0.3s;
         overflow: hidden;
     }
-    section > header{
+    .section > header{
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
         padding: 16px 64px 16px 16px;
-        background-color: #f1f1f1;
+        background-color: lightsalmon;
         font-weight: 700;
         height: 20px;
     }
-    section > header button {
+    .section > header button {
         position: absolute;
         top: 4.5px;
         right: 15px;
@@ -63,45 +64,77 @@ const ModalStyle = styled.div`
         color: #999;
         background-color: transparent;
     }
-    section > main {
+    .section > main {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 360px;
+        height: 80%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
         .title{
+            padding-left: 10px;
             margin-bottom: 30px;
-            width: 800px;
-            height: 30px;
+            width: 60%;
+            height: 100px;
+            background-color:#EEE4DC;
+            font-size: 20px;
+            border-radius: 10px;
+            border: none;
         }
         .content{
-            width: 800px;
-            margin-bottom: 30px;
-
+            padding-top:20px;
+            padding-left: 20px;
+            border-radius: 10px;
+            font-family: "NanumGothic";
+            width: 59.5%;
+            min-height: 350px;
+            margin-bottom: 10px;
+            background-color:#EEE4DC;
+            border: none;
         }
         .file{
-            position: relative;
-            right: 275px;
+            background-color:#EEE4DC;
+            width: 58%;
+            height: 10%;
+            padding:20px;
+            border-radius: 10px;
+            font-size: 20px;
+
+        }
+        .getrating{
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            width: 60%;
+            height: 150px;
+            border-radius: 10px;
+            background-color:#EEE4DC;
+            padding-left: 10px;
         }
     }
 
-    section > footer {
+    .section > footer {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    section > footer button {
+    .section > footer button {
         width: 200px;
         height: 30px;
         margin-top: 13px;
         margin-left:100px;
         margin-right: 100px;
-    }
+        background-color: lightsalmon;
+        border-radius: 10px;
+        font-size:20px;
 
+    }
+    .section > footer button:hover {
+        box-shadow: 1px 1px 5px;
+    }
     @keyframes modal-show {
         from {
             opacity: 0;
@@ -190,26 +223,30 @@ const ReviewUpdate = (props) => {
         <ModalStyle>
             <div className={open ? "openModal modal" : "modal"}>
             {open && 
-                <section>
-                    <header>
+                <div className="section">
+                <header>
                         <p>리뷰 수정</p>
                         <button onClick={close}>&times;</button>
                     </header>
                     <main>
                         <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
-                        <textarea className="content" cols="30" rows="10"  value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
-                        <input type="number" value={inputRating} onChange={onChangeRating} placeholder="평점을 입력하세요 (0 ~ 5)"/>
+                        <textarea className="content" value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
+                        <p className="getrating">평점을 선택하세요:<Rating
+                            onClick={onChangeRating}
+                            initialValue={inputRating}
+                            allowFraction
+                            />
+                        </p>
                         <input type="file" className="file" onChange={onChangeImage} />
                     </main>
                     <footer>
                         <button onClick={addReview}>리뷰 등록</button>
-                        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 리뷰 수정이 완료 되었습니다. </Modal>
-
                         <button onClick={close}>취소</button>
                     </footer>
-                </section>
+                </div>
             }
             </div>
+            <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 리뷰 수정이 완료 되었습니다. </Modal>
         </ModalStyle>
     );
   }

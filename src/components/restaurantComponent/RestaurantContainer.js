@@ -6,11 +6,8 @@ import {  useNavigate } from "react-router-dom";
 import InquiryModal from "../../utils/rest/InquiryModal";
 import StarRatings from "react-star-ratings";
 import MessageModal from "../../utils/MessageModal";
+import { FaHeart } from 'react-icons/fa';
 const FixContent = styled.section`
-button:hover{
-    box-shadow: 1px 1px 5px;
-
-}
         width: 70%;
         height: auto;
         margin: 30px auto;
@@ -41,42 +38,51 @@ button:hover{
         height: 300px;
         background-color: #fff;
     }
-    button{
+    .btns{
+        position: relative;
+        top:100px;
+      
+    }
+        button{
             font-size: 20px;
-            width: 150px;
             background-color: salmon;
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            position: relative;        
         }
         .like{
-            position: relative;        
             left: 540px;
-            bottom: 250px;
+            bottom: 340px;
             width: 40px;
+            height: 40px;
             background-color: white;
-            border: 1px solid;
+            /* border: 1px solid; */
         }
         .res{
-            position: relative;
-            left: 410px;
-            bottom: 50px;
+            width: 150px;
+            height: 50px;
+            bottom:120px;
+            left:350px;
         }
-        .inq{
-            position: relative;
-            left: 40px;
-            bottom: -10px;
+        .res:hover{
+            box-shadow: 1px 1px 5px;
+        }
+        .inq{            
+            width: 150px;
+            height: 50px;
+            bottom:70px;
+            left:60px;
+        }
+        .inq:hover{
+            box-shadow: 1px 1px 5px;
         }
         p{
             padding: 10px;
             margin: 0;
             font-size: 20px;
         }
-        .rating{
-            position: relative;
-            left:250px;
-            bottom:53px;
-        }
+
      
 `;
 
@@ -195,19 +201,21 @@ const checkLogin=() => {
                         <p>전화 번호 : {rest.phone}</p>
                         <p>주소 : {rest.addr}</p>
                         <p className="ratingBox">
-                        평점 : 
-                        <StarRatings rating={rest.avgRating}
+                        평점 : <StarRatings rating={rest.avgRating}
                             starDimension="30px"
                             starSpacing="4px"
-                            starRatedColor="yellow"/>
+                            starRatedColor="gold"/> {rest.avgRating}
                         </p>
-                        <p className="rating">{rest.avgRating}</p> 
-                        <button className="inq" onClick={openModal}>문의 하기</button>
-                        <MessageModal open={modalCheck} close={checkLogin} confirm={checkLogin} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
+                        <div className="btns">
+                            <button className="inq" onClick={openModal}>문의 하기</button>
+                            <MessageModal open={modalCheck} close={checkLogin} confirm={checkLogin} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
 
-                        <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
-                        <button className="like" onClick={()=>onClickLiked(rest.name)} style={{backgroundColor : isLiked ? "salmon" : "white"}}>찜</button>
-                        <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
+                            <InquiryModal open={modalOpen} close={closeModal}></InquiryModal>
+                            <button className="like" onClick={()=>onClickLiked(rest.name)}>
+                                <FaHeart  style={{fontSize: '24px', color: isLiked ? "red" : "#999999" }}/>
+                            </button>
+                            <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
+                        </div>
                         </div>
                     </div>
                 ))}

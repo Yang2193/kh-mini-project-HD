@@ -30,8 +30,7 @@ const ModalStyle = styled.div`
         margin-right: 10px;
         border: 0;
     }
-
-    section {
+    .section {
         width: 80%;
         height: 80%;
         margin: 0 auto;
@@ -41,7 +40,7 @@ const ModalStyle = styled.div`
         animation: modal-show 0.3s;
         overflow: hidden;
     }
-    section > header{
+   .section>header{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,7 +50,7 @@ const ModalStyle = styled.div`
         font-weight: 700;
         height: 20px;
     }
-    section > header button {
+    .section > header button {
         position: absolute;
         top: 4.5px;
         right: 15px;
@@ -62,7 +61,7 @@ const ModalStyle = styled.div`
         color: #999;
         background-color: transparent;
     }
-    section > main {
+    .section > main {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -72,22 +71,23 @@ const ModalStyle = styled.div`
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
         .title{
-            padding-left: 5px;
-            margin-bottom: 30px;
+            padding-left: 10px;
+            margin-bottom: 10px;
             width: 60%;
-            height: 10%;
+            height: 100px;
             background-color:#EEE4DC;
             font-size: 20px;
             border-radius: 10px;
             border: none;
         }
         .content{
-            padding: 20px;
+            padding-top:20px;
+            padding-left: 20px;
             border-radius: 10px;
             font-family: "NanumGothic";
-            width: 58%;
-            height: 50%;
-            margin-bottom: 30px;
+            width: 59.5%;
+            min-height: 350px;
+            margin-bottom: 10px;
             background-color:#EEE4DC;
             font-size: 20px;
             border: none;
@@ -102,28 +102,24 @@ const ModalStyle = styled.div`
 
         }
         .rating{
+            margin-top: 0;
             display: flex;
             align-items: center;
             width: 60%;
-            height: 10%;
+            height: 150px;
             border-radius: 10px;
             background-color:#EEE4DC;
             padding-left: 10px;
         }
-        .star{
-                position: relative;
-                bottom:60px;
-                right:200px;
-            }
     }
 
-    section > footer {
+    .section > footer {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    section > footer button {
+    .section > footer button {
         width: 200px;
         height: 30px;
         margin-top: 13px;
@@ -131,9 +127,11 @@ const ModalStyle = styled.div`
         margin-right: 100px;
         font-size: 20px;
         background-color: lightsalmon;
+        border-radius: 10px;
+        font-size:20px;
     }
-    section > footer button:hover {
-        color:white
+    .section > footer button:hover {
+        box-shadow: 1px 1px 5px;
     }
     @keyframes modal-show {
         from {
@@ -197,7 +195,9 @@ const ReviewModal = (props) => {
     const [inputRating,setInputRating] = useState(0);
 
     const onChangeTitle = e =>{
-        setInputTitle(e.target.value)
+        if (e.target.value.length <= 20) { // 최대 글자 수를 20으로 제한
+            setInputTitle(e.target.value);
+          }
     }
     const onChangeContent = e =>{
         setInputContent(e.target.value)
@@ -225,33 +225,31 @@ const ReviewModal = (props) => {
         <ModalStyle>
             <div className={open ? "openModal modal" : "modal"}>
             {open && 
-                <section>
-                    <header>
+                <div className="section">
+                    <header className="header">
                         <p>리뷰 작성</p>
                         <button onClick={close}>&times;</button>
                     </header>
                     <main>
                         <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
                         <textarea className="content" cols="30" rows="10"  value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
-                        <p className="rating">평점을 선택하세요:</p>
-                        <div className="star">
-                            <Rating
+                        <p className="rating">평점을 선택하세요: <Rating
                             onClick={onChangeRating}
                             initialValue={inputRating}
                             allowFraction
                             />
-                        </div>
+                        </p>
                     <input type="file" className="file" onChange={onChangeImage} />
                     </main>
                     <footer>
                         <button onClick={addReview}>리뷰 등록</button>
-                        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 리뷰 등록이 완료 되었습니다. </Modal>
-
                         <button onClick={close}>취소</button>
                     </footer>
-                </section>
+                </div>
+                
             }
             </div>
+            <Modal open={modalOpen} close={closeModal} type ="ok" header="등록 완료"> 리뷰 등록이 완료 되었습니다. </Modal>
         </ModalStyle>
     );
   }

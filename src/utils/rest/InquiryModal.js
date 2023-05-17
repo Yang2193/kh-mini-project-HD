@@ -7,7 +7,6 @@ import { ref,uploadBytes,getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
 import Modal from "../Modal";
 const ModalStyle = styled.div`
-
      .modal {
         display: none;  // 숨겨진 상태로 시작
         position: fixed;
@@ -27,7 +26,7 @@ const ModalStyle = styled.div`
         /* 팝업이 열릴때 스르륵 열리는 효과 */
         animation: modal-bg-show 0.8s;
     }
-    section {
+    .section {
         width: 80%;
         height: 80%;
         margin: 0 auto;
@@ -37,7 +36,7 @@ const ModalStyle = styled.div`
         animation: modal-show 0.3s;
         overflow: hidden;
     }
-    section > header{
+    .section > header{
         background-color: lightsalmon;
         display: flex;
         justify-content: center;
@@ -47,7 +46,7 @@ const ModalStyle = styled.div`
         font-weight: 700;
         height: 20px;
     }
-    section > header button {
+    .section > header button {
         position: absolute;
         top: 4.5px;
         right: 15px;
@@ -58,7 +57,7 @@ const ModalStyle = styled.div`
         color: #999;
         background-color: transparent;
     }
-    section > main {
+    .section > main {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -98,13 +97,12 @@ const ModalStyle = styled.div`
 
         }
     }
-    footer{
-        height: 50px;
+    .section>footer{
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    section > footer button {
+    .section > footer button {
         width: 200px;
         height: 30px;
         margin-top: 13px;
@@ -112,17 +110,13 @@ const ModalStyle = styled.div`
         margin-right: 100px;
         font-size: 20px;
         background-color: lightsalmon;
+        border-radius: 10px;
+        font-size:20px;
     }
-    section > footer button:hover {
-        color:white
+    .section > footer button:hover {
+        box-shadow: 1px 1px 5px;
     }
-    .add{
-        right:200px;
-    }
-    .clo{
-        left: 200px;
 
-    }
     @keyframes modal-show {
         from {
             opacity: 0;
@@ -226,7 +220,7 @@ const InquiryModal = (props) => {
         <ModalStyle>
             <div className={open ? "openModal modal" : "modal"}>
             {open && 
-                <section>
+                <div className="section">
                     <header>
                         <p>문의 작성</p>
                         <button onClick={close}>&times;</button>
@@ -238,13 +232,13 @@ const InquiryModal = (props) => {
                     </main>
                     <footer>
                         <button className="add" onClick={addInquiry}>문의 등록</button>
-                        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 문의 등록이 완료 되었습니다. </Modal>
-
                         <button className="clo" onClick={close}>취소</button>
                     </footer>
-                </section>
+                </div>
             }
             </div>
+            <Modal open={modalOpen} close={closeModal} type ="ok" header="등록 완료"> 문의 등록이 완료 되었습니다. </Modal>
+
         </ModalStyle>
     );
   }

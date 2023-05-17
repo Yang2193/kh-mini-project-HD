@@ -153,9 +153,10 @@ const ResCheck = (props) =>{
             </div>
             <div className="btn2">
                 <button className="next" onClick={addRes}>예약 신청</button>
-                <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 예약 신청이 완료 되었습니다. </Modal>
                 <button className="back" onClick={()=>nav("/info")}>취소</button>
             </div>
+            <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 예약 신청이 완료 되었습니다. </Modal>
+
         </div>
     </Res>
     )

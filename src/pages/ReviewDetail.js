@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import Modal from "../utils/Modal";
 import ReviewUpdate from "../utils/rest/ReviewUpdate";
+import { AiFillLike } from "react-icons/ai";
+
 const ReviewPage = styled.div`
     font-family: "NanumGothic";
 	background-color:#EEE4DC;
@@ -18,12 +20,10 @@ const ReviewPage = styled.div`
 	}
     .cont{
         box-shadow: 1px 1px 5px;
-
-        width: 430px;
         border-radius: 15px;
         position: relative;
 		padding: 30px;
-		width: 700px;
+		width: 60%;
         height: 600px;
 		background-color: #fff;
         margin: 60px 0px;
@@ -31,7 +31,7 @@ const ReviewPage = styled.div`
     }
     .btns{
         position: relative;
-        left: 470px;
+        left: 900px;
         bottom:680px;
         button{
             width: 100px;
@@ -44,27 +44,17 @@ const ReviewPage = styled.div`
         button:hover{
             color:#fff;
         }
-        .update{
-
-        }
-        .delete{
-
-        }
     }
 
     .like{
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        border: 1px solid;
-        height: 30px;
+        height: 40px;
         width: 40px;
-        bottom:30px;
+        bottom:35px;
         left:100px;
         cursor: pointer;
-        border-radius: 50px;
+        border: none;
+        background-color: white;
     }
     .box{
        /* border: 1px solid; */
@@ -77,21 +67,18 @@ const ReviewPage = styled.div`
             font-size: 10px;
         }
         .title {
-        font-size: 25px;
-        font-weight: bold;
-        bottom: 20px;
+            height: 30px;
+            font-size: 25px;
+            font-weight: bold;
+            bottom: 20px;
         }
         .ratingBox{
             font-size: 20px;
-            top:340px;
-        }
-        .rating{
-            position: relative;
-            left:250px;
-            top:287px;
-            font-size: 20px;
+            bottom:30px;
         }
         .content{
+            height: 400px;
+            bottom:35px;
             font-size: 15px;
         }
         .nick{
@@ -104,37 +91,33 @@ const ReviewPage = styled.div`
         }
         .likeCount{
             font-size: 15px;
-            top:290px
+            bottom:30px
 
         }
     }
     .return{
             position: relative;
-            width: 100px;
-            height: 30px;
+            font-size: 20px;
+            width: 150px;
+            height: 50px;
             background-color: salmon;
             border: none;
             cursor: pointer;
-            bottom: 70px;
-            left: 620px;
-            border-radius: 15px;
-            box-shadow: 1px 1px 2px;
+            bottom: 50px;
+            left: 950px;
+            border-radius: 10px;
         }
         .return:hover{
-            color:#fff;
+            box-shadow: 1px 1px 2px;
         }
     .imgBox{
         position: relative;
         bottom:600px;
-        left:400px;
-
-        width: 300px;
-        height: 400px;
+        left:600px;
         img{
-            border-radius: 5px;
-            width: 300px;
+            border-radius: 10px;
+            width: 500px;
             height: 400px;
-            border: 1px solid;
             position: absolute;
         }
     }
@@ -243,17 +226,17 @@ const ReviewDetail = () =>{
                             <p className="title">{rest.reviewTitle}</p>
                             <p className="content">{rest.reviewContent}</p>
                             <p className="ratingBox">
-                                평점 : 
-                                <StarRatings rating={rest.reviewRating}
+                                평점 : <StarRatings rating={rest.reviewRating}
                                     starDimension="30px"
                                     starSpacing="4px"
-                                    starRatedColor="yellow"/>
+                                    starRatedColor="gold"/> {rest.reviewRating}
                             </p>
-                            <p className="rating">{rest.reviewRating}</p> 
                             <p className="likeCount">공감수 : {rest.likeCnt} </p>
                         </div>
            
-                        <button className="like" onClick={()=>onClickLiked()} style={{backgroundColor : isRevLike ? "salmon" : "white"}}>👍</button>
+                        <button className="like" onClick={()=>onClickLiked()} >
+                            <AiFillLike style={{fontSize: '24px', color: isRevLike ? "salmon" : "#999999" }} />
+                        </button>
                         <button className="return" onClick={()=>movePage(rest.restId)}>매장으로 이동</button>
                         {(memId === rest.memId) ? (
                             <div className="btns">

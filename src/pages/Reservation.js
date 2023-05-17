@@ -11,7 +11,6 @@ import ko from "date-fns/locale/ko";
 import Select from 'react-select';
 import ResCheck from "../components/restaurantComponent/ResCheck";
 import 'react-calendar/dist/Calendar.css'; // css import
-import { MemberContext } from "../context/MemberContext";
 import AxiosApi from "../api/AxiosApi";
 const Style = styled.div`
 	font-family: "NanumGothic";
