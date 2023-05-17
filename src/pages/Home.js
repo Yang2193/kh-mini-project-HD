@@ -80,6 +80,13 @@ const Home = () => {
                 console.log(weeklyTop3RestRsp.data);
             }
 
+            const monthlyTop3RestRsp = await AxiosApi.monthlyTop3RestListGet();
+            
+            if(monthlyTop3RestRsp.status === 200){
+                setMt3r(monthlyTop3RestRsp.data);
+                console.log(monthlyTop3RestRsp.data);
+            }
+
             const weeklyTop3ReviewRsp = await AxiosApi.weeklyTop3ReviewListGet();
 
             if(weeklyTop3ReviewRsp.status === 200){
@@ -106,8 +113,7 @@ const Home = () => {
                         <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                         {restList && <RestListCarousel handleType={handleType} handleFilter={handleFilter} carouselRestList={restList}/>}
                         {reviewList && <ReviewListCarousel carouselReviewList={reviewList}/>}
-                        {/* <Button handleType={handleType} handleFilter={handleFilter}/> */}
-                        {(wt3r&&wt3review) && <HomeCarousel weeklyTop3Rest={wt3r} weeklyTop3Review={wt3review}/> } 
+                        {(wt3r&&wt3review) && <HomeCarousel weeklyTop3Rest={wt3r} monthlyTop3Rest={mt3r} weeklyTop3Review={wt3review}/> } 
                     </>
                 )}
                 {type === "List" && (

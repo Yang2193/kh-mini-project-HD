@@ -108,7 +108,7 @@ const StyledSlider = styled(Slider)`
 
 
 
-const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
+const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
 // 페이지이동
   const nav=useNavigate();
   const movePage = (restId,reservation) => {
@@ -153,8 +153,9 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
 
   useEffect(()=>{
     setWt3r(weeklyTop3Rest);
+    setMt3r(monthlyTop3Rest);
     setWt3review(weeklyTop3Review);
-  },[weeklyTop3Rest, weeklyTop3Review]);
+  },[weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review]);
 
 
     return (
@@ -164,6 +165,12 @@ const HomeCarousel = ({weeklyTop3Rest, weeklyTop3Review}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {wt3r && wt3r.map(e => (
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imgUrl}>
+                  <h3>{e.restName}({e.category})</h3>
+                  <p>평점 : {e.rating}</p>
+                </div>
+              ))}
+               {mt3r && mt3r.map(e => (
                 <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imgUrl}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
