@@ -1,25 +1,13 @@
 import React, {useContext}from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { MemberContext } from "../../context/MemberContext";
 import DatePicker from "react-datepicker";
 import AxiosApi from "../../api/AxiosApi";
-import Select from "react-select";
 import ko from "date-fns/locale/ko";
 import moment from "moment";
 import Modal from "../../utils/Modal";
-const CustomSelect = styled(Select)`
-position: relative;
-left: 100px;
-bottom:30px;
-    width: 200px;
-    height: 20px;
-    .css-13cymwt-control{
-        height: 5px;
-        font-size: 15px;
 
-    }
-`;
 //리뷰 상세정보
 const ResvModal = styled.div`
     font-family:"Nanum Gadic";
@@ -107,31 +95,28 @@ const {memberValue} = useContext(MemberContext);
 // 예약 변경
 const [showInput, setShowInput] = useState(false);
 // 날짜 시간
-const [value, setValue] = useState(new Date());// 날짜 저장
-const [time,setTime] = useState(new Date());// 시간 저장
+const [value, setValue] = useState(new Date(data.resvDate));// 날짜 저장, 초기값 세팅
+const [time, setTime] = useState(moment(data.resvTime, "a HH:mm").toDate()); // 시간 저장, 초기값 세팅
 const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss");
 const inputDate = moment(value).format("YYYY-MM-DD"); //날짜 이메일 보낼 떄 따로 넣기 위해서 수정.
-
 // 인원 수
 const [people, setPeople] = useState(1);
-function selPeo(selectedOption) {
-    setPeople(selectedOption.value);
-  }
-
-const optionPeos = [];
-  for (let i = 1; i <= 10; i++) {
-    optionPeos.push({ value: i, label: `${i}명` });
-  }
+function handlePeo(e) { 
+        setPeople(e.target.value);
+      }
+    function setOption(start, end) { // 포문 돌려서 옵션 생성
+        const options = [];
+        for (let i = start; i <= end; i++) {
+          options.push(
+            <option key={i} value={i}>
+              {i}명
+            </option>
+          );
+        }
+        return options;
+    }
 // 좌석
 const [seat, setSeat] = useState(1);
-function selSeat(selectedOption) {
-    setSeat(selectedOption.value);
-}
-
-const optionSeats = [];
-for (let i = 1; i <= 10; i++) {
-    optionSeats.push({ value: i, label: `${i}번` });
-}
 //요청사항
 const[resReq,setResReq] = useState();
 const onChange=(e)=>{
@@ -202,36 +187,37 @@ const onClickDel = async(resvId) => {
     <div className="restName">{data.restName}</div>
     <br />
     <div className="section1">
-    <label htmlFor ="date">날짜 : </label>
-    {showInput ?  <DatePicker
-      selected={value}
-      onChange={(date) => setValue(date)}
-      id="date"
-      locale={ko}
-      dateFormat="yyyy-MM-dd"/> 
-      : <span className="result">{moment(data.resvDate).format("YYYY-MM-DD")}</span>}
-    <br />
-    <label htmlFor ="time">시간 : </label>
-    {showInput ?<DatePicker
-      selected={time}
-      onChange={(date) => setTime(date)}
-      showTimeSelect
-      showTimeSelectOnly
-      locale={ko}
-      dateFormat="a h:mm"/>  :
-    <span className="result">{data.resvTime}</span>}
-    <br />
-    <label htmlFor ="peo">인원수 : </label>
-    {showInput ? <CustomSelect options={optionPeos} defaultValue={optionPeos[0]} onChange={selPeo} /> :
-                 <span className="result">{data.resvPeople}명</span>}
-    <br />
-    <label htmlFor ="seat">좌석 : </label>
-    {showInput ? <CustomSelect options={optionSeats} defaultValue={optionSeats[0]} onChange={selSeat} /> :
-                 <span className="result">{data.resvSeat}번</span>}
+        <label htmlFor ="date">날짜 : </label>
+        {showInput ?  <DatePicker
+        selected={value}
+        onChange={(date) => setValue(date)}
+        id="date"
+        locale={ko}
+        dateFormat="yyyy-MM-dd"/> 
+        : <span className="result">{moment(data.resvDate).format("YYYY-MM-DD")}</span>}
+        <br />
+        <label htmlFor ="time">시간 : </label>
+        {showInput ?<DatePicker
+        selected={time}
+        onChange={(date) => setTime(date)}
+        showTimeSelect
+        showTimeSelectOnly
+        minTime={new Date().setHours(8, 0)}
+        maxTime={new Date().setHours(20, 0)}
+        locale={ko}
+        dateFormat="a HH:mm"/>  :
+        <span className="result">{data.resvTime}</span>}
+        <br />
+        <label htmlFor ="peo">인원수 : </label>
+        {showInput ? <select onChange={handlePeo} value={people}>
+                        {setOption(1,10)}
+                     </select> 
+                    : <span className="result">{data.resvPeople}명</span>
+        }
+        <br />
     </div>
     <br />
     <div className="section2Title">예약자 정보 및 요청사항</div>
-
     <div className="section2">
     <div>이름 : {memberValue.name}</div>
     <div>전화번호 : {memberValue.phoneNum}</div>

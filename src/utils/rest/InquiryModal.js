@@ -190,14 +190,14 @@ const InquiryModal = (props) => {
 
    
     const addInquiry = async () => {
-        let reviewImageUrl = null;
+        let inquiryImageUrl = null;
 
         if (imageUplod) {
-            reviewImageUrl = await uploadImage();
-            console.log(reviewImageUrl);
+            inquiryImageUrl = await uploadImage();
+            console.log(inquiryImageUrl);
         }
 
-        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,reviewImageUrl);
+        const rsp = await AxiosApi.addInquiry(restId,memId,inputTttle,inputContent,inquiryImageUrl);
         if (rsp.data === true) {
             setModalOpen(true);
             

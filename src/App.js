@@ -9,7 +9,6 @@ import Mypage from './pages/Mypage';
 import Signup from './pages/Signup';
 import Info from './pages/RestaurantInfo';
 import RestaurantProvider from './context/RestaurantId';
-import Reservation from './pages/Reservation';
 import ReviewDetail from './pages/ReviewDetail';
 import IdPwFind from './pages/IdPwFind';
 import BizSignUp from './pages/BizSignup';
@@ -28,7 +27,6 @@ function App() {
               <Route path='/Login' element={<Login/>}/>
               <Route path="/Info" element={<Info/>} />
               <Route path='/Mypage' element={<Mypage/>}/>
-              <Route path='/Reservation' element={<Reservation/>}/>
               <Route path="/Detail" element={<ReviewDetail/>}/>
               <Route path='/IdPwFind' element={<IdPwFind/>}/>
               <Route path="/info" element={<Info/>} />

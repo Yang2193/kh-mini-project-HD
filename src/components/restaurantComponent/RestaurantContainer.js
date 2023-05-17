@@ -7,6 +7,7 @@ import InquiryModal from "../../utils/rest/InquiryModal";
 import StarRatings from "react-star-ratings";
 import MessageModal from "../../utils/MessageModal";
 import { FaHeart } from 'react-icons/fa';
+import ReservationModal from "../../utils/rest/ReservationModal";
 const FixContent = styled.section`
         width: 70%;
         height: auto;
@@ -83,7 +84,6 @@ const FixContent = styled.section`
 `;
 
 const RestaurantContainer =() =>{
-    const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
 
 	const restId = localStorage.getItem("restId");
     const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
@@ -103,8 +103,9 @@ const RestaurantContainer =() =>{
 
 // 문의 작성 버튼 입력시 팝업 창
 const navigate= useNavigate();
-
-const [modalOpen, setModalOpen] = useState(false);
+const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
+const[resModal,setResModal] = useState(false); // 예약하기 팝업
+const [modalOpen, setModalOpen] = useState(false);// 문의 팝업
 
 const openModal = () => {
     if (memId) {
@@ -113,9 +114,16 @@ const openModal = () => {
         setModalCheck(true);
     }
 }
-
+const openRes =()=>{
+    if (memId) {
+        setResModal(true);
+    } else {
+        setModalCheck(true);
+    }
+}
 const closeModal = () => {
     setModalOpen(false);
+    setResModal(false);
 }
 
 // 찜기능 
@@ -210,9 +218,10 @@ const checkLogin=() => {
                             <button className="like" onClick={()=>onClickLiked(rest.name)}>
                                 <FaHeart  style={{fontSize: '130%', color: isLiked ? "red" : "#999999" }}/>
                             </button>
-                            <button className="res"  disabled={possible === "0"}  onClick={checklogin}>예약 하기</button>
+                            <button className="res"  disabled={possible === "0"}  onClick={openRes}>예약 하기</button>
                         </div>
                         </div>
+                        <ReservationModal open={resModal} close={closeModal} ></ReservationModal>
                     </FixContent>
                 ))}
             </>
