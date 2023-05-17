@@ -547,7 +547,8 @@ reviewDelete:async(revId)=>{
     const reservation = {
       restId : restId,
       memberId: memId,
-      resDate: date
+      resDate: date,
+      resTime: time
 
     }
     return await axios.post(KH_DOMAIN + "/reservation/confirm/email", reservation);
@@ -561,7 +562,6 @@ reviewDelete:async(revId)=>{
       resDate: date,
       resTime: time,
       resvId : resvId
-
     }
     return await axios.post(KH_DOMAIN + "/reservation/confirm/emailBiz", reservation);
   },
@@ -591,23 +591,27 @@ reviewDelete:async(revId)=>{
     return await axios.post(KH_DOMAIN + "/reservation/cancel/emailBiz", reservation);
   },
   //사업자 측에서 예약 요청 거절 시 회원에게 이메일 보내기
-  sendReservationRejectEmail : async(restId, memId, date) =>
-  {
-    const reservation = {
-      restId : restId,
-      memberId: memId,
-      resDate: date
-    }
-    return await axios.post(KH_DOMAIN + "/reservation/reject/email", reservation);
-  },
-  //사업자 측에서 예약 요청 거절 시 이메일 보내기
-  sendReservationRejectEmailBiz : async(restId, memId, date, resvId) =>
+  sendReservationRejectEmail : async(restId, memId, date, time, reason) =>
   {
     const reservation = {
       restId : restId,
       memberId: memId,
       resDate: date,
-      resvId : resvId
+      resTime: time,
+      reason : reason
+    }
+    return await axios.post(KH_DOMAIN + "/reservation/reject/email", reservation);
+  },
+  //사업자 측에서 예약 요청 거절 시 이메일 보내기
+  sendReservationRejectEmailBiz : async(restId, memId, date, time, resvId, reason) =>
+  {
+    const reservation = {
+      restId : restId,
+      memberId: memId,
+      resDate: date,
+      resTime: time,
+      resvId : resvId,
+      reason : reason
     }
     return await axios.post(KH_DOMAIN + "/reservation/reject/emailBiz", reservation);
   }

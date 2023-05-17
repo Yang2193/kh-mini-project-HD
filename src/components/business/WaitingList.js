@@ -96,9 +96,74 @@ const WatingList = ({restResv,resvList,formatTime}) => {
     };
     
     const [cancelReason,setCancelReason] = useState('');
+    
+    
+  
+    //예약에 대한 Axios 요청을 보내는 함수 
+    const sendRequest = async(restId, memId, resvDate, resvTime, resvId) => {
+      try{
+        const rsp = await AxiosApi.sendReservationConfirmEmail(restId, memId, resvDate, resvTime);
+        if(rsp.status === 200) {
+          console.log(rsp.data);
+          console.log("회원에게 예약확정 메일 발송");
+        } else console.log("회원에게 예약확정 메일 발송 실패");
+
+        const bizRsp = await AxiosApi.sendReservationConfirmEmailBiz(restId, memId, resvDate, resvTime, resvId);
+
+        if(bizRsp.status === 200){
+          console.log(bizRsp.data);
+          console.log("사업자 회원에게 예약확정 메일 발송");
+        } else console.log("사업자 회원에게 예약확정 메일 발송 실패");
+
+      }catch(error){
+        console.log("예약 확정 메일 발송 실패");
+        console.log(error);
+      }
+    }
+
+    //checkedRows의 요소를 순회하며 Axios 요청을 보내는 함수
+    const sendMapRequests = async() => {
+      for(let i = 0; i < checkedRows.length; i++){
+        const e = checkedRows[i];
+        await new Promise(resolve => setTimeout(resolve, i * 1000));
+        sendRequest(e.restId, e.memId, e.resvDate, e.resvTime, e.resvId);
+      }
+    }
+
+    const sendCancelRequest = async(restId, memId, resvDate, resvTime, resvId, reason) => {
+
+      try{
+        const rsp = await AxiosApi.sendReservationRejectEmail(restId, memId, resvDate, resvTime, reason);
+        if(rsp.status === 200) {
+          console.log(rsp.data);
+          console.log("회원에게 예약요청 거절 메일 발송");
+        } else console.log("회원에게 예약요청 거절 메일 발송 실패");
+
+        const bizRsp = await AxiosApi.sendReservationRejectEmailBiz(restId, memId, resvDate, resvTime, resvId, reason);
+
+        if(bizRsp.status === 200){
+          console.log(bizRsp.data);
+          console.log("사업자 회원에게 예약요청 거절 메일 발송");
+        } else console.log("사업자 회원에게 예약요청 거절 메일 발송 실패");
+
+      }catch(error){
+        console.log("예약 요청 거절 메일 발송 실패");
+        console.log(error);
+      }
+    }
+
+    const sendCancelMapRequest = async(reason) => {
+        const e = checkedRows[0];
+        sendCancelRequest(e.restId, e.memId, e.resvDate, e.resvTime, e.resvId, reason);
+    }
+
+    
+  
 
     useEffect (()=> {
         restResv("예약대기");
+        console.log(checkedRows);
+        
     },[])
 
 
@@ -107,6 +172,9 @@ const WatingList = ({restResv,resvList,formatTime}) => {
         const rsp = await AxiosApi.resvStatUpdate(checkedRows);
         if (rsp.status === 200) setModalOpen("resvUpdate");
         console.log(rsp.data);
+
+        await sendMapRequests();
+
     }
     //예약 거절 하기
     const resvDeleteModal =()=> {
@@ -120,17 +188,17 @@ const WatingList = ({restResv,resvList,formatTime}) => {
      
   }
 
-  const resvDelete =async()=> {
-    console.log(cancelReason);
-    const resvId = checkedRows[0].resvId;
-   const rsp = await AxiosApi.resvDel(resvId);
-      if (rsp.status === 200){
-        setModalOpen("resvDel");
-        setCheckedRows('');
-        setCancelReason('');
-      } 
-  
-  }
+    const resvDelete =async()=> {
+      console.log(cancelReason);
+      const resvId = checkedRows[0].resvId;
+      const rsp = await AxiosApi.resvDel(resvId);
+        if (rsp.status === 200){
+          setModalOpen("resvDel");
+          setCheckedRows('');
+        } 
+        sendCancelMapRequest(cancelReason);
+        setCancelReason('');  
+    }
 
      //팝업 처리
      const [modalOpen, setModalOpen] = useState(null);
