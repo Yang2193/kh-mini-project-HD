@@ -41,7 +41,7 @@ const InquiryBlock  = styled.div`
 `;
 
 const InquiryList = ({data,children,stat,restInquiry}) => {
-   
+    
     const {restValue} = useContext(RestaurantContext);
     const [selectRow, setSelectRow] = useState('');
     const [modalOpen,setModalOpen] = useState(false);

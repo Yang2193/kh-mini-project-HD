@@ -3,7 +3,6 @@ import styled from "styled-components";
 import AxiosApi from "../../api/AxiosApi";
 import Modal from '../../utils/Modal';
 import MessageModal from "../../utils/MessageModal";
-import { async } from "q";
 const ResvBlock  = styled.div`
    display: flex;
    flex-direction: column;
@@ -14,6 +13,7 @@ const ResvBlock  = styled.div`
             font-weight: bold;
             text-align: center;
             margin: 0 auto;
+            margin-bottom : 10px;
            
         }
         table {
@@ -31,7 +31,7 @@ const ResvBlock  = styled.div`
         font-weight: bold;
         }
 
-        tr:hover {
+        .row:hover {
         background-color:#F0B7A2;
         cursor: pointer;
         }
@@ -82,9 +82,16 @@ const ResvBlock  = styled.div`
         border-radius: 18px; 
         margin:10px;
         }
+
+        .defaultBox{
+          height: 200px;
+          & :hover{
+            cursor: initial;
+          }
+        }
     
 `;
-const WatingList = ({restResv,resvList,formatTime}) => {
+const WatingList = ({restResv,resvList,formatTime,setModalType}) => {
     const [checkedRows, setCheckedRows] = useState([]);
 
     const handleCheckboxChange = (rowId) => {
@@ -170,7 +177,9 @@ const WatingList = ({restResv,resvList,formatTime}) => {
     //예약 확정 하기
     const resvStatUpdate =async()=> {
         const rsp = await AxiosApi.resvStatUpdate(checkedRows);
-        if (rsp.status === 200) setModalOpen("resvUpdate");
+        if (rsp.status === 200) {
+          setModalType("resvUpdate");
+        }
         console.log(rsp.data);
 
         await sendMapRequests();
@@ -223,9 +232,11 @@ const WatingList = ({restResv,resvList,formatTime}) => {
           </tr>
         </thead>
         <tbody>
-        
-        {resvList.map((e)=> (
-          <tr key={e.resvId}>
+        {resvList.length === 0 ? (
+        <tr className="defaultBox"><td colSpan={7}>예약된 리스트가 없습니다.</td></tr>
+      ) : (
+        resvList.map((e)=> (
+          <tr key={e.resvId} className="row">
             <td>
               <input
                 type="checkbox"
@@ -240,15 +251,16 @@ const WatingList = ({restResv,resvList,formatTime}) => {
             <td>{e.resvPeople}</td>
             <td>{e.resvRequest}</td>
           </tr>
-          ))}
+          ))
+          )}
         </tbody>
+     
       </table>
       <div>
       <button className="btn" onClick={resvStatUpdate}>예약확정</button>
-      <button className="btn" onClick={resvDeleteModal}>예약거절</button>
+      <button className="btn" onClick={resvDeleteModal}style={{backgroundColor : "#EEE4DC"}}>예약거절</button>
       </div>
       <MessageModal open={modalOpen === "error"} close={closeModal} header="삭제 오류" > 예약 거절은 리스트 당 한개만 선택 가능합니다.</MessageModal>
-      <MessageModal open={modalOpen==="resvUpdate"} close={closeModal} type ="ok" header="확정 완료">예약이 확정 되었습니다. </MessageModal>
       <MessageModal open={modalOpen==="resvDel"} close={closeModal} type ="ok" header="거절 완료">예약이 거절 되었습니다. </MessageModal>
       <Modal open={modalOpen==="resvDelete"} close={closeModal} type ="add" header="취소 사유 " confirm={resvDelete}>
       <div className="del">취소 사유 입력

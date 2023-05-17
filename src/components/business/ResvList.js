@@ -216,7 +216,8 @@ const ResvList = ({restValue}) => {
                     ))}
                     </Table>
                 </TableBlock>
-                <Modal open={modalOpen === "wait"} close={closeModal} header="예약 확정하기" type="resv"><WatingList restResv={restResv} resvList={resvList} formatTime={formatTime}/></Modal>
+                <Modal open={modalOpen === "wait"} close={closeModal} header="예약 확정하기" type="resv"><WatingList restResv={restResv} resvList={resvList} formatTime={formatTime} setModalType={setModalOpen}/></Modal>
+                <Modal open={modalOpen==="resvUpdate"} close={closeModal} type ="ok" header="확정 완료">예약이 확정 되었습니다. </Modal>
                 <Modal open={modalOpen ==="click"} close={closeModal} header="예약 정보" type="ok">{selectedResv&& <BizResvView data={selectedResv}/>}</Modal>
         </>
        

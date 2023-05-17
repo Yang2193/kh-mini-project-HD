@@ -104,8 +104,6 @@ const resvMemberValue = async() => {
     <label htmlFor ="date">인원수 : </label>
     <span className="result">{data.resvPeople}명</span>
     <br />
-    <label htmlFor ="date">좌석 : </label>
-    <span className="result">{data.resvSeat}번</span>
     </div>
     <br />
     <div className="section2Title">예약자 정보 및 요청사항</div>
