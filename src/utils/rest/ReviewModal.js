@@ -155,6 +155,7 @@ const ModalStyle = styled.div`
 `;
 
 const ReviewModal = (props) => {
+    const {open,close,rendering} = props;
 	const restId = localStorage.getItem("restId");
     const memId= localStorage.getItem("userId");
    //팝업 처리
@@ -164,8 +165,6 @@ const ReviewModal = (props) => {
        close();
        resetInput();
    };
-    // 팝업 열고 닫음
-    const {open,close} = props;
     // 팝업창 초기화
     const resetInput = () => {
         setInputTitle("");
@@ -217,6 +216,7 @@ const ReviewModal = (props) => {
     const rsp = await AxiosApi.addReview(restId, memId, inputTttle, inputContent, inputRating, reviewImageUrl);
     if (rsp.data === true) {
         setModalOpen(true);
+        rendering();
     } else {
         console.log("전송 실패");
         console.log(restId, memId, inputTttle, inputContent, inputRating, reviewImageUrl);
@@ -248,7 +248,6 @@ const ReviewModal = (props) => {
                         <button onClick={close}>취소</button>
                     </footer>
                 </div>
-                
             }
             </div>
             <Modal open={modalOpen} close={closeModal} type ="ok" header="등록 완료"> 리뷰 등록이 완료 되었습니다. </Modal>

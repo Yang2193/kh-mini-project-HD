@@ -9,6 +9,7 @@ import StarRatings from "react-star-ratings";
 import Modal from "../../utils/Modal";
 import ReviewUpdate from "../../utils/rest/ReviewUpdate";
 import MessageModal from "../../utils/MessageModal";
+import { AiFillCloseSquare } from 'react-icons/ai';
 
 const ReviewContanier = styled.section`
     display: flex;
@@ -117,7 +118,7 @@ const ReviewContanier = styled.section`
     .btns{
         position: relative;
         left:300px;
-        button:hover{
+        .update:hover{
             box-shadow: 1px 1px 5px ;
         }
     }
@@ -127,15 +128,13 @@ const ReviewContanier = styled.section`
         height: 30px;
         background-color: lightsalmon;
         bottom:250px;
-        left:250px;
+        left:400px;
     }
     .delete{
+        background-color: #EEE4DC;
         position: relative;
-        width: 100px;
-        height: 30px;
-        background-color: lightsalmon;
-        bottom:250px;
-        left:300px;
+        bottom:550px;
+        left:380px;
 
     }
     .sort{
@@ -147,34 +146,33 @@ const ReviewContanier = styled.section`
 `;
 
 const Review =() => {
+    const {setReviewId} = useContext(ReviewIdContext)
     const restId = localStorage.getItem("restId");
-    const isLogin=localStorage.getItem("isLogin")
-    const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const memId = localStorage.getItem("userId");  
 // 리뷰 데이터 입력
     const [rtReview, setRtReview] = useState(""); // 모든 리뷰 데이터
     const [visibleReviews, setVisibleReviews] = useState([]); // 화면에 보이는 리뷰 데이터
     const [rvCount, setRvCount] = useState(3); // 현재까지 불러온 리뷰 데이터 개수
-
+    const [refresh,setRefresh] = useState();// 팝업 실행후 화면 렌더링
 // onClick 으로 클릭시 3개씩 화면에 나올 데이터 개수 추가 + 화면 높이 증가
     const [rvHeight, setRvHeight] = useState();
 
 // 모든 리뷰 데이터 불러오는 axios 호출
     useEffect(() => {
-	        const rtReview = async()=>{
+	    const seleteReview = async()=>{
             const rsp = await AxiosApi.restaurantReview(restId)
             setRtReview(rsp.data);
         };
-        rtReview();
-    },[]);
-// 화면에 나올 리뷰 수 관리
-const [sortOrder, setSortOrder] = useState('date'); // 'date' 또는 'likes'
+        seleteReview();
+    },[refresh]);
+// 화면에 나올 리뷰 수 관리, 정렬 기능
+const [sortOrder, setSortOrder] = useState('date'); // 'date' 또는 'likes' 공감순 또는 최신 날짜순
 
 useEffect(() => {
     let sortedReviews = [...rtReview];
-  
     if (sortOrder === 'date') {
       sortedReviews.sort((a, b) => {
-        // 작성일을 비교하여 오름차순으로 정렬
+        // 작성일을 비교하여 내림차순으로 정렬
         return new Date(b.reviewDate) - new Date(a.reviewDate);
       });
     } else if (sortOrder === 'likes') {
@@ -183,9 +181,9 @@ useEffect(() => {
         return b.likeCnt - a.likeCnt;
       });
     }
-  
     setVisibleReviews(sortedReviews.slice(0, rvCount));
   }, [rtReview, rvCount, sortOrder]);
+
 // onClick 으로 클릭시 3개씩 화면에 나올 데이터 개수 추가 + 화면 높이 증가
     function handleLoadMore() {
         setRvCount(rvCount + 3);
@@ -212,37 +210,38 @@ useEffect(() => {
 
     const navigate= useNavigate();
 
-    const openModal = () => {
-        console.log(isLogin,memId);
+    const openModal = () => { // 리뷰 작성 팝업
         if (memId) {
             setModalOpen(true);
         } else {
             setModalCheck(true);
         }
     }
-    const update =() =>{
+    const update =(e) =>{ // 리뷰 수정 팝업
         setModalUpdate(true);
+        setReviewId(e);
 
     }
-    const closeModal = () => {
+    const closeModal = () => { // 팝업창 닫기
         setModalOpen(false);
         setModalCheck(false);
         setModalUpdate(false);
         setDeleteModal(false);
+        setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
+
     }
-    const checkLogin=() => {
+    const checkLogin=() => { // 로그인 체크 팝업
         setModalOpen(false);
         navigate('/Login');
       }
-    const deleteReview = async(revId)=>{
+    const deleteReview = async(revId)=>{ // 리뷰 삭제 함수
         const rsp = await AxiosApi.reviewDelete(revId);
         if (rsp) {
             setDeleteModal(true);
         }
     }
-// 리뷰 Id context api 로 전송
-    const {setReviewId} = useContext(ReviewIdContext)
   
+
     return (
         <ReviewContanier>
             <div className="cont" style={{height: rvHeight}}>
@@ -278,8 +277,10 @@ useEffect(() => {
                         <img src={rest.reviewImage}/>
                         {(memId === rest.memId) ? (
                             <div className="btns">
-                                <button className="update" onClick={update}>수정하기</button>
-                                <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>삭제</button>
+                                <button className="update" onClick={()=>update(rest.reviewId)}>수정하기</button>
+                                <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>
+                                 <AiFillCloseSquare style={{fontSize: '25px',color:"lightsalmon"}}/>
+                                </button>
                             </div>
                         ) : null}
                         <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>

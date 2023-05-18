@@ -2,13 +2,16 @@ import { useEffect,useState,useContext } from "react";
 import AxiosApi from "../api/AxiosApi";
 import { ReviewIdContext } from "../context/RestaurantId";
 import styled from "styled-components";
-import Header from "../components/header/Header";
-import HomeFooter from "../components/footer/HomeFooter";
 import { useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import Modal from "../utils/Modal";
-import ReviewUpdate from "../utils/rest/ReviewUpdate";
 import { AiFillLike } from "react-icons/ai";
+import MessageModal from "../utils/MessageModal";
+import { Rating } from "react-simple-star-rating";
+import { storage } from "../firebase/firebase";
+import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import { v4 } from "uuid";
+import { AiFillCloseSquare } from 'react-icons/ai';
 
 const ReviewPage = styled.div`
     font-family: "NanumGothic";
@@ -56,20 +59,33 @@ const ReviewPage = styled.div`
             position: relative;
         }
         .btns{
-        position: relative;
-        left: 900px;
-        bottom:680px;
-        button{
-            width: 100px;
-            height: 30px;
-            margin-left: 20px;
-            background-color: lightsalmon;
-            border-radius: 15px;
-            border: none;
-        }
-        button:hover{
-            color:#fff;
-        }
+            .update{
+                background-color: lightsalmon;
+                border: none;
+                width: 100px;
+                height: 30px;
+                border-radius: 10px;
+                position: relative;
+                bottom:100px;
+                left:50%;
+            }
+            .delete{
+                background-color: #fff;
+                border: none;
+                position: relative;
+                bottom:680px;
+                left:1000px;
+            }
+            .change{
+                background-color: lightsalmon;
+                border: none;
+                width: 100px;
+                height: 30px;
+                border-radius: 10px;
+                position: relative;
+                bottom:50px;
+                left:50%;
+            }
     }
     }
     .like{
@@ -144,12 +160,37 @@ const ReviewPage = styled.div`
             left:640px;
             position: relative;
         } */
+
+    .uptit{
+        padding:10px;
+        width: 100%;
+        height: 3%;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .upcont{
+        padding:10px;
+        width: 100%;
+        font-size: 18px;
+        font-family: "NanumGothic";
+        margin-bottom: 15px;
+        height: 50%;
+
+    }
+    .file{
+        width: 100%;
+        position: relative;
+        bottom:30px;
+    }
+    .change{
+        position: relative;
+    }
 `;
 
 const ReviewDetail = () =>{
     const nav = useNavigate();
     const {reviewId} = useContext(ReviewIdContext);
-    const memId = localStorage.getItem("userId");  // 로컬 스토리지로 로그인 시 회원 id 입력받고
+    const memId = localStorage.getItem("userId");  
 
     const [rtReview, setRtReview] = useState(""); // 리뷰 데이터 불러오기
     useEffect(() => {
@@ -183,8 +224,8 @@ const ReviewDetail = () =>{
         const rsp = await AxiosApi.addRevLike(reviewId, memId);
         if (rsp.data === true) {
             console.log("공감 등록 성공");
-            setRevLikeList([...revLikeList, {reviewId, memId}]); // 찜등록 성공시 배열에도 추가
-            setIsRevLike(true); // 최종 찜 상태를 true 로 전달
+            setRevLikeList([...revLikeList, {reviewId, memId}]); // 공감 등록 성공시 배열에도 추가
+            setIsRevLike(true); // 최종 공감 상태를 true 로 전달
             console.log(revLikeList);
             } else {
                 console.log(" 등록 전송 실패");
@@ -195,8 +236,8 @@ const ReviewDetail = () =>{
         const rsp = await AxiosApi.delRevLike(reviewId, memId);
         if (rsp.data === true) {
             console.log("공감 삭제 성공");
-            setRevLikeList(revLikeList.filter(item => !(item.reviewId === reviewId && item.memId === memId))); // 찜 삭제 성공시 배열에도 삭제
-            setIsRevLike(false); // 최종 찜 상태를 false 로 전달
+            setRevLikeList(revLikeList.filter(item => !(item.reviewId === reviewId && item.memId === memId))); // 공감 삭제 성공시 배열에도 삭제
+            setIsRevLike(false); // 최종 공감 상태를 false 로 전달
             console.log(revLikeList);
 
             } else {
@@ -206,8 +247,7 @@ const ReviewDetail = () =>{
 
     const onClickLiked = () =>{
         if(!memId) {  
-            alert("로그인이 되어있지 않습니다.")
-            nav("/login");
+            setModalCheck(true);
         } 
         if (!isRevLike) {
             addLike();
@@ -221,16 +261,66 @@ const ReviewDetail = () =>{
         nav("/Info");
       };
     // 팝업  
-    const[modalUpdate,setModalUpdate]=useState(false); // 리뷰 수정
+    const [showInput, setShowInput] = useState(false);// 리뷰 수정
     const [deleteModal,setDeleteModal] = useState(false); // 리뷰 삭제 완료
+    const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
+    const [modalOpen, setModalOpen] = useState(false);
 
-    const update =() =>{
-        setModalUpdate(true);
 
-    }
+ // 이미지 업로드 기능
+ const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
+
+ const onChangeImage =(e) =>{
+     setImageUpload(e.target.files[0])
+ }
+
+ const uploadImage = async () => {
+     if(imageUplod===null) return;
+
+     const imageRef = ref(storage, `images/${imageUplod.name + v4()}`);
+     const uploadSnapshot = await uploadBytes(imageRef, imageUplod);
+     const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+     return imageUrl;
+   };
+
+ // 리뷰 데이터 입력 받고 데이터 추가 전송
+ const [inputTttle, setInputTitle] = useState("");
+ const [inputContent, setInputContent] = useState("");
+ const [inputRating,setInputRating] = useState("");
+
+ const onChangeTitle = e =>{
+     if (e.target.value.length <= 20) { // 최대 글자 수를 20으로 제한
+         setInputTitle(e.target.value);
+       }
+ }
+ const onChangeContent = e =>{
+     if (e.target.value.length <= 525) { 
+         setInputContent(e.target.value);
+       }   
+ }
+ const onChangeRating = e =>{
+     setInputRating(e)
+ }
+
+ const updateReview = async () => {
+ let reviewImageUrl = null;
+ console.log(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
+
+     if (imageUplod) {
+         reviewImageUrl = await uploadImage();
+     }
+     const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
+     if (rsp.data === true) {
+         setModalOpen(true);
+     } else {
+         console.log("전송 실패");
+     }
+ };
+ //
     const closeModal = () => {
-        setModalUpdate(false);
         setDeleteModal(false);
+        setModalCheck(false);
+        setModalOpen(false);
     }
     const deleteReview = async(revId)=>{
         const rsp = await AxiosApi.reviewDelete(revId);
@@ -238,6 +328,9 @@ const ReviewDetail = () =>{
             setDeleteModal(true);
         }
     }
+    const checkLogin=() => { // 로그인 체크 팝업
+        nav('/Login');
+      }
     return(
         <ReviewPage>
         <div className="all">
@@ -246,32 +339,46 @@ const ReviewDetail = () =>{
                         <div className="box">
                             <p className="nick">{rest.nickName}</p>
                             <p className="date">작성일 : {rest.reviewDate}</p>
-                            <p className="title">{rest.reviewTitle}</p>
-                            <p className="content">{rest.reviewContent}</p>
-                            <p className="ratingBox">
-                                평점 : <StarRatings rating={rest.reviewRating}
-                                    starDimension="30px"
-                                    starSpacing="4px"
-                                    starRatedColor="gold"/> {rest.reviewRating}
-                            </p>
-                            <p className="likeCount">공감수 : {rest.likeCnt}</p>
+                            {showInput ? <input className="uptit" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/> : <p className="title">{rest.reviewTitle}</p>}
+                            {showInput ?  <textarea className="upcont" value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea> : <p className="content">{rest.reviewContent}</p>}
+                            {showInput ? <p className="ratingBox">평점을 선택하세요:<Rating
+                                            onClick={onChangeRating}
+                                            initialValue={inputRating}
+                                            allowFraction
+                                            />
+                                        </p> : <p className="ratingBox">
+                                                평점 : <StarRatings rating={rest.reviewRating}
+                                                    starDimension="30px"
+                                                    starSpacing="4px"
+                                                    starRatedColor="gold"/> {rest.reviewRating}
+                                                    </p>
+                                                }
+                            {showInput ? <input type="file" className="file" onChange={onChangeImage}/>: null}
+                            {showInput ? null :<p className="likeCount">공감수 : {rest.likeCnt}</p>}
                         </div>
-                        <button className="like" onClick={()=>onClickLiked()} >
-                            <AiFillLike style={{fontSize: '24px', color: isRevLike ? "salmon" : "#999999" }} />
-                        </button>
-                        <button className="return" onClick={()=>movePage(rest.restId,rest.reservation)}>매장으로 이동</button>
+                        {showInput ? null :<button className="like" onClick={()=>onClickLiked()} >
+                                            <AiFillLike style={{fontSize: '24px', color: isRevLike ? "salmon" : "#999999" }} />
+                                            </button> }
+                        {showInput ? null :<button className="return" onClick={()=>movePage(rest.restId,rest.reservation)}>매장으로 이동</button>}
                         {(memId === rest.memId) ? (
                             <div className="btns">
-                                <button className="update" onClick={update}>수정하기</button>
-                                <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>삭제</button>
+                                {showInput ? <button className="change" onClick={updateReview}>수정완료</button>:
+                                             <button className="update" onClick={()=> setShowInput(true)}>수정하기</button>}
+
+                                {showInput ? null : <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>
+                                                        <AiFillCloseSquare style={{fontSize: '30px',color:"lightsalmon"}}/>
+                                                    </button>
+                                }
                                 <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
                             </div>
                         ) : null}
-                        <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
                         <img src={rest.reviewImage} alt="이미지가 없습니다."/>
                     </div>
                 ))}
         </div>
+        <MessageModal open={modalCheck} close={checkLogin} confirm={closeModal} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
+        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 리뷰 수정이 완료 되었습니다. </Modal>
+
         </ReviewPage>
     )
 

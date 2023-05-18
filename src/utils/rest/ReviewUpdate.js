@@ -206,22 +206,22 @@ const ReviewUpdate = (props) => {
           }   
     }
     const onChangeRating = e =>{
-        console.log(e);
         setInputRating(e)
     }
 
-    const addReview = async () => {
+    const updateReview = async () => {
     let reviewImageUrl = null;
-    if (imageUplod) {
-        reviewImageUrl = await uploadImage();
-        console.log(reviewImageUrl);
-    }
-    const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
-    if (rsp.data === true) {
-        setModalOpen(true);
-    } else {
-        console.log("전송 실패");
-    }
+    console.log(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
+
+        if (imageUplod) {
+            reviewImageUrl = await uploadImage();
+        }
+        const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
+        if (rsp.data === true) {
+            setModalOpen(true);
+        } else {
+            console.log("전송 실패");
+        }
     };
         
     return (
@@ -245,7 +245,7 @@ const ReviewUpdate = (props) => {
                         <input type="file" className="file" onChange={onChangeImage} />
                     </main>
                     <footer>
-                        <button onClick={addReview}>리뷰 등록</button>
+                        <button onClick={updateReview}>리뷰 등록</button>
                         <button onClick={close}>취소</button>
                     </footer>
                 </div>
