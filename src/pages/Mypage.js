@@ -38,24 +38,20 @@ const Mypage= () => {
      
       const [category,setCategory] = useState(headerSelect || 'nomal');
       const onSelect = useCallback(category => setCategory(category),[]);
-      const [modalOpen, setModalOpen] = useState(false);
+    //   const [modalOpen, setModalOpen] = useState(false);
       const navigate = useNavigate();
 
-    useEffect(()=> {
-        const useId= localStorage.getItem("userId");
-        if(!useId) {
-            setModalOpen(true);
-        }
-    },[]);
+    // useEffect(()=> {
+    //     const useId= localStorage.getItem("userId");
+    //     if(!useId) {
+    //         setModalOpen(true);
+    //     }
+    // },[]);
 
     useEffect(() => {
        setCategory(headerSelect || 'nomarl');
       }, [headerSelect]);
 
-      const closeModal=() => {
-        setModalOpen(false);
-        navigate('/Login');
-      }
 	return (
 		<MypageBlock>
            <Header setCategory={setCategory}> MY PAGE </Header>
@@ -66,8 +62,7 @@ const Mypage= () => {
            <Section category={category}/>
            </div>
            <HomeFooter/>
-           <MessageModal open={modalOpen} close={closeModal} confirm={closeModal} header="로그인">로그인이 필요한 페이지입니다.</MessageModal>
-           {/* <Modal open={modalOpen} close={closeModal} type="ok" header="로그인">로그인이 필요한 페이지입니다.</Modal> */}
+          
         </MypageBlock>
     );
 }

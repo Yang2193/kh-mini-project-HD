@@ -82,14 +82,6 @@ const MenuBoxBlock = styled.div`
 `;
 
 const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,setImageUpload}) => {
-    // const ImgUpload = (e) => {
-    //     const file = e.target.files[0];
-    //     if(type==='add') {
-    //     if (file) {
-    //         setImageUpload(file);
-    //       };
-    //   }
-    //   }
     const ImgUpload = (e, menuId) => {
         const file = e.target.files[0];
         if(type==='add' && file){setImageUpload(file)}

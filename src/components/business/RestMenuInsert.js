@@ -75,6 +75,14 @@ const RestMenuInsert = () => {
         setModalOpen("add");
     }
     const closeModal = () => {
+        setNewData({
+            menuDesc : "",
+            menuImgFileName : "",
+            menuName:"",
+            menuPrice:"",
+            restId:restValue.restId,
+            menuId:""
+        });
         setModalOpen(false);
         restMenu();
     };
@@ -83,21 +91,12 @@ const RestMenuInsert = () => {
     const [imageUpload, setImageUpload] = useState(null);
       const [newData,setNewData] =useState({
         menuDesc : "",
-        menuImgFileName : '',
+        menuImgFileName : "",
         menuName:"",
         menuPrice:"",
         restId:restValue.restId,
         menuId:""
     });
-
-    // const uploadImage = async () => {
-    //     if(imageUpload===null) return;
-
-    //     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    //     const uploadSnapshot = await uploadBytes(imageRef, imageUpload);
-    //     const imageUrl = await getDownloadURL(uploadSnapshot.ref);
-    //     return imageUrl;
-    //   };
     const uploadImage = async (file) => {
         if (!file) return;
       

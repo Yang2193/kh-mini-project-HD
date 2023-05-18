@@ -3,7 +3,6 @@ import styled, {css} from "styled-components";
 import SideMenu from "../sidemenu/SideMenu";
 import LogoCoral from "../../images/logo-removebg-preview.png";
 import { useNavigate } from "react-router-dom";
-
 const Container = styled.div`
     background-color: none;
     position: relative;
@@ -39,7 +38,7 @@ const LogoBox = styled.div`
     z-index: 1;
 `;
 const Logo = styled.img`
-  
+ 
 `;
 
 
@@ -47,10 +46,14 @@ const Logo = styled.img`
 
 const Header = ({setCategory,children}) => {
     const navigate = useNavigate();
+    const memberType = window.localStorage.getItem("memberType");
+    const HomeClick = () => {
+     if(memberType ==="general") navigate("/");
+    }
     return(
         <>
             <Container>
-                <LogoBox onClick={()=>navigate("/")}>
+                <LogoBox onClick={()=>HomeClick()}>
                     <Logo src={LogoCoral}/>
                 </LogoBox>
                 <Box>           
