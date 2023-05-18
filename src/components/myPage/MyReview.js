@@ -46,6 +46,10 @@ border-bottom: 30px solid #FBF4EF;
         cursor: initial;
       }
  }
+ .reviewImg{
+  width: 100%;
+  height: 100%;
+}
 `;
 const MyReview =() => {
   const {setReviewId} = useContext(ReviewIdContext)
@@ -95,7 +99,7 @@ const MyReview =() => {
                 <TableRow key={e.reviewId} onClick={()=>movePage(e.reviewId)}>
                     <TableColumn>{e.reviewDate}</TableColumn>
                     <TableColumn>{e.restName}</TableColumn>
-                    <TableColumn>{e.reviewFileName}</TableColumn>
+                    <TableColumn><img className="reviewImg" src={e.reviewFileName} alt="" /></TableColumn>
                     <TableColumn>{e.reviewTitle}</TableColumn>
                     <TableColumn>
                     <StarRatings rating={e.rating}

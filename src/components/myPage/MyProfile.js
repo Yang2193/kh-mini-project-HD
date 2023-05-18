@@ -123,7 +123,7 @@ const MyProfile =  () => {
     if(!memberValue) return<MyProfileBlock>로그인이 필요합니다.</MyProfileBlock>;//추후 업데이트
     return( 
         <MyProfileBlock>
-        <div className="profileImg"><img src={memberValue.imgFileName} alt="Logo" /></div>
+        <div className="profileImg"><img src={memberValue.imgFileName === null ? (ProfileImg):(memberValue.imgFileName)} alt="Logo" /></div>
         <div className="profileInfo">
             <div className="text">
             <div className="box">
