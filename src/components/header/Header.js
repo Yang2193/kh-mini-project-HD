@@ -2,6 +2,7 @@ import React from "react";
 import styled, {css} from "styled-components";
 import SideMenu from "../sidemenu/SideMenu";
 import LogoCoral from "../../images/logo-removebg-preview.png";
+import LogoImg from "../../images/허당Logo.png"
 import { useNavigate } from "react-router-dom";
 const Container = styled.div`
     background-color: none;
@@ -24,7 +25,7 @@ const Box = styled.div`
         font-size: 30px;
         font-family: "NanumGothic";
         font-weight: bolder;
-        color : white;
+        
         margin-top:30px;
 
     }
@@ -38,7 +39,7 @@ const LogoBox = styled.div`
     z-index: 1;
 `;
 const Logo = styled.img`
- 
+    width: 100px;
 `;
 
 
@@ -54,7 +55,7 @@ const Header = ({setCategory,children}) => {
         <>
             <Container>
                 <LogoBox onClick={()=>HomeClick()}>
-                    <Logo src={LogoCoral}/>
+                    <Logo src={LogoImg}/>
                 </LogoBox>
                 <Box>           
                 <div className="title"> {children} </div>

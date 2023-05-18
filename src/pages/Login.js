@@ -1,6 +1,6 @@
 import React, { useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import imgLogo from "../images/logo-removebg-preview.png";
+import imgLogo from "../images/허당Logo(login).png";
 import styled from 'styled-components';
 import AxiosApi from '../api/AxiosApi';
 import Modal from '../utils/Modal';
@@ -26,7 +26,7 @@ const Label = styled.label`
 `;
 
 const Container = styled.div`
-  padding-top: 100px;
+  //padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -42,8 +42,8 @@ const Container = styled.div`
     align-items: center;
   }
   .item1 img {
-    width: 120px;
-    height: 120px;
+    width: 300px;
+    height: 300px;
   }
 
   .item2 {

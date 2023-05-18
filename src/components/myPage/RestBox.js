@@ -90,12 +90,12 @@ const movePage=(restId,reservation)=>{
         setCount(count + 3);  // 개수 추가
         setHeight(height + 250); // 높이를 250 증가시킴
     }
-
+    console.log(visibleLike);
     return(
         <RsetBlock >
         <div className="container" style={{height: height}}>
         {visibleLike && visibleLike.map(rest=>(
-            <div onClick={()=>movePage(rest.restId,rest.reservation)}  key={rest.restId} className="box" style={{backgroundImage: `url(${restSampleImg})`}}>
+            <div onClick={()=>movePage(rest.restId,rest.reservation)}  key={rest.restId} className="box" style={{backgroundImage: `url(${rest.restImgFileName})`}}>
             <div className="hoverBox">
             <p>{rest.restName}</p> 
             <span className="ratingBox">

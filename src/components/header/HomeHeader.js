@@ -6,7 +6,7 @@ import BackgroundImg from "../../images/korean-food-fried-rice-with-kimchi-serve
 import SearchBar from "../search/SearchBar";
 import HeaderTextImg from "../../images/text1.png"
 import { useNavigate } from "react-router-dom";
-
+import LogoImg from "../../images/허당Logo(color).png"
 //Home에 쓰는 헤더
 const Container = styled.div`
     background-color: none;
@@ -79,7 +79,7 @@ const LogoBox = styled.div`
     z-index: 1;
 `;
 const Logo = styled.img`
-  
+   width: 100px;
 `;
 
 
@@ -97,7 +97,7 @@ const HomeHeader = ({ handleType, children }) => {
         <>
             <Container>
                 <LogoBox onClick={onClickHome}>
-                    <Logo src={LogoCoral}/>
+                    <Logo src={LogoImg}/>
                 </LogoBox>
                 <Box>           
                     <TextImage/>
