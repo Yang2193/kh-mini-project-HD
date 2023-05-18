@@ -23,6 +23,7 @@ const Box = styled.div`
   text-align: center;
 `;
 
+
 const StyledSlider = styled(Slider)`
 
   .slick-slide {
@@ -31,11 +32,13 @@ const StyledSlider = styled(Slider)`
 
   }
 
+  
+
   .slick-slide div{
     width : 240px;
     height: 240px;
     margin: 10px;
-    background-color: black;
+    background: none;
     color: white;
     display: flex !important;
     flex-direction: column;
@@ -43,13 +46,24 @@ const StyledSlider = styled(Slider)`
     align-items: center;
     position: relative;
     cursor: pointer;
-    background-image: url(${props => props.imgUrl});
-    background-size: cover;
-    background-position: center;
+    
 
     img{
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+    }
+
+    .slide-content {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -165,22 +179,31 @@ const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {wt3r && wt3r.map(e => (
-                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imageUrl}>
-                  <h3>{e.restName}({e.category})</h3>
-                  <p>평점 : {e.rating}</p>
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId}>
+                  <div className="slide-content">
+                    <h3>{e.restName}({e.category})</h3>
+                    <p>평점 : {e.rating}</p>
+                  </div>
+                  <img src={e.imageUrl} alt="restaurant-img"/>
                 </div>
               ))}
                {mt3r && mt3r.map(e => (
-                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imageUrl}>
-                  <h3>{e.restName}({e.category})</h3>
-                  <p>평점 : {e.rating}</p>
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId}>
+                  <div className="slide-content">
+                    <h3>{e.restName}({e.category})</h3>
+                    <p>평점 : {e.rating}</p>
+                  </div>
+                  <img src={e.imageUrl} alt="restaurant-img"/>
                 </div>
               ))}
               {wt3review && wt3review.map(e=>(
-                <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId} imgUrl={e.reviewFileName}>
-                  <h2>{e.restName}</h2>
-                  <h3>{e.reviewTitle}</h3>
-                </div>
+                 <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId}>
+                 <div className="slide-content">
+                   <h2>{e.restName}</h2>
+                   <h3>{e.reviewTitle}</h3>
+                 </div>
+                 {e.reviewFileName && <img src={e.reviewFileName} alt="review-img"/>}
+               </div>
               ))}
            
             </StyledSlider>

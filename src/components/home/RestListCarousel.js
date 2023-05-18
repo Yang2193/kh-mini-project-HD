@@ -35,7 +35,7 @@ const StyledSlider = styled(Slider)`
     width : 240px;
     height: 240px;
     margin: 10px;
-    background-color: black;
+    background: none;
     color: white;
     display: flex !important;
     flex-direction: column;
@@ -43,22 +43,35 @@ const StyledSlider = styled(Slider)`
     align-items: center;
     position: relative;
     cursor: pointer;
-    background-image: url(${props => props.imgUrl});
-    background-size: cover;
-    background-position: center;
+    
 
     img{
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
     }
+
+    .slide-content {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
   }
 
+  
   .slick-list {
     width: 100%;
     margin: 0 auto;
     text-align: center;
   }
 
+/* Slick 라이브러리 버튼 CSS */
   .slick-prev:before,
   .slick-next:before {
     color: coral;
@@ -163,9 +176,12 @@ const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
             <h2> {title} </h2>
             <StyledSlider {...settings} >
               {restList && restList.map(e => (
-                <div key={e.restId} imgUrl={e.imageUrl} onClick={onClickCarousel}>
-                  <h3>{e.restName}({e.category})</h3>
-                  <p>평점 : {e.rating}</p>
+                <div key={e.restId} onClick={onClickCarousel}>
+                  <div className="slide-content">
+                    <h3>{e.restName}({e.category})</h3>
+                    <p>평점 : {e.rating}</p>
+                  </div>
+                  <img src={e.imageUrl} alt="restaurant-img"/>
                 </div>
               ))}
             </StyledSlider>

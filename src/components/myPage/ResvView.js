@@ -142,7 +142,6 @@ const onClickUpate =  async(resvId)=> {
         setShowInput(false);
         setModalOpen("updateOK");
     } 
-    // 업데이트는 해결함
 
     const inputTime = formatTime(new Date(date));
 
@@ -166,7 +165,7 @@ const onClickDel = async(resvId) => {
        console.log("삭제완료");
        setModalOpen("delOK");
     } 
-    //  예약 변경 후 바로 취소 눌렀을 때 변경사항이 업데이트 안 돼서 최신정보로 취소가 되어있지 않다.
+    
     const emailRsp = await AxiosApi.sendReservationCancelEmail(data.restId, data.restName, data.memId, data.resvDate, data.resvTime);
     if(emailRsp.status === 200){
         console.log(emailRsp.data);

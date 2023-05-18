@@ -35,22 +35,40 @@ const StyledSlider = styled(Slider)`
     width : 240px;
     height: 240px;
     margin: 10px;
-    background-color: black;
+    background: none;
     color: white;
     display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: relative !important;
     cursor: pointer;
-    background-image: url(${props => props.imgUrl});
-    background-size: cover;
-    background-position: center;
+    
 
     img{
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
     }
+
+    .slide-content {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      text-align: center;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      
+    }
+
+
   }
 
   .slick-list {
@@ -161,9 +179,12 @@ const ReviewListCarousel = ({carouselReviewList}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {reviewList && reviewList.map(e=>(
-                <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId} imgUrl={e.reviewFileName}>
-                  <h2>{e.restName}</h2>
-                  <h3>{e.reviewTitle}</h3>
+                <div onClick={()=>movePageReview(e.reviewId,e.reservation)} key={e.reviewId}>
+                  <div className="slide-content">
+                    <h2>{e.restName}</h2>
+                    <h3>{e.reviewTitle}</h3>
+                  </div>
+                  {e.reviewFileName && <img src={e.reviewFileName} alt="review-img"/>}
                 </div>
               ))}
            
