@@ -285,7 +285,6 @@ const ReservationModal = (props) =>{
                                     onChange={(date) => setTime(date)}
                                     showTimeSelect
                                     showTimeSelectOnly
-                                    timeIntervals={60}
                                     minTime={new Date().setHours(8, 0)}
                                     maxTime={new Date().setHours(20, 0)}
                                     timeCaption="시간"

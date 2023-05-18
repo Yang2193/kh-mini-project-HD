@@ -37,7 +37,7 @@ const MenuBlock =styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 2px;
+    border-radius: 15px;
 `;
 
 const Info = () => {

@@ -21,7 +21,7 @@ const RestaurantInfo = styled.div`
     cursor: pointer;
     color:black;
     width: 810px;
-    height: 240px;
+    height: 300px;
     border: 1px solid black;
     margin: 10px 10px;
     display: flex;
@@ -40,10 +40,13 @@ const RestaurantInfo = styled.div`
         width: 50%;
         height: 100%;
         display: flex;
+        justify-content: center;
         flex-direction: column;
         align-items: self-start;
         p{
             margin-bottom: 10px;
+            width: 550px;
+            text-align: start;
         }
     }
 
@@ -63,7 +66,7 @@ const RestaurantInfoBox = ({searchFilter}) => {
         searchFilter &&
         searchFilter.map(rest => (
             <RestaurantInfo to={"/Info"} onClick={() => movePage(rest.restId,rest.restName,rest.reservation)} key={rest.restId}>
-                    <img src={rest.imageUrl} alt="" className="image"/>
+                <img src={rest.imageUrl} alt="" className="image"/>
                 <div className="box">
                     <p>매장 이름 : {rest.restName} ({rest.category})</p>
                     <p>매장 주소 : {rest.addr}</p>

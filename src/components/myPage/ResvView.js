@@ -96,7 +96,7 @@ const {memberValue} = useContext(MemberContext);
 const [showInput, setShowInput] = useState(false);
 // 날짜 시간
 const [value, setValue] = useState(new Date(data.resvDate));// 날짜 저장, 초기값 세팅
-const [time, setTime] = useState(moment(data.resvTime, "a HH:mm").toDate()); // 시간 저장, 초기값 세팅
+const [time, setTime] = useState(moment(data.resvTime, "HH:mm").toDate()); // 시간 저장, 초기값 세팅
 const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss");
 const inputDate = moment(value).format("YYYY-MM-DD"); //날짜 이메일 보낼 떄 따로 넣기 위해서 수정.
 // 인원 수
@@ -204,8 +204,9 @@ const onClickDel = async(resvId) => {
         showTimeSelectOnly
         minTime={new Date().setHours(8, 0)}
         maxTime={new Date().setHours(20, 0)}
+        timeCaption="시간"
         locale={ko}
-        dateFormat="a HH:mm"/>  :
+        dateFormat="a h:mm"/>  :
         <span className="result">{data.resvTime}</span>}
         <br />
         <label htmlFor ="peo">인원수 : </label>

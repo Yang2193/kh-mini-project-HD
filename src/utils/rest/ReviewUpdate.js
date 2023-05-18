@@ -206,7 +206,8 @@ const ReviewUpdate = (props) => {
           }   
     }
     const onChangeRating = e =>{
-        setInputRating(e.target.value)
+        console.log(e);
+        setInputRating(e)
     }
 
     const addReview = async () => {
