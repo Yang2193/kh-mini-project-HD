@@ -165,13 +165,13 @@ const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
             <h2> {title} </h2>
             <StyledSlider {...settings}>
               {wt3r && wt3r.map(e => (
-                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imgUrl}>
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imageUrl}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>
               ))}
                {mt3r && mt3r.map(e => (
-                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imgUrl}>
+                <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId} imgUrl={e.imageUrl}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>

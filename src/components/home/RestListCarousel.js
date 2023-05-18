@@ -163,7 +163,7 @@ const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
             <h2> {title} </h2>
             <StyledSlider {...settings} >
               {restList && restList.map(e => (
-                <div key={e.restId} imgUrl={e.imgUrl} onClick={onClickCarousel}>
+                <div key={e.restId} imgUrl={e.imageUrl} onClick={onClickCarousel}>
                   <h3>{e.restName}({e.category})</h3>
                   <p>평점 : {e.rating}</p>
                 </div>
