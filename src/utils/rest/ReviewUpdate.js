@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useState,useContext } from "react";
+import { useState,useContext,useEffect } from "react";
 import AxiosApi from "../../api/AxiosApi";
 import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
@@ -163,17 +163,9 @@ const ReviewUpdate = (props) => {
    const closeModal = () => {
        setModalOpen(false);
        close();
-       resetInput();
    };
     // 팝업 열고 닫음
-    const {open,close} = props;
-    // 팝업창 초기화
-    const resetInput = () => {
-        setInputTitle("");
-        setInputContent("");
-        setInputRating("");
-        setImageUpload(null);
-      }
+    const {open,close,data} = props;
     // 이미지 업로드 기능
     const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
 
@@ -191,9 +183,9 @@ const ReviewUpdate = (props) => {
       };
 
     // 리뷰 데이터 입력 받고 데이터 추가 전송
-    const [inputTttle, setInputTitle] = useState("");
-    const [inputContent, setInputContent] = useState("");
-    const [inputRating,setInputRating] = useState("");
+    const [inputTttle, setInputTitle] = useState('');
+    const [inputContent, setInputContent] = useState('');
+    const [inputRating,setInputRating] = useState('');
 
     const onChangeTitle = e =>{
         if (e.target.value.length <= 20) { // 최대 글자 수를 20으로 제한
@@ -213,9 +205,11 @@ const ReviewUpdate = (props) => {
     let reviewImageUrl = null;
     console.log(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
 
-        if (imageUplod) {
-            reviewImageUrl = await uploadImage();
-        }
+    if (imageUplod) {
+        reviewImageUrl = await uploadImage();
+    }else{
+        reviewImageUrl = data.image;
+    }
         const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
         if (rsp.data === true) {
             setModalOpen(true);
@@ -223,7 +217,17 @@ const ReviewUpdate = (props) => {
             console.log("전송 실패");
         }
     };
-        
+
+const resetInput = () => {
+    setInputTitle('');
+    setInputContent('');
+    setInputRating('');
+    setImageUpload(null);
+  }
+  const reset=()=>{
+    resetInput();
+    close();
+  }
     return (
         <ModalStyle>
             <div className={open ? "openModal modal" : "modal"}>
@@ -231,14 +235,14 @@ const ReviewUpdate = (props) => {
                 <div className="section">
                 <header>
                         <p>리뷰 수정</p>
-                        <button onClick={close}>&times;</button>
+                        <button onClick={reset}>&times;</button>
                     </header>
                     <main>
-                        <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
-                        <textarea className="content" value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
+                        <input className="title" value={inputTttle||setInputTitle(data.title)} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
+                        <textarea className="content" value={inputContent||setInputContent(data.content)} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
                         <p className="getrating">평점을 선택하세요:<Rating
                             onClick={onChangeRating}
-                            initialValue={inputRating}
+                            initialValue={inputRating||setInputRating(data.rating)}
                             allowFraction
                             />
                         </p>
@@ -246,7 +250,7 @@ const ReviewUpdate = (props) => {
                     </main>
                     <footer>
                         <button onClick={updateReview}>리뷰 등록</button>
-                        <button onClick={close}>취소</button>
+                        <button onClick={reset}>취소</button>
                     </footer>
                 </div>
             }
@@ -255,6 +259,5 @@ const ReviewUpdate = (props) => {
         </ModalStyle>
     );
   }
-
 
 export default ReviewUpdate;

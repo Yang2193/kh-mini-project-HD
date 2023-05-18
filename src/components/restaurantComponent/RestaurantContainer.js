@@ -183,14 +183,6 @@ const closeModal = () => {
             deleteLike();
         }    
 // 예약 페이지
-const checklogin =()=>{
-    if(!memId){
-        setModalCheck(true);
-    }else{
-        navigate("/Reservation")
-    }
-}
-
 const checkLogin=() => {
     setModalOpen(false);
     navigate('/Login');

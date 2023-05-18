@@ -52,11 +52,11 @@ const ReviewPage = styled.div`
         }
         img{
             border-radius: 10px;
-            width: 500px;
-            height: 400px;
-            bottom:600px;
-            left:640px;
-            position: relative;
+            width: 43%;
+            height: 60%;
+            bottom:22%;
+            left:55%;
+            position: absolute;
         }
         .btns{
             .update{
@@ -67,7 +67,11 @@ const ReviewPage = styled.div`
                 border-radius: 10px;
                 position: relative;
                 bottom:100px;
-                left:50%;
+                left:75%;
+            }
+            .update:hover{
+                box-shadow: 1px 1px 5px;
+                cursor: pointer;
             }
             .delete{
                 background-color: #fff;
@@ -83,8 +87,12 @@ const ReviewPage = styled.div`
                 height: 30px;
                 border-radius: 10px;
                 position: relative;
-                bottom:50px;
-                left:50%;
+                bottom:40px;
+                left:75%;
+            }
+            .change:hover{
+                box-shadow: 1px 1px 5px;
+                cursor: pointer;
             }
     }
     }
@@ -137,36 +145,13 @@ const ReviewPage = styled.div`
 
         }
     }
-    /* .return{
-            position: relative;
-            font-size: 20px;
-            width: 150px;
-            height: 50px;
-            background-color: salmon;
-            border: none;
-            cursor: pointer;
-            bottom: 50px;
-            left: 950px;
-            border-radius: 10px;
-        }
-        .return:hover{
-            box-shadow: 1px 1px 2px;
-        }
-        img{
-            border-radius: 10px;
-            width: 500px;
-            height: 400px;
-            bottom:600px;
-            left:640px;
-            position: relative;
-        } */
-
     .uptit{
         padding:10px;
         width: 100%;
         height: 3%;
         font-size: 20px;
         margin-bottom: 10px;
+        border-radius: 10px;
     }
     .upcont{
         padding:10px;
@@ -175,6 +160,7 @@ const ReviewPage = styled.div`
         font-family: "NanumGothic";
         margin-bottom: 15px;
         height: 50%;
+        border-radius: 10px;
 
     }
     .file{
@@ -182,15 +168,14 @@ const ReviewPage = styled.div`
         position: relative;
         bottom:30px;
     }
-    .change{
-        position: relative;
-    }
+
 `;
 
 const ReviewDetail = () =>{
     const nav = useNavigate();
     const {reviewId} = useContext(ReviewIdContext);
     const memId = localStorage.getItem("userId");  
+    const [refresh,setRefresh] = useState();// 팝업 실행후 화면 렌더링
 
     const [rtReview, setRtReview] = useState(""); // 리뷰 데이터 불러오기
     useEffect(() => {
@@ -199,7 +184,7 @@ const ReviewDetail = () =>{
         setRtReview(rsp.data);
     };
     rtReview();
-    },[]);
+    },[refresh]);
 
     // 리뷰 공감 기능
     const [revLikeList,setRevLikeList] = useState([]); // 공감 리스트 배열
@@ -251,8 +236,12 @@ const ReviewDetail = () =>{
         } 
         if (!isRevLike) {
             addLike();
+            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
+
         }else{
             deleteLike();
+            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
+
         }
     }
     const movePage = (restId,reservation) => {
@@ -306,21 +295,31 @@ const ReviewDetail = () =>{
  let reviewImageUrl = null;
  console.log(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
 
-     if (imageUplod) {
-         reviewImageUrl = await uploadImage();
-     }
-     const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl,reviewId);
-     if (rsp.data === true) {
-         setModalOpen(true);
-     } else {
-         console.log("전송 실패");
-     }
- };
+    if (imageUplod) {
+        reviewImageUrl = await uploadImage();
+    } else {
+        const rtReviewData = rtReview.find(rest => rest.reviewId === reviewId);
+        reviewImageUrl = rtReviewData.reviewImage;
+    }
+    const rsp = await AxiosApi.reviewUpdate(inputTttle, inputContent, inputRating, reviewImageUrl, reviewId);
+    if (rsp.data === true) {
+      setModalOpen(true);
+    } else {
+      console.log("전송 실패");
+    }
+    setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
+  }
  //
     const closeModal = () => {
-        setDeleteModal(false);
         setModalCheck(false);
+        setShowInput(false);
         setModalOpen(false);
+        setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
+
+    }
+    const deleteOk =()=>{
+        setDeleteModal(false);
+        nav(-1);
     }
     const deleteReview = async(revId)=>{
         const rsp = await AxiosApi.reviewDelete(revId);
@@ -339,15 +338,16 @@ const ReviewDetail = () =>{
                         <div className="box">
                             <p className="nick">{rest.nickName}</p>
                             <p className="date">작성일 : {rest.reviewDate}</p>
-                            {showInput ? <input className="uptit" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/> : <p className="title">{rest.reviewTitle}</p>}
-                            {showInput ?  <textarea className="upcont" value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea> : <p className="content">{rest.reviewContent}</p>}
+                            {showInput ? <input className="uptit" value={inputTttle || setInputTitle(rest.reviewTitle)} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요" autoFocus/> : <p className="title">{rest.reviewTitle}</p>}
+                            {showInput ?  <textarea className="upcont" value={inputContent || setInputContent(rest.reviewContent)} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea> : <p className="content">{rest.reviewContent}</p>}
                             {showInput ? <p className="ratingBox">평점을 선택하세요:<Rating
                                             onClick={onChangeRating}
-                                            initialValue={inputRating}
+                                            initialValue={inputRating || setInputRating(rest.reviewRating)}
                                             allowFraction
                                             />
                                         </p> : <p className="ratingBox">
-                                                평점 : <StarRatings rating={rest.reviewRating}
+                                                평점 : <StarRatings 
+                                                    rating={rest.reviewRating}
                                                     starDimension="30px"
                                                     starSpacing="4px"
                                                     starRatedColor="gold"/> {rest.reviewRating}
@@ -360,6 +360,7 @@ const ReviewDetail = () =>{
                                             <AiFillLike style={{fontSize: '24px', color: isRevLike ? "salmon" : "#999999" }} />
                                             </button> }
                         {showInput ? null :<button className="return" onClick={()=>movePage(rest.restId,rest.reservation)}>매장으로 이동</button>}
+                      
                         {(memId === rest.memId) ? (
                             <div className="btns">
                                 {showInput ? <button className="change" onClick={updateReview}>수정완료</button>:
@@ -369,13 +370,14 @@ const ReviewDetail = () =>{
                                                         <AiFillCloseSquare style={{fontSize: '30px',color:"lightsalmon"}}/>
                                                     </button>
                                 }
-                                <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
                             </div>
                         ) : null}
-                        <img src={rest.reviewImage} alt="이미지가 없습니다."/>
-                    </div>
+
+                    <img src={rest.reviewImage} alt="이미지가 없습니다."/>
+                </div>
                 ))}
         </div>
+        <Modal open={deleteModal} close={deleteOk} type ="ok" header="삭제 완료"> 삭제가 완료 되었습니다.</Modal>
         <MessageModal open={modalCheck} close={checkLogin} confirm={closeModal} header="로그인">로그인이 되어있지 않습니다.</MessageModal>
         <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 리뷰 수정이 완료 되었습니다. </Modal>
 

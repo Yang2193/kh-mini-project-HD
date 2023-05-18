@@ -207,7 +207,12 @@ useEffect(() => {
     const[modalUpdate,setModalUpdate]=useState(false); // 리뷰 수정
     const [modalCheck,setModalCheck] = useState(false); // 로그인 체크 팝업
     const [deleteModal,setDeleteModal] = useState(false); // 리뷰 삭제 완료
-
+    const [data, setData] = useState({
+        title: '',
+        content: '',
+        rating: '',
+        image: null
+      });
     const navigate= useNavigate();
 
     const openModal = () => { // 리뷰 작성 팝업
@@ -217,10 +222,15 @@ useEffect(() => {
             setModalCheck(true);
         }
     }
-    const update =(e) =>{ // 리뷰 수정 팝업
+    const update =(id,title,content,rating,image) =>{ // 리뷰 수정 팝업
         setModalUpdate(true);
-        setReviewId(e);
-
+        setReviewId(id);
+        setData({
+            title: title,
+            content: content,
+            rating: rating,
+            image: image
+          });
     }
     const closeModal = () => { // 팝업창 닫기
         setModalOpen(false);
@@ -240,7 +250,6 @@ useEffect(() => {
             setDeleteModal(true);
         }
     }
-  
 
     return (
         <ReviewContanier>
@@ -277,13 +286,13 @@ useEffect(() => {
                         <img src={rest.reviewImage}/>
                         {(memId === rest.memId) ? (
                             <div className="btns">
-                                <button className="update" onClick={()=>update(rest.reviewId)}>수정하기</button>
+                                <button className="update" onClick={()=>update(rest.reviewId,rest.reviewTitle,rest.reviewContent,rest.reviewRating,rest.reviewImage)}>수정하기</button>
                                 <button className="delete" onClick={()=>deleteReview(rest.reviewId)}>
                                  <AiFillCloseSquare style={{fontSize: '25px',color:"lightsalmon"}}/>
                                 </button>
                             </div>
                         ) : null}
-                        <ReviewUpdate open={modalUpdate} close={closeModal}></ReviewUpdate>
+                        <ReviewUpdate open={modalUpdate} close={closeModal} data={data}></ReviewUpdate>
                         <Modal open={deleteModal} close={closeModal} type ="ok" header="수정 완료"> 삭제가 완료 되었습니다.</Modal>
 
                     </div>
