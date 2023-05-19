@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import imgLogo from "../images/logo-removebg-preview.png";
+import imgLogo from "../images/허당Logo(login).png";
 import AxiosApi from "../api/AxiosApi";
 import Modal from '../utils/Modal';
 import styled from "styled-components";
@@ -31,7 +31,22 @@ const Container = styled.div`
   align-items: center;
   background-color: ivory;
   height: 100vh;
+  .title {
+    margin-top: 10px;
+    font-family: "MalangMalangB";
+    font-weight: 600;
+    font-size: 50px;
+    color :#FF7F50;
+    margin-bottom : 20px;
 
+  }
+  .logo{
+    width: 300px;
+    height: 300px;
+    &> * {
+      width: 100%;
+    }
+  }
   .item1 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -91,10 +106,9 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 26px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 100%;
     height: 50px;
     color: white;
     background-color: coral;
@@ -110,10 +124,9 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 26px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 150px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: coral;
@@ -127,14 +140,12 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 150px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: coral;
-    font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
     border: #999;
@@ -144,14 +155,12 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 150px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: #999;
-    font-size: 13px;
     font-weight: 400;
     border-radius: 18px;
     border: coral;
@@ -161,19 +170,23 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 150px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
+    background-color: #FFA07A;
     border-radius: 18px;
     border: coral;
-    font-weight: 700;
     cursor: pointer;
+  }
+
+  .btnBox{
+    width: 100%;
+    display: flex;
+    flex-direction : row;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -306,6 +319,7 @@ const IdPwFind = () => {
             <div className="logo">
                 <img src={imgLogo} alt="로고" onClick={()=>navigate("/")}/>
             </div>
+            <div className="title">ID/PW 찾기</div>
             <div className='item4'>
                 <Label isChecked={"ID찾기"===findType}>
                     <input type="radio" name='memberType' value={"ID찾기"} onChange={onChangeFindType} checked={"ID찾기"===findType}/>ID찾기
@@ -327,10 +341,11 @@ const IdPwFind = () => {
                       {isSuccess===true && <span className="success">{checkMessage}</span>}
                     </div>
                     
-                    <div className="item2">
+                    <div className="btnBox">
                         {(isMail) ?
                         <input type="button" className="enable-button" onClick={onClickFindId} value="ID찾기"/> :
                         <button className="disable-button" >ID찾기</button>}
+                        <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</button>
                     </div>
                 </>
             :
@@ -352,16 +367,14 @@ const IdPwFind = () => {
                         {inputMail.length > 0 && (
                         <span className={`${isMail ? "success" : "error"}`}>{MailMessage}</span>)}
                     </div>
-                    <div className="item2">
+                    <div className="btnBox">
                         {(isMail) ?
                         <input type="button" className="enable-button" onClick={onClickFindPw} value="PW찾기"/> :
                         <button className="disable-button" >PW찾기</button>}
+                         <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</button>
                     </div>
                 </>
             }
-            <div className="item2">
-                <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 돌아가기</button>
-            </div>
         </Container>
     );
 }

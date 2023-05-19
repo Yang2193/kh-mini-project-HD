@@ -117,7 +117,7 @@ const Container = styled.div`
     margin-right: 30px;
     font-size: 26px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 100%;
     height: 50px;
     color: white;
     background-color: coral;

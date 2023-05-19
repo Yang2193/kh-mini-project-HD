@@ -4,12 +4,9 @@ import MenuBar from "../components/myPage/MenuBar";
 import MyProfile from "../components/myPage/MyProfile";
 import Section from "../components/myPage/Section";
 import styled from "styled-components";
-import Modal from "../utils/Modal";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "../components/header/Header";
 import { useLocation } from "react-router-dom";
-import MessageModal from "../utils/MessageModal";
 const MypageBlock = styled.div`
     //전체폰트
     font-family: "NanumGothic";
@@ -38,15 +35,6 @@ const Mypage= () => {
      
       const [category,setCategory] = useState(headerSelect || 'nomal');
       const onSelect = useCallback(category => setCategory(category),[]);
-    //   const [modalOpen, setModalOpen] = useState(false);
-      const navigate = useNavigate();
-
-    // useEffect(()=> {
-    //     const useId= localStorage.getItem("userId");
-    //     if(!useId) {
-    //         setModalOpen(true);
-    //     }
-    // },[]);
 
     useEffect(() => {
        setCategory(headerSelect || 'nomarl');

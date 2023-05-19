@@ -10,6 +10,7 @@ import AddressModal from '../../utils/AddressModal';
 import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
+import ActionButton from "../../utils/Button/ActionButton";
 const MemberInfoBlock = styled.div`
        
         display: flex;
@@ -24,16 +25,7 @@ const MemberInfoBlock = styled.div`
         align-items: center;
         justify-content: center;
         width: 400px;
-        position: relative;
-        /* .addrBtn{
-            position: absolute;
-            right: -100px;
-            width: 100px;
-            height: 30px;
-            background-color: #FFA07A;
-            border: none;
-            cursor: pointer;
-        } */
+      
             label{
                 width: 150px;
                 text-align: center;
@@ -210,7 +202,7 @@ const MemberInfo = () => {
                   <div className='box'>
                     <label htmlFor='addr'>주소</label>
                     <input id='addr' name='addr' value={inputAddress} onChange={onChange} />
-                    <button onClick={openPost} className='addrBtn'>주소찾기</button>
+                    <ActionButton onClick={openPost} className='addrBtn'>주소찾기</ActionButton>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
                    <div className='box'>
