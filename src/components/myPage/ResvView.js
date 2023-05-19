@@ -112,19 +112,19 @@ const {memberValue} = useContext(MemberContext);
 // 예약 변경
 const [showInput, setShowInput] = useState(false);
 // 초기값을 위한 시간 타입 변경
-const timeString = data.resvTime; // "오후 00:00"
+const timeString = data.resvTime; // "ex) 오후 3시"
 const isPM = timeString.includes("오후");
-const timeParts = timeString.replace(/[^\d:]/g, "").split(":");
+const timeParts = timeString.replace(/[^\d:]/g, "").split(":"); // 오후 3:00 에서 숫자와 콜론을 제외한 모든 문자를 replace로 제거후에 split : 기준 으로  잘라서 배열에 담아 ["03","00"]으로 만듬
 let hours = parseInt(timeParts[0], 10);
-const minutes = parseInt(timeParts[1], 10);
+const minutes = parseInt(timeParts[1], 10); // 배열에 담긴 03,00을 10진수 숫자로 바꿈
 
-if (isPM && hours !== 12) {
+if (isPM && hours !== 12) { // 오후 이면서 숫자가 12를 넘기지 않았으면 12를 더해서 15:00 로 바꿈
   hours += 12;
 } else if (!isPM && hours === 12) {
   hours = 0;
 }
 
-const timeFormat = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00`;
+const timeFormat = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00`; // 다시 문자열 형식인 "15:00:00" 으로 바꿈
 console.log(timeFormat); // "15:00:00"
 
 // date 저장
