@@ -212,7 +212,10 @@ const WatingList = ({restResv,resvList,formatTime,setModalType}) => {
      //팝업 처리
      const [modalOpen, setModalOpen] = useState(null);
      const closeModal = () => {
+            //기본값 다시 설정
             setModalOpen(null);
+            setCheckedRows('');
+            setCancelReason('');  
             restResv("예약대기");
         };
     return(

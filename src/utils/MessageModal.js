@@ -39,7 +39,7 @@ const ModalStyle = styled.div`
         font-size: 13px;
     }
 
-    section {
+    .section {
         width: 450px;
         /* max-width: ${props => props.maxWidth}; */
         max-width:450px;
@@ -50,13 +50,13 @@ const ModalStyle = styled.div`
         animation: modal-show 0.3s;
         overflow: hidden;
     }
-    section > header {
+    .section > header {
         position: relative;
         padding: 16px 64px 16px 16px;
         background-color: #FFA07A;
         font-weight: 700;
     }
-    section > header button {
+    .section > header button {
         position: absolute;
         top: 15px;
         right: 15px;
@@ -68,18 +68,18 @@ const ModalStyle = styled.div`
         background-color: transparent;
     }
 
-    section > main {
+    .section > main {
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
     }
 
-    section > footer {
+    .section > footer {
         padding: 12px 16px;
         text-align: right;
     }
 
-    section > footer button {
+   .section > footer button {
         padding: 6px 12px;
         color: #fff;
         background-color: #6c757d;
@@ -132,7 +132,7 @@ const MessageModal = (props) => {
         <ModalStyle>
             <div className={open ? 'openModal modal' : 'modal'} onClick={close}>
             {open &&
-                <section>
+                <div className="section">
                     <header>
                         {header}
                         <button onClick={close}>
@@ -143,7 +143,7 @@ const MessageModal = (props) => {
                     <footer>
                      <input className="inputBtn" type="button" onClick={confirm} autoFocus onKeyDown={handleKeyDown} value="확인"/>
                     </footer>
-                </section>
+                </div>
             }
             </div>
         </ModalStyle>
