@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Modal from "../../utils/Modal";
 import AxiosApi from "../../api/AxiosApi";
 
 const InquriyBlock = styled.div`
@@ -65,7 +64,7 @@ const InquriyBlock = styled.div`
         cursor: pointer;
     }
 `;
-const InquiryModal = ({data,inquiryInfo}) => {
+const InquiryModal = ({data,inquiryInfo,setModalOpen}) => {
 
     //답변 입력창 답변 내용창 상태관리
     const [showInput, setShowInput] = useState(false);
@@ -81,27 +80,19 @@ const InquiryModal = ({data,inquiryInfo}) => {
           }));
     }
 
-    //팝업 처리
-    const [modalOpen, setModalOpen] = useState(false);
-    const closeModal = () => {
-           setModalOpen(false);
-           
-       };
-
     //답변 등록
     const inquiryUpdate = async () => {
         const rsp = await AxiosApi.inquiryUpdate(updateValue);
         if(rsp.data){
-             setModalOpen(true);
-            //input창 닫기 
+             setModalOpen("ok");
              setShowInput(false);
-             inquiryInfo();
+            inquiryInfo();
          }
          
     }
     //답변하기 버튼 클릭 
     const updateBtnClick =() => {
-        setShowInput(true)
+        setShowInput(true);
     }
    
 
@@ -115,12 +106,10 @@ const InquiryModal = ({data,inquiryInfo}) => {
             :(<div className="box2">제목 : {updateValue.inquiryTitle}</div>)}
         {showInput ? (<input className="box3" type="text" name='inquiryContent' value={updateValue.inquiryContent||''} onChange={onChange} placeholder="내용입력"/>)
             :(<div className="box3">{updateValue.inquiryContent}</div>)}
-        <div className="box1">첨부파일 : {data.inquiryImgFileName}</div>
         <div className="box4">{data.inquiryAnswer}</div>
         {showInput ? (<button className="confirmBtn" onClick={inquiryUpdate} style={{ backgroundColor: "#FFA07A" }}>수정완료</button>) : 
             data.inquiryAnswer ? null : (<button className="confirmBtn" onClick={updateBtnClick}>수정하기</button>)}
         
-        <Modal open={modalOpen} close={closeModal} type ="ok" header="수정 완료"> 문의 수정이 완료 되었습니다. </Modal>
         </InquriyBlock>
     );
 }

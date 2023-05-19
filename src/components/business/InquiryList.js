@@ -51,13 +51,13 @@ const InquiryList = ({data,children,stat,restInquiry}) => {
     
     const {restValue} = useContext(RestaurantContext);
     const [selectRow, setSelectRow] = useState('');
-    const [modalOpen,setModalOpen] = useState(false);
+    const [modalOpen,setModalOpen] = useState(null);
     const closeModal =() => {
-      setModalOpen(false);
+      setModalOpen(null);
      
     }
     const inquiryRowClick=(selectRow) => {
-      setModalOpen(true);
+      setModalOpen("answer");
       setSelectRow(selectRow);
     }
     return(
@@ -83,8 +83,8 @@ const InquiryList = ({data,children,stat,restInquiry}) => {
           }
         }))}
         </Table>
-        <Modal open={modalOpen} close={closeModal} header="문의 내역" type="resv"><InquiryView data={selectRow} restInquiry={restInquiry}/></Modal>
-
+        <Modal open={modalOpen ==="answer"} close={closeModal} header="문의 내역" type="resv"><InquiryView data={selectRow} restInquiry={restInquiry} setModalOpen={setModalOpen}/></Modal>
+        <Modal open={modalOpen==="ok"} close={closeModal} type ="ok" header="답변 완료">답변이 정상적으로 등록 되었습니다. </Modal>
         </InquiryBlock>
     );
 }

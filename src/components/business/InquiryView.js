@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Modal from "../../utils/Modal";
 import AxiosApi from "../../api/AxiosApi";
 
 const InquriyBlock = styled.div`
@@ -65,7 +64,7 @@ const InquriyBlock = styled.div`
         cursor: pointer;
     }
 `;
-const InquiryView = ({data,restInquiry}) => {
+const InquiryView = ({data,restInquiry,setModalOpen}) => {
 
     //답변 입력창 답변 내용창 상태관리
     const [showInput, setShowInput] = useState(false);
@@ -82,18 +81,12 @@ const InquiryView = ({data,restInquiry}) => {
           }));
     }
 
-    //팝업 처리
-    const [modalOpen, setModalOpen] = useState(false);
-    const closeModal = () => {
-           setModalOpen(false);
-           
-       };
 
     //답변 등록
     const answerUpdate = async () => {
         const rsp = await AxiosApi.inquiryAnswerUpdate(answer);
         if(rsp.data){
-             setModalOpen(true);
+            setModalOpen("ok");
             //input창 닫기 
              setShowInput(false);
              restInquiry();
@@ -115,7 +108,7 @@ const InquiryView = ({data,restInquiry}) => {
 
     //답변하기 버튼 클릭 
     const answerBtnClick =() => {
-        setShowInput(true)
+        setShowInput("ok");
         // 답변완료 업데이트
         setAnswer((prevAnswer) => ({
             ...prevAnswer,
@@ -134,7 +127,6 @@ const InquiryView = ({data,restInquiry}) => {
         <div className="box1">아이디 : {data.memId}님</div>
         <div className="box2">제목 : {data.inquiryTitle}</div>
         <div className="box3">{data.inquiryContent}</div>
-        <div className="box1">첨부파일 : {data.inquiryImgFileName}</div>
         {showInput ? (<input className="box4" type="text" name='inquiryAnswer' value={answer.inquiryAnswer||''} onChange={onChange} autoFocus={true} placeholder="답변입력"/>)
             :
         (<div className="box4">{answer.inquiryAnswer}</div>)}
@@ -142,7 +134,7 @@ const InquiryView = ({data,restInquiry}) => {
         {showInput? <button className="confirmBtn" onClick={answerUpdate}style={{backgroundColor : "#FFA07A"}}>답변완료</button> :
                     <button className="confirmBtn" onClick={answerBtnClick}>{data.inquiryAnswer ? ("수정하기"):("답변하기")}</button>}
         
-        <Modal open={modalOpen} close={closeModal} type ="ok" header="답변 완료">답변이 정상적으로 등록 되었습니다. </Modal>
+        
         </InquriyBlock>
     );
 }

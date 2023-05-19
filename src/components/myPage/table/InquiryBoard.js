@@ -57,6 +57,7 @@ const InquiryBoard = props => {
   useEffect(() => {
    
     inquiryInfo();
+    //console.log(inquiryValue);
 
   },[])
 
@@ -67,14 +68,14 @@ const InquiryBoard = props => {
   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
   const currentPageData = inquiryValue.slice(offset, offset + ITEMS_PAGE);
 
-  const [modalOpen,setModalOpen] = useState(false);
+  const [modalOpen,setModalOpen] = useState(null);
   const closeModal =() => {
-    setModalOpen(false);
+    setModalOpen(null);
    
   }
   const [selectRow, setSelectRow] = useState('');
   const inquiryRowClick=(selectRow) => {
-    setModalOpen(true);
+    setModalOpen("update");
     setSelectRow(selectRow);
   }
     return (
@@ -95,8 +96,8 @@ const InquiryBoard = props => {
         </Table>
       </TableBlock>
       <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
-      <Modal open={modalOpen} close={closeModal} header="문의 내역" type="resv"><InquiryModal data={selectRow} inquiryInfo={inquiryInfo}/></Modal>
-
+      <Modal open={modalOpen==="update"} close={closeModal} header="문의 내역" type="resv"><InquiryModal data={selectRow} inquiryInfo={inquiryInfo} setModalOpen={setModalOpen}/></Modal>
+      <Modal open={modalOpen==="ok"} close={closeModal} type ="ok" header="수정 완료"> 문의 수정이 완료 되었습니다. </Modal>
       </>
     );
   }
