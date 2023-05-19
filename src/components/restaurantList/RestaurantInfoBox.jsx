@@ -87,7 +87,11 @@ const RestaurantInfoBox = ({searchFilter}) => {
 
     return (
         <Container>
-           {searchFilterMap}
+            {searchFilter.length > 0 ? searchFilterMap : 
+            <>
+                <span>검색 결과가 없습니다.</span>
+            </>}
+           
         </Container>
     );
 }

@@ -43,6 +43,7 @@ const StyledSlider = styled(Slider)`
     align-items: center;
     position: relative;
     cursor: pointer;
+    border-radius: 18px;
     
 
     img{
@@ -51,6 +52,8 @@ const StyledSlider = styled(Slider)`
       left: 0;
       width: 100%;
       height: 100%;
+      border-radius: 18px;
+
     }
 
     .slide-content {
@@ -61,6 +64,7 @@ const StyledSlider = styled(Slider)`
       text-align: center;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
+
     }
   }
 
