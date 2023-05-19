@@ -47,7 +47,7 @@ border-bottom: 30px solid #FBF4EF;
       }
  }
  .reviewImg{
-  width: 100%;
+  width: 100px;
   height: 100%;
 }
 `;
