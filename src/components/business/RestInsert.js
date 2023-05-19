@@ -254,7 +254,7 @@ const closeModal = () => {
                   </div>
                    <div className='box'>
                     <label htmlFor='addr'>주소</label>
-                    <input id='addr' name='restAddr' value={inputAddress} onChange={restInfoOnChange} className="inputBox"/>
+                    <input id='addr' name='restAddr' value={inputAddress || ''} onChange={restInfoOnChange} className="inputBox"/>
                     <button onClick={openPost} className='addrBtn'>주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>

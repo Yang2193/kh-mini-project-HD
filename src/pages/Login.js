@@ -26,7 +26,7 @@ const Label = styled.label`
 `;
 
 const Container = styled.div`
-  //padding-top: 100px;
+  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -337,7 +337,7 @@ const Login = ({children}) => {
             <button className='signup-button' onClick={()=>navigate("/IdPwFind")}>ID/PW 찾기</button>
           </div>
       
-          <Modal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</Modal>
+          <MessageModal open={modalOpen} close={closeModal} header="오류">아이디 및 패스워드를 재확인해 주세요.</MessageModal>
           <MessageModal open={loginModalOpen} close={onClickConfirm} confirm={onClickConfirm} header="로그인 성공">환영합니다!</MessageModal>
    </Container>
     );

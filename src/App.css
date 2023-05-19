@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'MalangMalangB';
+  src: url('./utils/font/MALANGMALANGB.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

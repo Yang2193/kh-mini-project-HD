@@ -263,8 +263,8 @@ const WatingList = ({restResv,resvList,formatTime,setModalType}) => {
       <button className="btn" onClick={resvStatUpdate}>예약확정</button>
       <button className="btn" onClick={resvDeleteModal}style={{backgroundColor : "#EEE4DC"}}>예약거절</button>
       </div>
-      <MessageModal open={modalOpen === "error"} close={closeModal} header="삭제 오류" > 예약 거절은 리스트 당 한개만 선택 가능합니다.</MessageModal>
-      <MessageModal open={modalOpen==="resvDel"} close={closeModal} type ="ok" header="거절 완료">예약이 거절 되었습니다. </MessageModal>
+      <MessageModal open={modalOpen === "error"} confirm={closeModal} close={closeModal} header="삭제 오류" > 예약 거절은 리스트 당 한개만 선택 가능합니다.</MessageModal>
+      <MessageModal open={modalOpen==="resvDel"} confirm={closeModal} close={closeModal} type ="ok" header="거절 완료">예약이 거절 되었습니다. </MessageModal>
       <Modal open={modalOpen==="resvDelete"} close={closeModal} type ="add" header="취소 사유 " confirm={resvDelete}>
       <div className="del">취소 사유 입력
       <input type="text" value={cancelReason} onChange={(e)=>setCancelReason(e.target.value) } className="delInput"/>

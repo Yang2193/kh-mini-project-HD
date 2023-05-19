@@ -1,21 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
 import AddressModal from "../utils/AddressModal";
 import MessageModal from "../utils/MessageModal";
-
+import ActionButton from "../utils/Button/ActionButton";
 
 const Container = styled.div`
-  padding-top: 100px;
+  padding-top: 50px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   background-color: ivory;
   height: 100vh;
+  .sign {
+    margin-top: 10px;
+    font-family: "MalangMalangB";
+    font-weight: 600;
+    font-size: 80px;
+    color :#FF7F50;
+    margin-bottom : 20px;
 
+  }
   .box{
     display:flex;
     flex-wrap: wrap;
@@ -68,12 +76,14 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     width: 500px;
-    
-    button{
-        margin-right: 36px;
-        width : 100px;
-        height: 100%;
-    }
+     & > button {
+        width: 120px;
+        height: 30px;
+        
+     }
+     & > input {
+        margin-right: 10px;
+     }
   }
 
   .item6{
@@ -105,7 +115,6 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 26px;
     font-weight: bold;
     width: 100%; /* 원하는 너비 설정 */
@@ -124,10 +133,9 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 26px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 120px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: coral;
@@ -141,14 +149,12 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 120px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: coral;
-    font-size: 15px;
     font-weight: 400;
     border-radius: 18px;
     border: #999;
@@ -158,14 +164,12 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 120px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
     background-color: #999;
-    font-size: 13px;
     font-weight: 400;
     border-radius: 18px;
     border: coral;
@@ -175,29 +179,29 @@ const Container = styled.div`
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
+    font-size: 15px;
     font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
+    width: 120px; /* 원하는 너비 설정 */
     height: 50px;
     color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
+    background-color: #FFA07A;
     border-radius: 18px;
     border: coral;
-    font-weight: 700;
     cursor: pointer;
   }
 
-  .input2{
-    width: 500px;
+  .btnBox{
+    width: 100%;
+    display: flex;
+    flex-direction : row;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
 const Input = styled.input`
   margin-left: 30px;
-  margin-right: 30px;
+  margin-right: 10px;
   width: 100%; /* 원하는 너비 설정 */
   height: auto; /* 높이값 초기화 */
   line-height : normal; /* line-height 초기화 */
@@ -422,11 +426,10 @@ const SignUp = () => {
 
 
     return(
-        <Container>
-            
+        <Container>   
             <div className="box">
                     <div className="sign">
-                        <span>Sign Up</span>
+                        <span>회원가입</span>
                     </div>
 
                     <div className="item2">
@@ -454,7 +457,7 @@ const SignUp = () => {
                     </div>
                     <div className="item5">
                         <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-                        <button onClick={onClickEmail}>이메일 인증</button>
+                        <ActionButton onClick={onClickEmail}>이메일 인증</ActionButton>
                     </div>
                     <div className="hint">
                         {(inputEmail.length > 0 && !isSend) && (
@@ -483,18 +486,16 @@ const SignUp = () => {
                     </div>
                     <div className="item5">
                         <Input type="text" placeholder="주소" value={inputAddress} onChange={onChangeAddress} onKeyDown={onKeyDownSignUp} />
-                        <button onClick={openPost}>주소찾기</button>
+                        <ActionButton onClick={openPost}>주소찾기</ActionButton>
                         {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress}/>}
                     </div>
                 
-                    <div className="item2">
+                    <div className="btnBox">
                         {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
                         <input type="button" className="enable-button" onClick={onClickSignUp} onKeyDown={onKeyDownSignUp} value="회원가입"/> :
                         <button className="disable-button">회원가입</button>}
                         <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
                         <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal} header="회원가입">회원가입을 환영합니다!</MessageModal>
-                    </div>
-                    <div className="item2">
                         <button className="prev-button" onClick={onClickPrev}>이전으로</button>
                     </div>
                 </div>

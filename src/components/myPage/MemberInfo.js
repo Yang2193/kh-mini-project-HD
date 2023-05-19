@@ -25,7 +25,7 @@ const MemberInfoBlock = styled.div`
         justify-content: center;
         width: 400px;
         position: relative;
-        .addrBtn{
+        /* .addrBtn{
             position: absolute;
             right: -100px;
             width: 100px;
@@ -33,7 +33,7 @@ const MemberInfoBlock = styled.div`
             background-color: #FFA07A;
             border: none;
             cursor: pointer;
-        }
+        } */
             label{
                 width: 150px;
                 text-align: center;
@@ -93,26 +93,6 @@ const MemberInfoBlock = styled.div`
   
 
 `;
-
-// const FileInputContainer = styled.label` 
-//   display: flex;
-//   align-items: center;
-//   justify-content: flex-end;
-// `;
-
-// const FileInput = styled.input`
-//   /* 숨겨진 원본 input 스타일 */
-//   /* display: none; */
-
-// `;
-
-// const FileInputLabel = styled.span`
-//   /* 버튼 스타일 */
-//   background-color: #ccc;
-//   padding: 8px 16px;
-//   border-radius: 4px;
-//   cursor: pointer;
-// `;
 
 
 //내정보 수정
@@ -235,10 +215,6 @@ const MemberInfo = () => {
                     </div>
                    <div className='box'>
                   <label htmlFor='input-file'>프로필 사진</label>
-                  {/* <FileInputContainer>
-                    <FileInput type="file" onChange={onChangeImage} />
-                    <FileInputLabel>파일 선택</FileInputLabel>
-                    </FileInputContainer> */}
                   <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/>
                   </div>
                     

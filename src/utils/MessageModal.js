@@ -41,8 +41,6 @@ const ModalStyle = styled.div`
 
     .section {
         width: 450px;
-        /* max-width: ${props => props.maxWidth}; */
-        max-width:450px;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
