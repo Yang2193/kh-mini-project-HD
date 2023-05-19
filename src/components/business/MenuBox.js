@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import menu from "../../images/menu.png";
+import { useEffect } from "react";
 
 const MenuBoxBlock = styled.div`
     background-color:#EEE4DC;
@@ -82,14 +83,32 @@ const MenuBoxBlock = styled.div`
 `;
 
 const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,setImageUpload}) => {
+
+    //이미지 미리보기상태 관리 
+    const [previewImage, setPreviewImage] = useState(null);
+    //메뉴등록 이미지 업로드함수
     const ImgUpload = (e, menuId) => {
         const file = e.target.files[0];
-        if(type==='add' && file){setImageUpload(file)}
+        if (file) {
+            // 파일이 선택된 경우에만 미리보기 이미지를 설정
+            const reader = new FileReader();
+            reader.onloadend = () => {
+            setPreviewImage(reader.result);
+            };
+                reader.readAsDataURL(file);
+            } else {
+                setPreviewImage(null); // 파일이 선택되지 않은 경우 미리보기 이미지를 null로 설정
+            }
+
+        if(type==='add' && file){
+            setImageUpload(file);
+        }
         else {
             ImageUploadUpdate(file, menuId);
         }
       };
       
+    //메뉴 수정 이미지 업로드 함수
       const ImageUploadUpdate = (file, menuId) => {
         setImageUpload((prevState) => ({
           ...prevState,
@@ -100,7 +119,7 @@ const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,set
         }));
       };
     
-   
+   //input값이 변경될때마다 발생하는 onChange함수
     const onChange = (e) => {
         const { name, value } = e.target;
         if(type==='add') {
@@ -116,12 +135,21 @@ const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,set
         }
       };
 
+      useEffect(()=> {
+        setImageUpload(null);
+
+      },[]);
     return(
 
         <MenuBoxBlock>
         <div className="imgBox">
-           <img src={menuInfo.menuImgFileName} alt="메뉴사진" />
-           {/* <div className="placeholder" style={{backgroundImage :`url(${menu})`}}></div> */}
+            {previewImage ? (<img src={previewImage} alt="미리보기이미지"/>) : 
+                            (menuInfo.menuImgFileName ? (
+                            <img src={menuInfo.menuImgFileName} alt="메뉴사진" />
+                            ) : (
+                            <img src={menu} alt="메뉴 기본 사진" />
+                            )
+                            )}
             <input type="file" name = "menuImgFileName" onChange={(e) => ImgUpload(e, menuInfo.menuId)}/>
             
         </div>

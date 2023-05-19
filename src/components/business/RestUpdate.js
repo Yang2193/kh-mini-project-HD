@@ -269,7 +269,7 @@ const closeModal = () => {
                  </div> 
                 <div className="box">
                 <button className='btn' type="submit" onClick={onClickUpate}>수정</button>
-                <button className='btn' style={{backgroundColor : "#EEE4DC"}} onClick={()=>navigate(0)} > 취소 </button>
+                {/* <button className='btn' style={{backgroundColor : "#EEE4DC"}} onClick={()=>navigate(0)} > 취소 </button> */}
                 </div>
                 <Modal open={modalOpen} close={closeModal} type ="ok" header="매장 정보 수정 완료">매장 정보 수정이 완료 되었습니다. </Modal>
             </RestInsertBlock>

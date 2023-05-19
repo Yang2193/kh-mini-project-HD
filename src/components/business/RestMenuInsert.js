@@ -112,7 +112,7 @@ const RestMenuInsert = () => {
         let menuImgFileName = null;
         if (imageUpload) {
             menuImgFileName = await uploadImage(imageUpload);
-            console.log(menuImgFileName);
+            //console.log(menuImgFileName);
         }
         const {menuDesc,menuName,menuPrice,restId} =newData;
         const rsp = await AxiosApi.restMenuAdd(restId,menuName,menuPrice,menuDesc,menuImgFileName);
@@ -123,7 +123,6 @@ const RestMenuInsert = () => {
         } 
         
     }
-    console.log(newData);
     const deleteClick = async (menuId) => {
         console.log("삭제");
         const rsp = await AxiosApi.restMenuDel(menuId);

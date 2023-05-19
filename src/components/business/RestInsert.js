@@ -291,7 +291,7 @@ const closeModal = () => {
                  </div> 
                 <div className="box">
                 <button className='btn' type="submit" onClick={onClickInsert}>등록</button>
-                <button className='btn' style={{backgroundColor : "#EEE4DC"}} onClick={()=>navigate(0)} > 취소 </button>
+                {/* <button className='btn' style={{backgroundColor : "#EEE4DC"}} onClick={()=>''} > 취소 </button> */}
                 </div>
                 <Modal open={modalOpen} close={closeModal} type ="ok" header="매장등록 완료">매장 등록이 완료 되었습니다. </Modal>
             </RestInsertBlock>
