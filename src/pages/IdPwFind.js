@@ -25,7 +25,6 @@ const Label = styled.label`
 `;
 
 const Container = styled.div`
-  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -42,6 +41,7 @@ const Container = styled.div`
 
   }
   .logo{
+    margin-top: 100px;
     width: 300px;
     height: 300px;
     &> * {
@@ -240,7 +240,6 @@ const IdPwFind = () => {
             <div className="logo">
                 <img src={imgLogo} alt="로고" onClick={()=>navigate("/")}/>
             </div>
-            <div className="title">ID/PW 찾기</div>
             <div className='item4'>
                 <Label isChecked={"ID찾기"===findType}>
                     <input type="radio" name='memberType' value={"ID찾기"} onChange={onChangeFindType} checked={"ID찾기"===findType}/>ID찾기
@@ -251,6 +250,7 @@ const IdPwFind = () => {
              </div>
             {findType==="ID찾기" ?
                 <>
+                    <div className="title">회원 ID 찾기</div>
                     <div className='item4'>
                         <p>가입하실 때 입력하신 이메일 주소를 입력해주세요.</p>
                     </div>
@@ -271,6 +271,7 @@ const IdPwFind = () => {
                 </>
             :
                 <>
+                    <div className="title">회원 PW 찾기</div>
                     <div className='item4'>
                         <p>가입하실 때 입력하신 ID와 이메일 주소를 입력해주세요.</p>
                     </div>

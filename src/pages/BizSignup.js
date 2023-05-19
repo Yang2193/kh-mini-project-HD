@@ -11,7 +11,6 @@ import InputBtn from '../utils/Button/InputBtn';
 
 
 const Container = styled.div`
-  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -20,7 +19,7 @@ const Container = styled.div`
   height: 100vh;
 
   .sign {
-    margin-top: 10px;
+    margin-top: 120px;
     font-family: "MalangMalangB";
     font-weight: 600;
     font-size: 70px;

@@ -14,6 +14,7 @@ const Button =styled.button`
     font-weight: 400;
     border-radius: 5px;
     border: none;
+    
 `;
 const DisableBtn =  ({children}) => {
 

@@ -3,9 +3,7 @@ import {useNavigate} from "react-router-dom";
 import imgLogo from "../images/허당Logo(login).png";
 import styled from 'styled-components';
 import AxiosApi from '../api/AxiosApi';
-import Modal from '../utils/Modal';
 import MessageModal from '../utils/MessageModal';
-import { useEffect } from 'react';
 import { RestaurantContext } from "../context/RestaurantContext";
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
@@ -26,7 +24,6 @@ const Label = styled.label`
 `;
 
 const Container = styled.div`
-  padding-top: 100px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -35,7 +32,7 @@ const Container = styled.div`
   height: 100vh;
 
   .item1 {
-    margin-top: 10px;
+    margin-top: 100px;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
