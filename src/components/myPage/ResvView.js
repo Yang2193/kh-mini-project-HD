@@ -10,6 +10,7 @@ import Modal from "../../utils/Modal";
 
 //리뷰 상세정보
 const ResvModal = styled.div`
+    border-radius: 15px;
     font-family:"Nanum Gadic";
     background-color: #FBF4EF;
     margin: 0 auto;
@@ -46,6 +47,22 @@ const ResvModal = styled.div`
     .section1{
         width: 60%;
         font-size: 1.5rem;
+        .react-datepicker{
+            position: relative;
+            left:100px;
+        }
+        input{
+            height: 30px;
+            font-size:15px;
+            margin: 0;
+        }
+        select{
+            margin-left: 10px;
+            width: 100px;
+            height: 30px;
+            font-size:15px;
+
+        }
     }
     .section2Title{
         font-size : 20px;
@@ -94,9 +111,26 @@ const {memberValue} = useContext(MemberContext);
 
 // 예약 변경
 const [showInput, setShowInput] = useState(false);
-// 날짜 시간
+// 초기값을 위한 시간 타입 변경
+const timeString = data.resvTime; // "오후 00:00"
+const isPM = timeString.includes("오후");
+const timeParts = timeString.replace(/[^\d:]/g, "").split(":");
+let hours = parseInt(timeParts[0], 10);
+const minutes = parseInt(timeParts[1], 10);
+
+if (isPM && hours !== 12) {
+  hours += 12;
+} else if (!isPM && hours === 12) {
+  hours = 0;
+}
+
+const timeFormat = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00`;
+console.log(timeFormat); // "15:00:00"
+
+// date 저장
 const [value, setValue] = useState(new Date(data.resvDate));// 날짜 저장, 초기값 세팅
-const [time, setTime] = useState(moment(data.resvTime, "HH:mm").toDate()); // 시간 저장, 초기값 세팅
+const [time, setTime] = useState(moment(timeFormat, "HH:mm:ss").toDate()); // 시간 저장, 초기값 세팅
+
 const date = moment(value).format("YYYY-MM-DD") + ' ' + moment(time).format("HH:mm:ss");
 const inputDate = moment(value).format("YYYY-MM-DD"); //날짜 이메일 보낼 떄 따로 넣기 위해서 수정.
 // 인원 수
