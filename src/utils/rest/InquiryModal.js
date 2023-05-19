@@ -27,8 +27,8 @@ const ModalStyle = styled.div`
         animation: modal-bg-show 0.8s;
     }
     .section {
-        width: 80%;
-        height: 80%;
+        width: 50%;
+        height: 60%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -62,14 +62,14 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 80%;
+        height: 75%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
         .title{
-            padding-left: 5px;
+            padding-left: 20px;
             margin-bottom: 30px;
-            width: 60%;
+            width: 88%;
             height: 10%;
             background-color:#EEE4DC;
             font-size: 20px;
@@ -80,8 +80,8 @@ const ModalStyle = styled.div`
             padding: 20px;
             border-radius: 10px;
             font-family: "NanumGothic";
-            width: 58%;
-            height: 50%;
+            width: 86%;
+            height: 60%;
             margin-bottom: 30px;
             background-color:#EEE4DC;
             font-size: 20px;
@@ -232,7 +232,6 @@ const InquiryModal = (props) => {
                     <main>
                         <input className="title" value={inputTttle} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/>
                         <textarea className="content" cols="30" rows="10"  value={inputContent} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea>
-                        <input type="file" className="file"  onChange={onChangeImage}/>
                     </main>
                     <footer>
                         <button className="add" onClick={addInquiry}>문의 등록</button>

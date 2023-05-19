@@ -26,7 +26,7 @@ const ModalStyle = styled.div`
     }
     .section {
         width: 40%;
-        height: 80%;
+        height: 65%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -60,7 +60,7 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 80%;
+        height: 78%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;

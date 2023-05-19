@@ -12,7 +12,7 @@ const MenuContanier = styled.section `
     .cont{
         border-radius: 15px;
         box-shadow: 1px 1px 5px;
-        margin-top: 30px;
+        margin: 30px 0px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -21,7 +21,7 @@ const MenuContanier = styled.section `
 		bottom:5px;
 		padding: 30px;
 		background-color: white;
-		width: 845px;
+		width: 1000px;
          button {
             background-color: #fff;
             font-size: 20px;

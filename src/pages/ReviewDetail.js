@@ -38,13 +38,15 @@ const ReviewPage = styled.div`
         .return{
             position: relative;
             font-size: 20px;
-            width: 150px;
+            width: 15%;
             height: 50px;
             background-color: salmon;
             border: none;
             cursor: pointer;
             bottom: 50px;
-            left: 950px;
+            /* left: 950px; */
+            left: 80%;
+
             border-radius: 10px;
         }
         .return:hover{
@@ -59,36 +61,43 @@ const ReviewPage = styled.div`
             position: absolute;
         }
         .btns{
+            height: 100%;
+            width: 20%;
+            left: 60%;
+            position: relative;
+            bottom:100%;
             .update{
                 background-color: lightsalmon;
                 border: none;
-                width: 100px;
+                width: 40%;
                 height: 30px;
                 border-radius: 10px;
                 position: relative;
-                bottom:100px;
-                left:75%;
+                top:85%;
+                left:60%;
             }
             .update:hover{
                 box-shadow: 1px 1px 5px;
                 cursor: pointer;
             }
             .delete{
+                width: 0;
                 background-color: #fff;
                 border: none;
                 position: relative;
-                bottom:680px;
-                left:1000px;
+                bottom: 15%;
+                left:140%;
+                cursor: pointer;
             }
             .change{
                 background-color: lightsalmon;
                 border: none;
-                width: 100px;
+                width: 40%;
                 height: 30px;
                 border-radius: 10px;
                 position: relative;
-                bottom:40px;
-                left:75%;
+                top:95%;
+                left:130%;
             }
             .change:hover{
                 box-shadow: 1px 1px 5px;
@@ -338,7 +347,7 @@ const ReviewDetail = () =>{
                         <div className="box">
                             <p className="nick">{rest.nickName}</p>
                             <p className="date">작성일 : {rest.reviewDate}</p>
-                            {showInput ? <input className="uptit" value={inputTttle || setInputTitle(rest.reviewTitle)} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요" autoFocus/> : <p className="title">{rest.reviewTitle}</p>}
+                            {showInput ? <input className="uptit" value={inputTttle || setInputTitle(rest.reviewTitle)} type="text" onChange={onChangeTitle} placeholder="제목을 입력해 주세요"/> : <p className="title">{rest.reviewTitle}</p>}
                             {showInput ?  <textarea className="upcont" value={inputContent || setInputContent(rest.reviewContent)} onChange={onChangeContent} placeholder="내용을 입력해 주세요"></textarea> : <p className="content">{rest.reviewContent}</p>}
                             {showInput ? <p className="ratingBox">평점을 선택하세요:<Rating
                                             onClick={onChangeRating}

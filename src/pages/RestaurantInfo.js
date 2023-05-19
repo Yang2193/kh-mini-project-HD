@@ -18,21 +18,26 @@ const InfoContainer = styled.section`
 		}
 		.infoCont{
 		border-radius: 15px;
-		margin-top: 30px;
+		margin: 30px 0px;
         position: relative;
 		padding: 30px;
-		width: 845px;
+		width: 1000px;
 		background-color: #fff;
 		box-shadow: 1px 1px 5px;
 	}
 	.box{
 		margin: 50px 0px;
+		p{
+			font-size: 20px;
+			margin-left: 2%;
+		}
 	}
 `;
 const MenuBlock =styled.div`
- width: 70%;
+ width: 72%;
+ box-shadow: 0px 0px 2px;
+ background-color: #FBF4EF;
     margin: 0 auto;
-    background-color:#F0B7A2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +74,7 @@ const Info = () => {
 			<RestaurantContainer/>
 			<MenuBlock>
 			<RestaurantNav  handleType={handleType}/>
-			</MenuBlock>
+			
 
 			{type === "default" && (
 				<div className="all">
@@ -106,6 +111,7 @@ const Info = () => {
 			{type === "review" && (
 				<Review/>
 			)}
+			</MenuBlock>
 			<HomeFooter/>
 		</InfoContainer>
 	);

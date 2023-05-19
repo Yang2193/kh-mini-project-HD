@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Nav = styled.div`
     width: 80%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -12,9 +13,9 @@ const Nav = styled.div`
     }
 
   button{
-    width: 200px;
-    height: 100px;
-    background : #FF7F50;
+    width: 30%;
+    height: 80px;
+    background : lightsalmon;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -22,8 +23,15 @@ const Nav = styled.div`
     font-size: 20px;
     font-family: inherit;
     border : 1px solid white;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
+    box-shadow: 0px 6px 0px 0px #F5D0A9;
+
+  }
+  button:hover{
+    box-shadow: 0px 0px 0px 0px;
+            margin-top: 15px;
+            margin-bottom: 5px;
   }
 `;
 

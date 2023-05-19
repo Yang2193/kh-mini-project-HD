@@ -21,6 +21,7 @@ const FixContent = styled.section`
         align-items: center;
         padding: 20px;
         position: relative;
+        box-shadow: 0px 0px 2px;
     .cont{
         position: relative;
         border-radius: 15px;
@@ -29,6 +30,8 @@ const FixContent = styled.section`
         background-color: #fff;
         display: flex;
         flex-direction: column;
+        box-shadow: 0px 0px 2px;
+
     }
     img{
         position: relative;
@@ -38,42 +41,51 @@ const FixContent = styled.section`
         background-color: #fff;
     }
     .btns{
-        position: relative;
+        /* position: relative; */
         top:100px;
-      
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
         button{
+            /* margin: 0px 40px; */
             font-size: 20px;
-            background-color: salmon;
+            background-color: lightsalmon;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            position: relative;        
+            border-radius: 20px;
+            position: relative;
         }
         .like{
-            left: 90%;
-            bottom: 340px;
+            left: 45%;
+            bottom: 220px;
             background-color: white;
             /* border: 1px solid; */
         }
         .res{
             width: 25%;
             height: 50px;
-            bottom:120px;
-            left:60%;
+            box-shadow: 0px 5px 0px 0px #F5D0A9;
         }
         .res:hover{
-            box-shadow: 1px 1px 5px;
+            box-shadow: 0px 0px 0px 0px;
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
         .inq{            
             width: 25%;
             height: 50px;
-            bottom:70px;
-            left:10%;
+            box-shadow: 0px 5px 0px 0px #F5D0A9;
+
         }
         .inq:hover{
-            box-shadow: 1px 1px 5px;
+            box-shadow: 0px 0px 0px 0px;
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
+
+
         p{
             padding: 10px;
             margin: 0;

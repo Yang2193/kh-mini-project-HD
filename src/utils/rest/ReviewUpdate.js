@@ -104,7 +104,8 @@ const ModalStyle = styled.div`
 
         }
         .getrating{
-            margin-top: 0;
+            margin: 0;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             width: 60%;

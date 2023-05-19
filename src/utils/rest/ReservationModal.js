@@ -68,7 +68,7 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 80%;
+        height: 82%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;

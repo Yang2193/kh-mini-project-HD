@@ -16,7 +16,7 @@ const ReviewContanier = styled.section`
     justify-content: center;
     align-items: center;
     .cont{
-        margin-top: 30px;
+        margin: 30px 0px;
 		border-radius: 15px;
 
         display: flex;
@@ -27,7 +27,7 @@ const ReviewContanier = styled.section`
 		bottom:5px;
 		padding: 30px;
 		background-color: white;
-		width: 845px;
+		width: 1000px;
         box-shadow: 1px 1px 5px;
         button{
             border: none;
@@ -54,14 +54,15 @@ const ReviewContanier = styled.section`
         .modalBtn{
             width: 150px;
             height: 50px;
-            background-color: salmon;
+            background-color: lightsalmon;
             margin-bottom: 30px;
             position: relative;
             right: 345px;
-            font-size: 20px;
+            font-size: 17px;
+            border-radius: 15px;
         }
         .modalBtn:hover{
-            box-shadow: 1px 1px 5px;
+            box-shadow: 0px 0px 5px 0px;
         }
         .box{
             background-color:#EEE4DC;
@@ -108,6 +109,7 @@ const ReviewContanier = styled.section`
             height: 200px;
             bottom: 280px;
             left: 500px;
+            border-radius: 15px;
         }
 
         }
