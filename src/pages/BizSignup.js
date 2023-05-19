@@ -4,7 +4,10 @@ import Modal from "../utils/Modal";
 import AxiosApi from "../api/AxiosApi";
 import styled from "styled-components";
 import MessageModal from "../utils/MessageModal";
-
+import ActionButton from "../utils/Button/ActionButton";
+import DisableBtn from '../utils/Button/DisableBtn';
+import Backbtn from '../utils/Button/BackBtn';
+import InputBtn from '../utils/Button/InputBtn';
 
 
 const Container = styled.div`
@@ -16,6 +19,15 @@ const Container = styled.div`
   background-color: ivory;
   height: 100vh;
 
+  .sign {
+    margin-top: 10px;
+    font-family: "MalangMalangB";
+    font-weight: 600;
+    font-size: 70px;
+    color :#FF7F50;
+    margin-bottom : 20px;
+
+  }
   .box{
     display:flex;
     flex-wrap: wrap;
@@ -102,94 +114,12 @@ const Container = styled.div`
   .error {
     color: red;
   }
-
-  .signup-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: orange;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .enable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-    font-weight: 700;
-  }
-  .enable-button:active {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #999;
-    font-weight: 700;
-  }
-  .disable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #999;
-    font-size: 13px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-  }
-
-  .prev-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-    font-weight: 700;
-    cursor: pointer;
+  .btnBox{
+    width: 100%;
+    display: flex;
+    flex-direction : row;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -423,7 +353,7 @@ const BizSignUp = () => {
                 </div>
                 <div className="item5">
                     <Input type="email" placeholder="이메일" value ={inputEmail} onChange={onChangeMail}/>
-                    <button onClick={onClickEmail}>이메일 인증</button>
+                    <ActionButton onClick={onClickEmail}>이메일 인증</ActionButton>
                 </div>
                 <div className="hint">
                     {(inputEmail.length > 0 && !isSend) && (
@@ -448,15 +378,13 @@ const BizSignUp = () => {
                         )}
                 </div>
 
-                <div className="item2">
+                <div className="btnBox">
                     {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
-                    <button className="enable-button" onClick={onClickSignUp}>회원가입</button> :
-                    <button className="disable-button">회원가입</button>}
+                    <InputBtn onClick={onClickSignUp}>회원가입</InputBtn> :
+                    <DisableBtn>회원가입</DisableBtn>}
                     <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
                     <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
-                </div>
-                <div className="item2">
-                    <button className="prev-button" onClick={onClickPrev}>이전으로</button>
+                    <Backbtn onClick={onClickPrev}>이전으로</Backbtn>
                 </div>
             </div>
         </Container>

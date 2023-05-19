@@ -6,6 +6,9 @@ import styled from "styled-components";
 import AddressModal from "../utils/AddressModal";
 import MessageModal from "../utils/MessageModal";
 import ActionButton from "../utils/Button/ActionButton";
+import DisableBtn from '../utils/Button/DisableBtn';
+import Backbtn from '../utils/Button/BackBtn';
+import InputBtn from '../utils/Button/InputBtn';
 
 const Container = styled.div`
   padding-top: 50px;
@@ -110,86 +113,6 @@ const Container = styled.div`
   .error {
     color: red;
   }
-
-  .signup-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%;
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: orange;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .enable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 120px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-    font-weight: 700;
-  }
-  .enable-button:active {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 120px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #999;
-    font-weight: 700;
-  }
-  .disable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 120px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #999;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-  }
-
-  .prev-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 120px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #FFA07A;
-    border-radius: 18px;
-    border: coral;
-    cursor: pointer;
-  }
-
   .btnBox{
     width: 100%;
     display: flex;
@@ -197,6 +120,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
   }
+
 `;
 
 const Input = styled.input`
@@ -492,11 +416,11 @@ const SignUp = () => {
                 
                     <div className="btnBox">
                         {(isId && isPw && isConPw && isName && isMail && isPhone && isNick && isKey) ? 
-                        <input type="button" className="enable-button" onClick={onClickSignUp} onKeyDown={onKeyDownSignUp} value="회원가입"/> :
-                        <button className="disable-button">회원가입</button>}
+                        <InputBtn onClick={onClickSignUp} onKeyDown={onKeyDownSignUp} value="회원가입"/> :
+                        <DisableBtn>회원가입</DisableBtn>}
                         <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
                         <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal} header="회원가입">회원가입을 환영합니다!</MessageModal>
-                        <button className="prev-button" onClick={onClickPrev}>이전으로</button>
+                        <Backbtn onClick={onClickPrev}>이전으로</Backbtn>
                     </div>
                 </div>
             

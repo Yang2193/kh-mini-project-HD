@@ -20,11 +20,15 @@ font-family: "NanumGothic";
 background-color:#EEE4DC;
 //페이지제목
 .pageTitle{
+        font-family: "MalangMalangB";
         margin-top: 30px;
         text-align: center;
         font-size: 50px;
         font-weight: 800;
     }
+  .defaultBox{
+    height: 150px;
+  }
 `;
 const MenuBlock =styled.div`
  width: 70%;
@@ -104,16 +108,18 @@ const BusinessPage = () => {
     return(
     <BizBlock>
     <Header>사업자 페이지</Header>
-    <div className="pageTitle"> BUSINESS PAGE </div>
+    <div className="pageTitle"> 사업자 페이지 </div>
     <BizProfile restInfoList={restInfoList} setRestInfoList={setRestInfoList} restName ={restValue.restName}likeCnt={likeCnt}/>
     <MenuBlock>
     <BizMenuBar category={category} onSelect={onSelect}/>
     <RatingView ratingAvg={ratingAvg}/>
     </MenuBlock>
-    {category!==null &&
+    {category===null? <div className="defaultBox">널 </div> :
     <BizSection category={category} restInfoList={restInfoList} setRestInfoList={setRestInfoList} restName ={restValue.restName}/>}
     <HomeFooter/>
     </BizBlock>
+  
+     
     );
 }
 

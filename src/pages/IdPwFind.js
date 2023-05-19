@@ -2,9 +2,10 @@ import React, {useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import imgLogo from "../images/허당Logo(login).png";
 import AxiosApi from "../api/AxiosApi";
-import Modal from '../utils/Modal';
 import styled from "styled-components";
-
+import DisableBtn from '../utils/Button/DisableBtn';
+import Backbtn from '../utils/Button/BackBtn';
+import InputBtn from '../utils/Button/InputBtn';
 const Label = styled.label`
         background-color: ${({ isChecked }) => (isChecked ? 'coral' : 'ivory')};
         color : ${({ isChecked }) => (isChecked ? 'white' : 'black')};
@@ -101,86 +102,6 @@ const Container = styled.div`
   .error {
     color: red;
   }
-
-  .signup-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 100%;
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: orange;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .enable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 150px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-    font-weight: 700;
-  }
-  .enable-button:active {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 150px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: coral;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #999;
-    font-weight: 700;
-  }
-  .disable-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 150px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #999;
-    font-weight: 400;
-    border-radius: 18px;
-    border: coral;
-  }
-
-  .prev-button {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 150px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #FFA07A;
-    border-radius: 18px;
-    border: coral;
-    cursor: pointer;
-  }
-
   .btnBox{
     width: 100%;
     display: flex;
@@ -343,9 +264,9 @@ const IdPwFind = () => {
                     
                     <div className="btnBox">
                         {(isMail) ?
-                        <input type="button" className="enable-button" onClick={onClickFindId} value="ID찾기"/> :
-                        <button className="disable-button" >ID찾기</button>}
-                        <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</button>
+                        <InputBtn onClick={onClickFindId} value="ID찾기"/> :
+                        <DisableBtn className="disable-button" >ID찾기</DisableBtn>}
+                        <Backbtn onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</Backbtn>
                     </div>
                 </>
             :
@@ -369,9 +290,9 @@ const IdPwFind = () => {
                     </div>
                     <div className="btnBox">
                         {(isMail) ?
-                        <input type="button" className="enable-button" onClick={onClickFindPw} value="PW찾기"/> :
-                        <button className="disable-button" >PW찾기</button>}
-                         <button className="prev-button" onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</button>
+                        <InputBtn onClick={onClickFindPw} value="PW찾기"/> :
+                        <DisableBtn className="disable-button" >PW찾기</DisableBtn>}
+                         <Backbtn className="prev-button" onClick={onClickPrev}>로그인 화면으로 <br/> 돌아가기</Backbtn>
                     </div>
                 </>
             }

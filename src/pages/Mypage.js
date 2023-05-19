@@ -18,6 +18,7 @@ const MypageBlock = styled.div`
         text-align: center;
         font-size: 50px;
         font-weight: 800;
+        font-family: "MalangMalangB";
     }
     //메뉴바와 세션 영역 CSS
     .section {
@@ -42,8 +43,8 @@ const Mypage= () => {
 
 	return (
 		<MypageBlock>
-           <Header setCategory={setCategory}> MY PAGE </Header>
-           <div className="pageTitle"> MY PAGE </div>
+           <Header setCategory={setCategory}> 마이페이지 </Header>
+           <div className="pageTitle"> 마이페이지 </div>
            <MyProfile/>
            <div className="section">
            <MenuBar category={category} onSelect={onSelect}/>

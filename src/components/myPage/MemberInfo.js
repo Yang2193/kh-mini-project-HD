@@ -25,6 +25,16 @@ const MemberInfoBlock = styled.div`
         align-items: center;
         justify-content: center;
         width: 400px;
+        position: relative;
+         .addrBtn{
+            position: absolute;
+            right: -100px;
+            width: 100px;
+            height: 30px;
+            background-color: #FFA07A;
+            border: none;
+            cursor: pointer;
+        }
       
             label{
                 width: 150px;
@@ -56,7 +66,7 @@ const MemberInfoBlock = styled.div`
            
    
         }
-  input{
+  .inputBox{
         margin-left: 10px;
         margin-right: 10px;
         width: 100%; 
@@ -81,9 +91,6 @@ const MemberInfoBlock = styled.div`
                     font-weight: bolder;
                 }
              }
-
-  
-
 `;
 
 
@@ -181,38 +188,38 @@ const MemberInfo = () => {
             <div className='titleName'> 내 정보 조회 / 수정 </div>
                   <div className='box'>
                   <label htmlFor='id'>아이디</label>
-                  <input id='id' name='memId'value={memberValue.memId} disabled={true}/>
+                  <input id='id' name='memId'value={memberValue.memId} disabled={true} className="inputBox"/>
                   </div>
                   <div className='box'>
                   <label htmlFor='password'>비밀번호</label>
-                  <input id='password' name='pwd' type="password" value={memberValue.pwd} onChange={onChange}/>
+                  <input id='password' name='pwd' type="password" value={memberValue.pwd} onChange={onChange}  className="inputBox"/>
                   </div>
                   <div className='box'>
                   <label htmlFor='name'>이름</label>
-                  <input id='name'name='name'value={memberValue.name} onChange={onChange} />
+                  <input id='name'name='name'value={memberValue.name} onChange={onChange}  className="inputBox"/>
                   </div>
                   <div className='box'>
                   <label htmlFor='nickName'>닉네임</label>
-                  <input id='nickName' name='nickName' value={memberValue.nickName} onChange={onChange}/>
+                  <input id='nickName' name='nickName' value={memberValue.nickName} onChange={onChange} className="inputBox"/>
                   </div>
                   <div className='box'>
                   <label htmlFor='phoneNum'>핸드폰 번호</label>
-                  <input id='phoneNum' name='phoneNum' value={memberValue.phoneNum} onChange={onChange}/>
+                  <input id='phoneNum' name='phoneNum' value={memberValue.phoneNum} onChange={onChange} className="inputBox"/>
                   </div>
                   <div className='box'>
                     <label htmlFor='addr'>주소</label>
-                    <input id='addr' name='addr' value={inputAddress} onChange={onChange} />
-                    <ActionButton onClick={openPost} className='addrBtn'>주소찾기</ActionButton>
+                    <input id='addr' name='addr' value={inputAddress} onChange={onChange}  className="inputBox"/>
+                    <button onClick={openPost} className='addrBtn'>주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
                    <div className='box'>
                   <label htmlFor='input-file'>프로필 사진</label>
-                  <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/>
+                  <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage} className="inputBox"/>
                   </div>
                     
                   <div className='box'>
                   <label htmlFor='email'>이메일</label>
-                  <input id='email' name='email' value={memberValue.email} onChange={onChange}/>
+                  <input id='email' name='email' value={memberValue.email} onChange={onChange} className="inputBox"/>
                   </div>
                 <div className="box">
                 <button className='btn' type="submit" onClick={submit}>수정</button>
