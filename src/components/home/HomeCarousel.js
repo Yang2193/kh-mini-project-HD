@@ -7,6 +7,7 @@ import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom/dist";
 import { useContext } from "react";
 import { ReviewIdContext } from "../../context/RestaurantId";
+import StarRatings from "react-star-ratings";
 const Container = styled.div`
     margin-top: 60px;
     width: 100%;
@@ -14,6 +15,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
+    font-family: "MalangMalangB";
 
 `;
 
@@ -41,7 +43,7 @@ const StyledSlider = styled(Slider)`
     background: none;
     color: white;
     display: flex !important;
-    flex-direction: column;
+    //flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -66,6 +68,18 @@ const StyledSlider = styled(Slider)`
       text-align: center;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column  ;
+      flex-wrap: wrap;
+
+    }
+     .ratingBox{
+      width: 100%;
+      height: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
     }
   }
 
@@ -185,6 +199,12 @@ const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
                   <div className="slide-content">
                     <h3>{e.restName}({e.category})</h3>
                     <p>평점 : {e.rating}</p>
+                    <p className="ratingBox">
+                    <StarRatings rating={e.rating}
+                              starDimension="20px"
+                              starSpacing="2px"
+                              starRatedColor="gold"/>
+                    </p>
                   </div>
                   <img src={e.imageUrl} alt="restaurant-img"/>
                 </div>
@@ -193,7 +213,13 @@ const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
                 <div onClick={()=>movePage(e.restId,e.reservation)} key={e.restId}>
                   <div className="slide-content">
                     <h3>{e.restName}({e.category})</h3>
-                    <p>평점 : {e.rating}</p>
+                    <span>평점 : {e.rating}</span>
+                    <p className="ratingBox">
+                    <StarRatings rating={e.rating}
+                              starDimension="20px"
+                              starSpacing="2px"
+                              starRatedColor="gold"/>
+                    </p>
                   </div>
                   <img src={e.imageUrl} alt="restaurant-img"/>
                 </div>

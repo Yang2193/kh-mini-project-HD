@@ -3,10 +3,10 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from "styled-components";
-import AxiosApi from "../../api/AxiosApi";
 import { useNavigate } from "react-router-dom/dist";
 import { useContext } from "react";
 import { ReviewIdContext } from "../../context/RestaurantId";
+import StarRatings from "react-star-ratings";
 const Container = styled.div`
     margin-top: 60px;
     width: 100%;
@@ -14,6 +14,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
+    font-family: "MalangMalangB";
 
 `;
 
@@ -24,6 +25,7 @@ const Box = styled.div`
 `;
 
 const StyledSlider = styled(Slider)`
+
 
   .slick-slide {
     display: flex;
@@ -38,14 +40,13 @@ const StyledSlider = styled(Slider)`
     background: none;
     color: white;
     display: flex !important;
-    flex-direction: column;
+    //flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     cursor: pointer;
     border-radius: 18px;
-    
-
+  
     img{
       position: absolute;
       top: 0;
@@ -55,7 +56,6 @@ const StyledSlider = styled(Slider)`
       border-radius: 18px;
 
     }
-
     .slide-content {
       margin: 0;
       width: 100%;
@@ -64,8 +64,21 @@ const StyledSlider = styled(Slider)`
       text-align: center;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column  ;
+      flex-wrap: wrap;
 
     }
+    .ratingBox{
+      width: 100%;
+      height: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+
   }
 
   
@@ -175,18 +188,27 @@ const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
 
     return (
       <Container>
+        
         <Box >
             <div>
-            <h2> {title} </h2>
+            <h2>{title} </h2>
             <StyledSlider {...settings} >
               {restList && restList.map(e => (
                 <div key={e.restId} onClick={onClickCarousel}>
                   <div className="slide-content">
-                    <h3>{e.restName}({e.category})</h3>
-                    <p>평점 : {e.rating}</p>
+                    <h2>{e.restName}({e.category})</h2>
+                    <span>평점 : {e.rating}</span>
+                    <p className="ratingBox">
+                    <StarRatings rating={e.rating}
+                              starDimension="20px"
+                              starSpacing="2px"
+                              starRatedColor="gold"/>
+                    </p>
                   </div>
                   <img src={e.imageUrl} alt="restaurant-img"/>
+                
                 </div>
+                
               ))}
             </StyledSlider>
             </div>

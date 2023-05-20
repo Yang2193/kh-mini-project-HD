@@ -13,7 +13,7 @@ import RestListCarousel from "../components/home/RestListCarousel";
 import ReviewListCarousel from "../components/home/ReviewListCarousel";
 import { useEffect } from "react";
 import AxiosApi from "../api/AxiosApi";
-
+import { MdScreenSearchDesktop } from 'react-icons/md';
 
 const Body = styled.div`
     background-color: ivory;
@@ -21,6 +21,13 @@ const Body = styled.div`
 
     p {
         text-align: center;
+    }
+    .text{
+        font-family: "NanumGothic";
+        font-size : 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     /* @media (min-height: 1200px) {
@@ -109,7 +116,7 @@ const Home = () => {
                 </HomeHeader>
                 {type === "Main" && (
                     <>
-                        <p>무엇으로 검색해야 할지 생각이 안 날 땐? 지역, 메뉴, 가격대, 평점으로 맞춤 검색! </p>
+                        <p className="text">무엇으로 검색해야 할지 생각이 안 날 땐? <b>지역, 메뉴, 가격대, 평점</b>으로 맞춤 검색 <MdScreenSearchDesktop  style={{ fontSize: '40px' }}/></p>
                         <DetailedCheck handleType={handleType} handleFilter={handleFilter}/>
                         {restList && <RestListCarousel handleType={handleType} handleFilter={handleFilter} carouselRestList={restList}/>}
                         {reviewList && <ReviewListCarousel carouselReviewList={reviewList}/>}

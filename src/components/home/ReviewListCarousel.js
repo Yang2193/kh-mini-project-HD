@@ -14,6 +14,8 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
+    font-family: "MalangMalangB";
+
 
 `;
 
@@ -67,8 +69,8 @@ const StyledSlider = styled(Slider)`
       text-align: center;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
-      
     }
+
 
 
   }
