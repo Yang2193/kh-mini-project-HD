@@ -122,28 +122,8 @@ const RegionFilter = () => {
     const context = useContext(UserContext);
     const {address, setAddress, region, setRegion, checkedCities, setCheckedCities} = context;
     
-    // const [region, setRegion] = useState("");
-    // const [checkedCities, setCheckedCities] = useState([]);
+ 
 
-    const changeRegionName = (e) => {
-        if(e === "서울") return "서울특별시";
-        else if(e === "경기") return "경기도";
-        else if(e === "인천") return "인천광역시";
-        else if(e === "대전") return "대전광역시";
-        else if(e === "세종") return "세종특별자치시";
-        else if(e === "충북") return "충청북도";
-        else if(e === "충남") return "충청남도";
-        else if(e === "광주") return "광주광역시";
-        else if(e === "전북") return "전라북도";
-        else if(e === "전남") return "전라남도";
-        else if(e === "대구") return "대구광역시";
-        else if(e === "경북") return "경상북도";
-        else if(e === "부산") return "부산광역시";
-        else if(e === "울산") return "울산광역시";
-        else if(e === "경남") return "경상남도";
-        else if(e === "강원") return "강원도";
-        else if(e === "제주") return "제주특별자치도";
-    }
 
     const addAddress = (val) => {
         setAddress(prevAddr => ({
@@ -152,16 +132,26 @@ const RegionFilter = () => {
         }));
     }
 
-    const removeAddress = (obj, val) => {
-        // const regionName = changeRegionName(region);
-        if(obj[region]){
-            obj[region] = obj[region].filter((item) => item !== val);
-            if(obj[region].length === 0) {
-                delete obj[region];
-            }
-        }
+    // const removeAddress = (obj, val) => {
+    //     if(obj[region]){
+    //         obj[region] = obj[region].filter((item) => item !== val);
+    //         if(obj[region].length === 0) {
+    //             delete obj[region];
+    //         }
+    //     }
         
-    }
+    // }
+
+    const removeAddress = (obj, val) => {
+        const newObj = { ...obj };
+        if (newObj[region]) {
+          newObj[region] = newObj[region].filter((item) => item !== val);
+          if (newObj[region].length === 0) {
+            delete newObj[region];
+          }
+        }
+        setAddress(newObj);
+      };
     
     const onCheckRegion = (e) => {
         const value = e.target.value;
@@ -169,7 +159,7 @@ const RegionFilter = () => {
         
         if (checked) {
             setRegion(value);
-          } 
+          } else setRegion('');
           console.log(region);
         };
 
