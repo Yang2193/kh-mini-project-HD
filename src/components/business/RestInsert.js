@@ -8,7 +8,7 @@ import AddressModal from "../../utils/AddressModal";
 import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
-
+import FileBtn from "../../utils/Button/FileBtn";
 const RestInsertBlock = styled.div`
         display: flex;
         flex-direction: column;
@@ -35,7 +35,7 @@ const RestInsertBlock = styled.div`
             text-align: center;
         }
         
-            label{
+            .name{
                 width: 120px;
                 text-align: right;
                 }
@@ -217,9 +217,12 @@ const closeModal = () => {
 
      // 이미지 업로드 기능
      const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
-
+     const [selectedFile, setSelectedFile] = useState(null); //선택한 이미지 파일 저장
      const onChangeImage =(e) =>{
-         setImageUpload(e.target.files[0]);
+        const file = e.target.files[0];
+         setImageUpload(file);
+         setSelectedFile(file);
+
      }
  
      const uploadImage = async () => {
@@ -237,41 +240,43 @@ const closeModal = () => {
             <RestInsertBlock>
             <div className='titleName'> 매장등록 </div>
                   <div className='box'>
-                  <label htmlFor='id'>사업자 ID : </label>
+                  <label htmlFor='id' className="name">사업자 ID : </label>
                   <input id='id' disabled={true} value={newRestData.memId} className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>사업자 등록번호 :</label>
+                  <label htmlFor='id' className="name">사업자 등록번호 :</label>
                   <input id='id'value={newRestData.restId} name='restId' onChange={restIdOnchange} className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>매장 이름 :</label>
+                  <label htmlFor='id'className="name">매장 이름 :</label>
                   <input id='id' value = {newRestData.restName||''}name='restName' onChange={restOnChange} className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>전화 번호 : </label>
+                  <label htmlFor='id' className="name">전화 번호 : </label>
                   <input id='id' value={newRestInfoData.restPhoneNum||''} name='restPhoneNum'onChange={restInfoOnChange} className="inputBox"/>
                   </div>
                    <div className='box'>
-                    <label htmlFor='addr'>주소</label>
+                    <label htmlFor='addr' className="name">주소</label>
                     <input id='addr' name='restAddr' value={inputAddress || ''} onChange={restInfoOnChange} className="inputBox"/>
                     <button onClick={openPost} className='addrBtn'>주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
                   <div className='box'>
-                     <label htmlFor='input-file'>프로필 사진</label>
-                    <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/>
+                     {/* <label htmlFor='input-file'>프로필 사진</label>
+                    <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage}/> */}
+                    <label style={{margin: "10px"}}>프로필 사진</label>
+                    <FileBtn onChangeImage={onChangeImage} selectedFile={selectedFile}/>
                   </div>
-                  <div className='box'>
-                  <label htmlFor='id'> 공지사항 : </label>
+                  <div className='box' >
+                  <label htmlFor='id'className="name"> 공지사항 : </label>
                   <input id='id' value={newRestInfoData.restNotice||''} name='restNotice'onChange={restInfoOnChange}className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>영업시간 : </label>
+                  <label htmlFor='id'className="name">영업시간 : </label>
                   <input id='id' value={newRestInfoData.restHours||''} name='restHours'onChange={restInfoOnChange}className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>소개 글 : </label>
+                  <label htmlFor='id'className="name">소개 글 : </label>
                   <input id='id' value={newRestInfoData.restIntro||''} name='restIntro'onChange={restInfoOnChange} className="inputBox"/>
                   </div>
                   <div className='box'>
@@ -284,7 +289,7 @@ const closeModal = () => {
                   </div>
                   </div>
                   <div className='box'>
-                  <label htmlFor='id'>매장 분류 :  </label>
+                  <label htmlFor='id'className="name">매장 분류 :  </label>
                  <Select
                     options={options}
                     onChange={selectChange}  placeholder="메뉴선택" isSearchable={true} className="option"/>

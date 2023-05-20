@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import menu from "../../images/menu.png";
 import { useEffect } from "react";
-
 const MenuBoxBlock = styled.div`
     background-color:#EEE4DC;
     border-radius: 5px;
@@ -151,7 +150,6 @@ const MenuBox = ({menuList,menuInfo,setMenuList,type,deleteClick,imageUpload,set
                             )
                             )}
             <input type="file" name = "menuImgFileName" onChange={(e) => ImgUpload(e, menuInfo.menuId)}/>
-            
         </div>
             <div className="inputBox">
             <div className="box">
