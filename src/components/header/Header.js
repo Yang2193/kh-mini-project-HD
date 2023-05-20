@@ -49,7 +49,7 @@ const Header = ({setCategory,children}) => {
     const navigate = useNavigate();
     const memberType = window.localStorage.getItem("memberType");
     const HomeClick = () => {
-     if(memberType ==="general") navigate("/");
+     if(memberType ==="general" || memberType === "") navigate("/");
     }
     return(
         <>

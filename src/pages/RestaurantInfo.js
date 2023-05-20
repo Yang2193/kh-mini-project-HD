@@ -51,8 +51,6 @@ const Info = () => {
 	const restId = localStorage.getItem("restId");
 	console.log(restId);
 	
-	const navigate=useNavigate();
-
 	// 데이터 호출 
 	const [restInfo, setRestInfo] = useState("");
 	
