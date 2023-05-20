@@ -10,7 +10,7 @@ import AddressModal from '../../utils/AddressModal';
 import { storage } from "../../firebase/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid"; // 이름이 같지 않게 랜덤함수 불러오기
-import ActionButton from "../../utils/Button/ActionButton";
+import FileBtn from '../../utils/Button/FileBtn';
 const MemberInfoBlock = styled.div`
        
         display: flex;
@@ -36,7 +36,7 @@ const MemberInfoBlock = styled.div`
             cursor: pointer;
         }
       
-            label{
+            .name{
                 width: 150px;
                 text-align: center;
                 }
@@ -91,6 +91,7 @@ const MemberInfoBlock = styled.div`
                     font-weight: bolder;
                 }
              }
+
 `;
 
 
@@ -153,6 +154,9 @@ const MemberInfo = () => {
     // 주소찾기 팝업 및 조건부 렌더링 용
     const [isOpenPost, setIsOpenPost] = useState(false);
     const [inputAddress, setInputAddress] = useState(memberValue.addr);
+
+
+
     const openPost = () => {
         setIsOpenPost(true);
       };
@@ -166,9 +170,12 @@ const MemberInfo = () => {
 
      // 이미지 업로드 기능
      const [imageUplod, setImageUpload] = useState(null);// 이미지 파일 저장 
-
+     const [selectedFile, setSelectedFile] = useState(null); //선택한 이미지 파일 저장
      const onChangeImage =(e) =>{
-         setImageUpload(e.target.files[0]);
+        const file = e.target.files[0];
+         setImageUpload(file);
+         setSelectedFile(file);
+
      }
  
      const uploadImage = async () => {
@@ -180,45 +187,44 @@ const MemberInfo = () => {
          return imageUrl;
        };
 
- 
     if(!memberValue) return<div>로그인이 필요합니다.</div>;
 	return (
  
 		    <MemberInfoBlock>
             <div className='titleName'> 내 정보 조회 / 수정 </div>
                   <div className='box'>
-                  <label htmlFor='id'>아이디</label>
+                  <label htmlFor='id' className='name'>아이디</label>
                   <input id='id' name='memId'value={memberValue.memId} disabled={true} className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='password'>비밀번호</label>
+                  <label htmlFor='password'  className='name'>비밀번호</label>
                   <input id='password' name='pwd' type="password" value={memberValue.pwd} onChange={onChange}  className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='name'>이름</label>
+                  <label htmlFor='name' className='name'>이름</label>
                   <input id='name'name='name'value={memberValue.name} onChange={onChange}  className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='nickName'>닉네임</label>
+                  <label htmlFor='nickName' className='name'>닉네임</label>
                   <input id='nickName' name='nickName' value={memberValue.nickName} onChange={onChange} className="inputBox"/>
                   </div>
                   <div className='box'>
-                  <label htmlFor='phoneNum'>핸드폰 번호</label>
+                  <label htmlFor='phoneNum' className='name'>핸드폰 번호</label>
                   <input id='phoneNum' name='phoneNum' value={memberValue.phoneNum} onChange={onChange} className="inputBox"/>
                   </div>
                   <div className='box'>
-                    <label htmlFor='addr'>주소</label>
+                    <label htmlFor='addr' className='name'>주소</label>
                     <input id='addr' name='addr' value={inputAddress} onChange={onChange}  className="inputBox"/>
-                    <button onClick={openPost} className='addrBtn'>주소찾기</button>
+                    <button onClick={openPost} className="addrBtn">주소찾기</button>
                     {isOpenPost && <AddressModal open={isOpenPost} onClose={closePost} searchAddress={searchAddress} />}
                     </div>
-                   <div className='box'>
-                  <label htmlFor='input-file'>프로필 사진</label>
-                  <input id='input-file' name='imgFileName' type="file" onChange={onChangeImage} className="inputBox"/>
-                  </div>
-                    
+                   <div className='box' >
+                    <label style={{margin: "10px"}}>프로필 사진</label>
+                    <FileBtn onChangeImage={onChangeImage} selectedFile={selectedFile}/>
+                    </div>
+                   
                   <div className='box'>
-                  <label htmlFor='email'>이메일</label>
+                  <label htmlFor='email' className='name'>이메일</label>
                   <input id='email' name='email' value={memberValue.email} onChange={onChange} className="inputBox"/>
                   </div>
                 <div className="box">
