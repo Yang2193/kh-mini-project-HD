@@ -7,6 +7,7 @@ import RestaurantContainer from "../components/restaurantComponent/RestaurantCon
 import RestaurantNav from "../components/restaurantComponent/RestaurantNav";
 import Menu from "../components/restaurantComponent/RestaurantMenu";
 import Review from "../components/restaurantComponent/RestaurantReview";
+import { useNavigate } from "react-router-dom";
 
 const InfoContainer = styled.section`
 		font-family: "NanumGothic";
@@ -49,6 +50,8 @@ const Info = () => {
 	// 로컬 스토리지 사용
 	const restId = localStorage.getItem("restId");
 	console.log(restId);
+	
+	const navigate=useNavigate();
 
 	// 데이터 호출 
 	const [restInfo, setRestInfo] = useState("");
@@ -59,6 +62,7 @@ const Info = () => {
 		setType(e);
 
 	}
+
 
 	useEffect(() => {
 		const rtInfo = async () => {

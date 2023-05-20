@@ -49,16 +49,33 @@ const Container = styled.div`
     }
   }
   .item1 {
-    margin-top: 10px;
+    margin-top: 60px;
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (min-width: 1920px) and (min-height: 1080px) {
+      margin-top: 100px;
+  }
+
+  @media (max-width: 1600px) and (max-height: 900px) {
+    margin-top: 20px;
+  }
   }
   .item1 img {
-    width: 120px;
-    height: 120px;
+  width: 240px; /* 기본 이미지 크기 */
+  height: 240px; /* 기본 이미지 크기 */
+
+  @media (min-width: 1920px) and (min-height: 1080px) {
+    width: 300px; /* 1920x1080 이상일 때 큰 이미지 크기 */
+    height: 300px; /* 1920x1080 이상일 때 큰 이미지 크기 */
   }
+
+  @media (max-width: 1600px) and (max-height: 900px) {
+    width: 160px; /* 1600x900 이하일 때 작은 이미지 크기 */
+    height: 160px; /* 1600x900 이하일 때 작은 이미지 크기 */
+  }
+}
 
   .item2 {
     margin: 10px;
@@ -237,7 +254,7 @@ const IdPwFind = () => {
 
     return (
         <Container>
-            <div className="logo">
+            <div className="item1">
                 <img src={imgLogo} alt="로고" onClick={()=>navigate("/")}/>
             </div>
             <div className='item4'>

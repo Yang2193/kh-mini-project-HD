@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 
 const KH_DOMAIN = "http://localhost:8111";
-
+// const KH_DOMAIN = "http://192.168.10.244:8111";
+// const KH_DOMAIN = "http://192.168.110.33:8111";
 
 
 const AxiosApi = {

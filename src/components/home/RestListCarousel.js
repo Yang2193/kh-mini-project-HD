@@ -182,7 +182,9 @@ const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
 
 
   const onClickCarousel = () => {
+    handleFilter(restList);
     handleType("List");
+    
   }
 
 
