@@ -379,7 +379,7 @@ const BizSignUp = () => {
 
                 <div className="btnBox">
                     {(isId && isPw && isConPw && isName && isMail && isPhone) ? 
-                    <InputBtn onClick={onClickSignUp}>회원가입</InputBtn> :
+                    <InputBtn onClick={onClickSignUp} value="회원가입">회원가입</InputBtn> :
                     <DisableBtn>회원가입</DisableBtn>}
                     <Modal open={modalOpen} close={closeModal} header="오류">{modalText}</Modal>
                     <MessageModal open={signUpModalOpen} confirm={closeSignUpModal} close={closeSignUpModal}>회원가입을 환영합니다!</MessageModal>
