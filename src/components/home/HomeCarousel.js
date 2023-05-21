@@ -167,9 +167,11 @@ const HomeCarousel = ({weeklyTop3Rest, monthlyTop3Rest, weeklyTop3Review}) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1200,
     slidesToShow: 3,
     slidesToScroll: 3,
+    autoplay: true,
+    autoplaySpeed: 15000,  
     beforeChange: (currentSlide, nextSlide) => {
       if (nextSlide === 0) {
         setTitle("이 주의 인기 매장");

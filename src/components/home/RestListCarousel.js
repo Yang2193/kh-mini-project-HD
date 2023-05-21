@@ -162,9 +162,11 @@ const RestListCarousel = ({handleType, handleFilter, carouselRestList }) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1200,
     slidesToShow: 3,
     slidesToScroll: 3,
+    autoplay: true,
+    autoplaySpeed: 10000, 
     beforeChange: (currentSlide, nextSlide) => {
       if (nextSlide === 0) {
         setTitle("어디가 제일 인기 있을까?");

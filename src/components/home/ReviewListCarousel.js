@@ -156,9 +156,11 @@ const ReviewListCarousel = ({carouselReviewList}) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1200,
     slidesToShow: 3,
     slidesToScroll: 3,
+    autoplay: true,
+    autoplaySpeed: 13000, 
     beforeChange: (currentSlide, nextSlide) => {
       if (nextSlide === 0) {
         setTitle("가장 유명한 후기를 보고 싶다면?");
