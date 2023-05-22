@@ -244,6 +244,7 @@ const ReviewDetail = () =>{
     const onClickLiked = () =>{
         if(!memId) {  
             setModalCheck(true);
+            return;
         } 
         if (!isRevLike) {
             addLike();
