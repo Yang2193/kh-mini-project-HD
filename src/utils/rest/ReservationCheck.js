@@ -160,6 +160,7 @@ const ReservationCheck = (e) =>{
 const moveOk =()=>{
     setOkModal(false);
     close();
+    setResReq("");
     nav("/Info");
 }
     const nav = useNavigate();
