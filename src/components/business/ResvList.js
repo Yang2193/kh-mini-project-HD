@@ -137,9 +137,6 @@ const ResvListBlock = styled.div`
         color: white;
         }
 
-       
-        
-
 `;
 
 const ResvList = ({restValue}) => {
@@ -209,7 +206,16 @@ const ResvList = ({restValue}) => {
                 <Calendar
                             value={selectedDate}
                             onChange={handleDateChange}
-                            formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
+                            formatDay={(locale, date) => {
+                            const day = date.toLocaleString("en", {day: "numeric"});
+                            const isSunday = date.getDay() === 0; // 일요일인지 확인
+                            const isSaturday = date.getDay() === 6; // 토요일인지 확인
+                            const style = {
+                                color: isSunday ? "red" : isSaturday ? "blue" : "inherit",
+                            };
+                            return <span style={style}>{day}</span>;
+                        }}
+
                             calendarType="US"
                         />
             </ResvListBlock> 
