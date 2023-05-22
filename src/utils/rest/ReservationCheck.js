@@ -2,8 +2,9 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AxiosApi from "../../api/AxiosApi";
 import styled from "styled-components";
-import MessageModal from "../MessageModal";
 import moment from "moment";
+import Modal from "../Modal";
+import MessageModal from "../MessageModal";
 const ModalStyle = styled.div`
      .modal {
         display: none;  // 숨겨진 상태로 시작
@@ -26,7 +27,7 @@ const ModalStyle = styled.div`
     }
     .section {
         width: 40%;
-        height: 65%;
+        height: 80%;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -60,7 +61,7 @@ const ModalStyle = styled.div`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 78%;
+        height: 82%;
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
         border-top: 1px solid #dee2e6;
@@ -247,7 +248,8 @@ const moveOk =()=>{
                 </div>
             }
             </div>
-            <MessageModal open={okModal} close={moveOk} confirm={moveOk} header="완료">예약 신청이 완료되었습니다.</MessageModal>
+            <Modal open={okModal} close={moveOk} type ="ok" header="예약 완료"> 예약 신청이 완료 되었습니다. </Modal>
+
 
         </ModalStyle>
     )

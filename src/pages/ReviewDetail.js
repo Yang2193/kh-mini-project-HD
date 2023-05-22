@@ -220,6 +220,7 @@ const ReviewDetail = () =>{
             console.log("공감 등록 성공");
             setRevLikeList([...revLikeList, {reviewId, memId}]); // 공감 등록 성공시 배열에도 추가
             setIsRevLike(true); // 최종 공감 상태를 true 로 전달
+            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
             console.log(revLikeList);
             } else {
                 console.log(" 등록 전송 실패");
@@ -232,6 +233,7 @@ const ReviewDetail = () =>{
             console.log("공감 삭제 성공");
             setRevLikeList(revLikeList.filter(item => !(item.reviewId === reviewId && item.memId === memId))); // 공감 삭제 성공시 배열에도 삭제
             setIsRevLike(false); // 최종 공감 상태를 false 로 전달
+            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
             console.log(revLikeList);
 
             } else {
@@ -245,12 +247,8 @@ const ReviewDetail = () =>{
         } 
         if (!isRevLike) {
             addLike();
-            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
-
         }else{
             deleteLike();
-            setRefresh(prevRefresh => !prevRefresh); // 리뷰 데이터를 다시 불러오기 위한 refresh 상태 변수 토글
-
         }
     }
     const movePage = (restId,reservation) => {
@@ -381,8 +379,7 @@ const ReviewDetail = () =>{
                                 }
                             </div>
                         ) : null}
-
-                    <img src={rest.reviewImage} alt="이미지가 없습니다."/>
+                    {rest.reviewImage === null ? null :  <img src={rest.reviewImage}/>}
                 </div>
                 ))}
         </div>

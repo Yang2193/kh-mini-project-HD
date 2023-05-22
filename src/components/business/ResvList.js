@@ -210,6 +210,7 @@ const ResvList = ({restValue}) => {
                             value={selectedDate}
                             onChange={handleDateChange}
                             formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
+                            calendarType="US"
                         />
             </ResvListBlock> 
                 <TableBlock>

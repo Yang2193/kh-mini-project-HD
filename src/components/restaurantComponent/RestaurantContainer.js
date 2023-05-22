@@ -37,7 +37,8 @@ const FixContent = styled.section`
         position: relative;
         border-radius: 15px;
         left:-50px;
-        width:30%;
+        width:400px;
+        height: 300px;
         background-color: #fff;
     }
     .btns{
